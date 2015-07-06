@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,7 +17,6 @@ import org.json.JSONObject;
 
 public class testsignup extends ActionBarActivity {
 
-    public static Context CTX;
     EditText et_username;
     EditText et_pass;
     EditText et_confirm_pass;
@@ -29,7 +29,6 @@ public class testsignup extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testsignup);
 
-        CTX = getApplication();
         et_username=(EditText) findViewById(R.id.editText);
         et_pass=(EditText) findViewById(R.id.editText2);
         et_confirm_pass=(EditText) findViewById(R.id.editText3);
@@ -57,12 +56,14 @@ public class testsignup extends ActionBarActivity {
                         user.put("first_name", fname);
                         user.put("last_name", lname);
 
-                        InsertUserTask insertUserTask = new InsertUserTask();
+                        InsertUserTask insertUserTask = new InsertUserTask(getApplicationContext());
                         insertUserTask.execute(user);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
+                else
+                    Toast.makeText(getApplicationContext(), "passwords mismatch!", Toast.LENGTH_SHORT).show();
             }
         });
     }

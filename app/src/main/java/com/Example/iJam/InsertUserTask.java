@@ -18,41 +18,10 @@ import java.net.URL;
 /**
  * Created by Mostafa on 7/6/2015.
  */
-public class InsertUserTask extends AsyncTask<JSONObject, Void, String> {
-    @Override
-    protected String doInBackground(JSONObject... params) {
-        try {
-            URL url = new URL(ServerManager.getServerURL() + "/users/insert.php");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+public class InsertUserTask extends HttpPostTask {
 
-            conn.setDoOutput(true);
-            conn.setDoInput(true);
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setRequestMethod("POST");
-
-            OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
-            writer.write(params[0].toString());
-            writer.flush();
-            writer.close();
-
-            //SERVER RESPONSE
-            StringBuilder builder = new StringBuilder();
-            int responseCode = conn.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    if(line.charAt(0)!='<')
-                        builder.append(line + "\n");
-                }
-                reader.close();
-                return builder.toString();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public InsertUserTask(Context ctx) {
+        super(ServerManager.getServerURL() + "/users/insert.php", ctx);
     }
 
     @Override
@@ -60,7 +29,6 @@ public class InsertUserTask extends AsyncTask<JSONObject, Void, String> {
         try{
             JSONObject response = new JSONObject(s);
             String status = response.getString("status");
-            Context ctx = testsignup.CTX;
             ServerManager.setServerStatus(status);
             if(status.equals("fail")) {
                 Toast.makeText(ctx, "Sign up failed! " + response.getString("error"), Toast.LENGTH_SHORT).show();

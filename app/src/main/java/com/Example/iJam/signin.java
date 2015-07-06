@@ -16,7 +16,6 @@ import org.json.JSONObject;
 
 public class signin extends AppCompatActivity {
 
-    public static Context CTX;
     EditText et_user_name;
     EditText et_password;
     Button signup;
@@ -27,7 +26,6 @@ public class signin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
-        CTX = getApplicationContext();
         et_user_name = (EditText) findViewById(R.id.editText7);
         et_password = (EditText) findViewById(R.id.editText8);
         signin = (Button)findViewById(R.id.button);
@@ -44,7 +42,7 @@ public class signin extends AppCompatActivity {
                     login_info.put("user_name", user_name);
                     login_info.put("password", password);
 
-                    LogInTask logInTask = new LogInTask();
+                    LogInTask logInTask = new LogInTask(getApplicationContext());
                     logInTask.execute(login_info);
                 } catch (JSONException e) {
                     e.printStackTrace();
