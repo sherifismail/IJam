@@ -1,4 +1,4 @@
-package slidenerd.vivz.navigationviewdemo;
+package com.Example.iJam;
 
 import org.json.JSONArray;
 import org.json.JSONException;

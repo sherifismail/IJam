@@ -1,4 +1,4 @@
-package slidenerd.vivz.navigationviewdemo;
+package com.Example.iJam;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package slidenerd.vivz.navigationviewdemo;
+package com.Example.iJam;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

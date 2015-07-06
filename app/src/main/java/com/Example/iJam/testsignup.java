@@ -1,4 +1,4 @@
-package slidenerd.vivz.navigationviewdemo;
+package com.Example.iJam;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -15,7 +15,7 @@ public class testsignup extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_testsignup);
 
         btn=(Button) findViewById(R.id.button3);
         btn.setOnClickListener(new View.OnClickListener() {
