@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public interface myInterface {
     public void setImageUrl(String imageUrl);
     public void setTitle(String title);
-    public void setRating(float rating);
+    public void setRating(double rating);
     public void setLikes(int likes);
     public void setUploader(String uploader);
     public void setDuration(int duration);
@@ -21,7 +21,7 @@ public interface myInterface {
 
     public String getImageUrl();
     public String getTitle();
-    public float getRating();
+    public double getRating();
     public int getLikes();
     public String getUploader();
     public int getDuration();

@@ -26,7 +26,7 @@ public class Track implements myInterface {
     //private ArrayList<String> instruments;          //names of instrucments involved
     private String instrument;
     private int likes;                  //number of likes
-    private float rating;
+    private double rating;
     private int raters;
 
 
@@ -68,6 +68,25 @@ public class Track implements myInterface {
         ancestor.children.add(this);
     }
 
+    public Track(){
+        title = null;
+        uploader = null;
+        band = false;
+        id = 0;
+        duration = 0;
+        imageUrl = null;
+        upload_date = null;
+        tags = null;
+        ancestor = null;
+        children =  null;
+        //contributors;
+        //instruments;
+        instrument = null ;
+        likes = 0;
+        rating = 0.0;
+        raters = 0;
+    }
+
     public static JSONArray toJsonArray(ArrayList<Track> tracks){
         JSONArray trackArray = new JSONArray();
         for(Track track : tracks){
@@ -97,6 +116,48 @@ public class Track implements myInterface {
         return trackOb;
     }
 
+    public static ArrayList<Track> parseJson(JSONArray jArray){
+        ArrayList<Track> myTracks = new ArrayList<>();
+
+        for(int i = 0; i < jArray.length(); i++){
+            try {
+                Track track = new Track();
+                JSONObject ob = jArray.getJSONObject(i);
+
+                int duration = ob.getInt("Duration");
+                int likes = ob.getInt("Likes");
+                double rating = ob.getDouble("Rating");
+                String title = ob.getString("Title");
+                String uploader = ob.getString("Uploader");
+                String instrument = ob.getString("Instrument");
+                ArrayList<String> tags = new ArrayList<>();
+
+                JSONArray t = ob.getJSONArray("Tags");
+                for(int j = 0; j < t.length(); j++ ){
+                    JSONObject ob2 = t.getJSONObject(j);
+
+                    String tag = ob2.getString("Tag"+Integer.toString(j));
+                    tags.add(tag);
+                }
+                track.setDuration(duration);
+                track.setLikes(likes);
+                track.setRating(rating);
+                track.setTitle(title);
+                track.setUploader(uploader);
+                track.setInstrument(instrument);
+                track.setTags(tags);
+
+                myTracks.add(track);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        return myTracks;
+    }
+
     @Override
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
@@ -108,7 +169,7 @@ public class Track implements myInterface {
     }
 
     @Override
-    public void setRating(float rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
@@ -168,7 +229,7 @@ public class Track implements myInterface {
     }
 
     @Override
-    public float getRating() {
+    public double getRating() {
         return rating;
     }
 
