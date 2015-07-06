@@ -1,5 +1,6 @@
 package com.Example.iJam;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,18 +8,50 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class signin extends AppCompatActivity {
 
+    public static Context CTX;
+    EditText et_user_name;
+    EditText et_password;
     Button signup;
     Button signin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
-        signup=(Button)findViewById(R.id.button2);
-        signin=(Button)findViewById(R.id.button);
+
+        CTX = getApplicationContext();
+        et_user_name = (EditText) findViewById(R.id.editText7);
+        et_password = (EditText) findViewById(R.id.editText8);
+        signin = (Button)findViewById(R.id.button);
+        signup = (Button)findViewById(R.id.button2);
+
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String user_name = et_user_name.getText().toString().trim();
+                String password = et_password.getText().toString().trim();
+
+                JSONObject login_info = new JSONObject();
+                try {
+                    login_info.put("user_name", user_name);
+                    login_info.put("password", password);
+
+                    LogInTask logInTask = new LogInTask();
+                    logInTask.execute(login_info);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -26,14 +59,6 @@ public class signin extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(signin.this, ThirdActivity.class);
-                startActivity(i);
-            }
-        });
-
     }
 
     @Override

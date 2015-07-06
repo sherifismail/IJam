@@ -1,5 +1,6 @@
 package com.Example.iJam;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -7,22 +8,61 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class testsignup extends ActionBarActivity {
 
-    Button btn;
+    public static Context CTX;
+    EditText et_username;
+    EditText et_pass;
+    EditText et_confirm_pass;
+    EditText et_email;
+    EditText et_fname;
+    EditText et_lname;
+    Button btn_signup_;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testsignup);
 
-        btn=(Button) findViewById(R.id.button3);
-        btn.setOnClickListener(new View.OnClickListener() {
+        CTX = getApplication();
+        et_username=(EditText) findViewById(R.id.editText);
+        et_pass=(EditText) findViewById(R.id.editText2);
+        et_confirm_pass=(EditText) findViewById(R.id.editText3);
+        et_email=(EditText) findViewById(R.id.editText4);
+        et_fname=(EditText) findViewById(R.id.editText5);
+        et_lname=(EditText) findViewById(R.id.editText6);
+        btn_signup_=(Button) findViewById(R.id.button3);
+
+        btn_signup_.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(testsignup.this, ThirdActivity.class);
-                startActivity(i);
+                String password = et_pass.getText().toString().trim();
+                String confirm_pass = et_confirm_pass.getText().toString().trim();
+                if(password.equals(confirm_pass)) {
+                    String user_name = et_username.getText().toString().trim();
+                    String email = et_email.getText().toString().trim();
+                    String fname = et_fname.getText().toString().trim();
+                    String lname = et_lname.getText().toString().trim();
+
+                    JSONObject user = new JSONObject();
+                    try{
+                        user.put("user_name", user_name);
+                        user.put("password", password);
+                        user.put("email", email);
+                        user.put("first_name", fname);
+                        user.put("last_name", lname);
+
+                        InsertUserTask insertUserTask = new InsertUserTask();
+                        insertUserTask.execute(user);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
     }
