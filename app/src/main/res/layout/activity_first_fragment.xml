@@ -32,4 +32,9 @@
         android:layout_marginTop="77dp"
         android:textSize="50dp" />
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lvTracks" />
+
 </RelativeLayout>
