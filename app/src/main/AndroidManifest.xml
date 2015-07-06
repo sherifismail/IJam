@@ -40,6 +40,19 @@
             android:name=".signup"
             android:label="@string/title_activity_signup" >
         </activity>
+        <activity
+            android:name=".signin"
+            android:label="@string/title_activity_signin" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".testsignup"
+            android:label="@string/title_activity_testsignup" >
+        </activity>
     </application>
 
 </manifest>

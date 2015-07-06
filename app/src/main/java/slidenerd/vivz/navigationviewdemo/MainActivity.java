@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = null;
         if (mSelectedId == R.id.navigation_item_1) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
-            intent = new Intent(this, SecondActivity.class);
+            intent = new Intent(this, signin.class);
             startActivity(intent);
         }
         if (mSelectedId == R.id.navigation_item_2) {
