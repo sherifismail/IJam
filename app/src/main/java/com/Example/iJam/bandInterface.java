@@ -11,7 +11,9 @@ public interface bandInterface {
     public ArrayList<Track> getTracks();
     public ArrayList<User> getUsers();
     public String getAuthor();
+    public String getImageUrl();
 
+    public void setImageUrl(String imageUrl);
     public void setAuthor(String author);
     public void setMembers(ArrayList<User> members);
     public void addMember(User member);

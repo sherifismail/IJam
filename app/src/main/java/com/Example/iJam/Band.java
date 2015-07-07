@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public class Band implements bandInterface{
     private int band_id;
+    private String imageUrl;
     private String name;
     private String author;
     private ArrayList<User> members;
@@ -48,6 +49,16 @@ public class Band implements bandInterface{
     @Override
     public String getAuthor() {
         return author;
+    }
+
+    @Override
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    @Override
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override

@@ -38,12 +38,14 @@ public class bandAdapter extends ArrayAdapter<Band>{
 
         TextView txtName = (TextView) rowView.findViewById(R.id.txtBand);
         TextView txtTracks = (TextView) rowView.findViewById(R.id.txtTracks);
-        //RatingBar rateBar = (RatingBar) rowView.findViewById(R.id.ratingBar);
+        TextView txtAuthor = (TextView) rowView.findViewById(R.id.txtAuthor);
         final ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
         final Band item = items.get(position);
 
         txtName.setText(item.getName());
-        txtTracks.setText(item.getAuthor());
+        txtAuthor.setText(item.getAuthor());
+        txtTracks.setText(item.getTracks().size());
+        //imageView.setImageBitmap();
 
         /*
         rowView.setOnClickListener(new View.OnClickListener(){
