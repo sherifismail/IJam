@@ -22,9 +22,8 @@ import java.util.ArrayList;
 public class TopTracks extends Fragment {
 
     private FloatingActionButton mFAB;
-
     private RelativeLayout mRoot;
-
+    private ListView lvTracks;
     public static ArrayList<Track> topTracks = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,8 +32,11 @@ public class TopTracks extends Fragment {
         mRoot = (RelativeLayout) v.findViewById(R.id.root_activity_second);
         mFAB = (FloatingActionButton) v.findViewById(R.id.fab);
         mFAB.setOnClickListener(mFabClickListener);
+        ListView lvTracks = (ListView) v.findViewById(R.id.lvTracks);
 
-        ArrayList<Track> tracksList = new ArrayList<Track>();
+        getTopTracks(getActivity());
+
+        /*ArrayList<Track> tracksList = new ArrayList<Track>();
         String strJ = "[\n" +
                 "    {\n" +
                 "        \"Title\":\"Title1\",\n" +
@@ -60,11 +62,9 @@ public class TopTracks extends Fragment {
             tracksList = Track.parseJson(j);
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
-        ListView lvTracks = (ListView) v.findViewById(R.id.lvTracks);
-        trackAdapter tracksAdap = new trackAdapter(getActivity(), MainActivity.class, (ArrayList<trackInterface>) (ArrayList<?>) tracksList);
-        lvTracks.setAdapter(tracksAdap);
+
         return v;
     }
 
@@ -81,19 +81,25 @@ public class TopTracks extends Fragment {
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent i=new Intent(getActivity(),UploadTracks.class);
+            Intent i=new Intent(getActivity(),Upload.class);
             startActivity(i);
         }
     };
+
     public void getTopTracks(Context context){
         JSONObject ob = new JSONObject();
         new HttpPostTask(ServerManager.getServerURL()+"/tracks/top_tracks.php",context){
             @Override
             protected void onPostExecute(String s) {
-                super.onPostExecute(s);
                 try {
-                    JSONArray j = new JSONArray(s);
-                    topTracks = Track.parseJson(j);
+                    JSONObject response = new JSONObject(s);
+                    if(response.getString("status").equals("success")) {
+                        JSONArray jArray = new JSONArray(response.getString("results"));
+                        topTracks = Track.parseJson(jArray);
+
+                        trackAdapter tracksAdap = new trackAdapter(getActivity(), MainActivity.class, (ArrayList<trackInterface>) (ArrayList<?>) topTracks);
+                        lvTracks.setAdapter(tracksAdap);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

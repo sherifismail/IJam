@@ -20,7 +20,7 @@ public class Upload extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload);
+        setContentView(R.layout.activity_upload_tracks);
 
         final EditText et_name = (EditText) findViewById(R.id.et_trackname);
         final EditText et_insturment = (EditText) findViewById(R.id.et_trackinstrument);

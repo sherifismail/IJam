@@ -124,28 +124,28 @@ public class Track implements trackInterface {
                 Track track = new Track();
                 JSONObject ob = jArray.getJSONObject(i);
 
-                int duration = ob.getInt("Duration");
-                int likes = ob.getInt("Likes");
-                double rating = ob.getDouble("Rating");
-                String title = ob.getString("Title");
-                String uploader = ob.getString("Uploader");
-                String instrument = ob.getString("Instrument");
+                int duration = ob.getInt("duration");
+                int likes = ob.getInt("likes");
+                double rating = ob.getDouble("rating");
+                String title = ob.getString("name");
+                //String uploader = ob.getString("");
+                String instrument = ob.getString("instrument");
                 ArrayList<String> tags = new ArrayList<>();
 
-                JSONArray t = ob.getJSONArray("Tags");
+                /*JSONArray t = ob.getJSONArray("Tags");
                 for(int j = 0; j < t.length(); j++ ){
                     JSONObject ob2 = t.getJSONObject(j);
 
                     String tag = ob2.getString("Tag"+Integer.toString(j));
                     tags.add(tag);
-                }
+                }*/
                 track.setDuration(duration);
                 track.setLikes(likes);
                 track.setRating(rating);
                 track.setTitle(title);
-                track.setUploader(uploader);
+                track.setUploader("batee5");
                 track.setInstrument(instrument);
-                track.setTags(tags);
+                //track.setTags(tags);
 
                 myTracks.add(track);
 
