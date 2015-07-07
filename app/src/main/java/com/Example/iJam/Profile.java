@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -18,13 +19,15 @@ import java.util.ArrayList;
 
 public class Profile extends Fragment {
 ListView listV;
+    ImageView profileimage;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_profile, container, false);
         String[] profitems=new String[]{"Profile","Settings","My Tracks","About us","Sign Out"};
         listV=(ListView)v.findViewById(R.id.listView2);
         final ArrayList<String> list = new ArrayList<String>();
-
+profileimage=(ImageView)v.findViewById(R.id.imageView2);
+        profileimage.setImageResource(R.drawable.x);
         for (int i = 0; i < profitems.length; ++i) {
             list.add(profitems[i]);
         }
@@ -48,6 +51,7 @@ listV.setOnItemClickListener(new  AdapterView.OnItemClickListener(){
         else if (position==4){
 Intent intent=new Intent(getActivity(),signin.class);
         startActivity(intent);
+            getActivity().finish();
         }
     }
 });

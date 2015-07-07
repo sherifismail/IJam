@@ -20,22 +20,23 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="79dp"
-            android:text="Start Record"
+            android:text="Start Recording"
             android:id="@+id/button5"
             android:layout_gravity="right"
-            android:background="@drawable/circularbutton"
+            android:background="@drawable/recordbutton"
             android:layout_weight="0.65"
             android:layout_marginRight="5dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Stop Record"
+            android:text="Stop Recording"
             android:id="@+id/button6"
             android:layout_gravity="right"
-            android:background="#FF8A65FF"
+            android:background="@drawable/stopbutton"
             android:layout_weight="0.66"
-            android:layout_marginRight="5dp" />
+            android:layout_marginRight="5dp"
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 

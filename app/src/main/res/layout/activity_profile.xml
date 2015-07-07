@@ -31,7 +31,8 @@
             android:id="@+id/listView2"
             android:longClickable="false"
             android:clickable="true"
-            android:choiceMode="singleChoice" />
+            android:choiceMode="singleChoice"
+            android:layout_weight="1.32" />
 
     </LinearLayout>
 

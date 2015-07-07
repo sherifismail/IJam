@@ -43,7 +43,8 @@
         android:id="@+id/button8"
         android:layout_gravity="center_horizontal"
         android:layout_below="@+id/listView"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/holo_orange_light" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
