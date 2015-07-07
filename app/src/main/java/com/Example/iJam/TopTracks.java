@@ -77,7 +77,7 @@ public class TopTracks extends Fragment {
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent i=new Intent(getActivity(),Recordtrack.class);
+            Intent i=new Intent(getActivity(),Upload.class);
             startActivity(i);
         }
     };

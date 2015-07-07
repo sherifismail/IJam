@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root_activity_second"
+    android:id="@+id/root_activity_bands"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/holo_orange_dark">
+    android:layout_height="match_parent">
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/lvTracks"
+        android:id="@+id/lvBands"
         android:background="@android:color/white" />
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
