@@ -16,3 +16,4 @@ build.gradle
 app/src/main/java/com/Example/iJam/ServerManager.java
 IJam.iml
 app/app.iml
+.idea/misc.xml
