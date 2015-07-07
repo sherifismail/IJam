@@ -34,7 +34,7 @@ public class TopTracks extends Fragment {
         mFAB.setOnClickListener(mFabClickListener);
         ListView lvTracks = (ListView) v.findViewById(R.id.lvTracks);
 
-        getTopTracks(getActivity());
+        //getTopTracks(getActivity());
 
         /*ArrayList<Track> tracksList = new ArrayList<Track>();
         String strJ = "[\n" +
