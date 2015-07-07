@@ -54,19 +54,19 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText12"
+        android:id="@+id/et_trackname"
         android:hint="Name"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText13"
+        android:id="@+id/et_trackinstrument"
         android:hint="Instrument"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText14"
+        android:id="@+id/et_tracktags"
         android:layout_gravity="center_horizontal"
         android:hint="Genre/Tag"/>
 
@@ -74,7 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Upload"
-        android:id="@+id/button7"
+        android:id="@+id/btn_uploadtrack"
         android:layout_gravity="center_horizontal"
         android:background="@android:color/holo_orange_dark"
         android:layout_marginTop="10dp" />
