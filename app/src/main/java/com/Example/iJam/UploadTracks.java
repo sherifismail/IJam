@@ -1,18 +1,28 @@
 package com.Example.iJam;
 
+import android.app.Activity;
+import android.media.MediaRecorder;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import java.io.IOException;
 
 
-public class Upload extends ActionBarActivity {
+public class UploadTracks extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload);
+        setContentView(R.layout.activity_upload_tracks);
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

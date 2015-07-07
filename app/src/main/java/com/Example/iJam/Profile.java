@@ -21,7 +21,7 @@ ListView listV;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_profile, container, false);
-        String[] profitems=new String[]{"Profile","Settings","Your Tracks","About us"};
+        String[] profitems=new String[]{"Profile","Settings","My Tracks","About us"};
         listV=(ListView)v.findViewById(R.id.listView2);
         final ArrayList<String> list = new ArrayList<String>();
 

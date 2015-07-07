@@ -42,7 +42,7 @@ public class Search extends Fragment {
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent i=new Intent(getActivity(),Upload.class);
+            Intent i=new Intent(getActivity(),UploadTracks.class);
             startActivity(i);
         }
     };
