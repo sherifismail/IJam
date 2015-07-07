@@ -17,15 +17,15 @@ import java.util.HashMap;
 /**
  * Created by Khodary on 7/5/15.
  */
-public class myAdapter extends ArrayAdapter<myInterface> {
+public class trackAdapter extends ArrayAdapter<trackInterface> {
     private final Activity context;
     private final Class<?> context2;
-    ArrayList<myInterface> items;
+    ArrayList<trackInterface> items;
 
     public static HashMap<String, Bitmap> myImages = new HashMap<String, Bitmap>();
 
 
-    public myAdapter(Activity context, Class<?> context2, ArrayList<myInterface> items) {
+    public trackAdapter(Activity context, Class<?> context2, ArrayList<trackInterface> items) {
         super(context, R.layout.row_layout, items);
         this.items = items;
         this.context = context;
@@ -42,7 +42,7 @@ public class myAdapter extends ArrayAdapter<myInterface> {
         TextView txtLikes = (TextView) rowView.findViewById(R.id.txtLikes);
         RatingBar rateBar = (RatingBar) rowView.findViewById(R.id.ratingBar);
         final ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
-        final myInterface item = items.get(position);
+        final trackInterface item = items.get(position);
 
         txtTitle.setText(item.getTitle());
         txtLikes.setText(Float.toString(item.getLikes()));

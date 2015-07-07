@@ -4,7 +4,6 @@ package com.Example.iJam;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +59,7 @@ public class TopTracks extends Fragment {
         }
 
         ListView lvTracks = (ListView) v.findViewById(R.id.lvTracks);
-        myAdapter tracksAdap = new myAdapter(getActivity(), MainActivity.class, (ArrayList<myInterface>) (ArrayList<?>) tracksList);
+        trackAdapter tracksAdap = new trackAdapter(getActivity(), MainActivity.class, (ArrayList<trackInterface>) (ArrayList<?>) tracksList);
         lvTracks.setAdapter(tracksAdap);
         return v;
     }
