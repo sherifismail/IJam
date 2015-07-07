@@ -67,7 +67,7 @@ public class SecondActivity extends ActionBarActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(SecondActivity.this,testsignup.class);
+                Intent i=new Intent(SecondActivity.this, com.Example.iJam.signup.class);
                 startActivity(i);
             }
         });

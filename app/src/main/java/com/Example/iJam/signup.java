@@ -1,7 +1,5 @@
 package com.Example.iJam;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,7 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class testsignup extends ActionBarActivity {
+public class signup extends ActionBarActivity {
 
     EditText et_username;
     EditText et_pass;
@@ -27,7 +25,7 @@ public class testsignup extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_testsignup);
+        setContentView(R.layout.activity_signup);
 
         et_username=(EditText) findViewById(R.id.editText);
         et_pass=(EditText) findViewById(R.id.editText2);

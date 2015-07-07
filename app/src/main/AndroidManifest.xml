@@ -46,12 +46,12 @@
             android:label="@string/title_activity_second_fragment" >
         </activity>
         <activity
-            android:name=".ThirdFragment"
+            android:name=".Bands"
             android:label="@string/title_activity_third_fragment" >
         </activity>
         <activity
             android:name=".signin"
-            android:label="@string/title_activity_signin" >
+            android:label="Jam Hub" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,15 +59,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".testsignup"
+            android:name=".signup"
             android:label="@string/title_activity_testsignup" >
         </activity>
         <activity
-            android:name=".Uploadtrack"
-            android:label="@string/title_activity_uploadtrack" >
-        </activity>
-        <activity
-            android:name=".Recordtrack"
+            android:name=".Upload"
             android:label="@string/title_activity_recordtrack" >
         </activity>
     </application>

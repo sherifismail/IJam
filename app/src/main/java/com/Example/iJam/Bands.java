@@ -9,28 +9,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-public class Search extends Fragment {
+public class Bands extends Fragment {
+
     private FloatingActionButton mFAB;
 
     private RelativeLayout mRoot;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_search, container, false);
-        mRoot = (RelativeLayout) v.findViewById(R.id.root_activity_search);
+        View v = inflater.inflate(R.layout.activity_bands, container, false);
+        mRoot = (RelativeLayout) v.findViewById(R.id.root_activity_bands);
         mFAB = (FloatingActionButton) v.findViewById(R.id.fab);
         mFAB.setOnClickListener(mFabClickListener);
-
-        //TextView tv = (TextView) v.findViewById(R.id.tvFragSecond);
-        //tv.setText(getArguments().getString("msg"));
 
         return v;
     }
 
-    public static Search newInstance(String text) {
+    public static Bands newInstance(String text) {
 
-        Search f = new Search();
+        Bands f = new Bands();
         Bundle b = new Bundle();
         b.putString("msg", text);
 
