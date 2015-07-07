@@ -35,9 +35,11 @@ public class Upload extends ActionBarActivity {
                 String instrument = et_insturment.getText().toString().trim();
                 String tags = et_tags.getText().toString().trim();
                 JSONObject json_track = new JSONObject();
+                boolean val =false;
                 try{
                     json_track.put("name", name);
-                    json_track.put("band", false);
+                    json_track.put("band", val);
+                    json_track.put("band_id", 4);
                     json_track.put("user_id", 3);
                     json_track.put("instrument", instrument);
                     json_track.put("duration", 24);
