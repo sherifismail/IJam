@@ -1,32 +1,30 @@
 package com.Example.iJam;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by Khodary on 7/5/15.
+ * Created by Khodary on 7/7/15.
  */
-public class myAdapter extends ArrayAdapter<myInterface> {
+public class bandAdapter extends ArrayAdapter<Band>{
     private final Activity context;
     private final Class<?> context2;
-    ArrayList<myInterface> items;
+    ArrayList<Band> items;
 
     public static HashMap<String, Bitmap> myImages = new HashMap<String, Bitmap>();
 
 
-    public myAdapter(Activity context, Class<?> context2, ArrayList<myInterface> items) {
-        super(context, R.layout.row_layout, items);
+    public bandAdapter(Activity context, Class<?> context2, ArrayList<Band> items) {
+        super(context, R.layout.track_row_layout, items);
         this.items = items;
         this.context = context;
         this.context2 = context2;
@@ -36,25 +34,27 @@ public class myAdapter extends ArrayAdapter<myInterface> {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = context.getLayoutInflater();
-        View rowView = inflater.inflate(R.layout.row_layout, null, true);
+        View rowView = inflater.inflate(R.layout.band_row_layout, null, true);
 
-        TextView txtTitle = (TextView) rowView.findViewById(R.id.txtTitle);
-        TextView txtLikes = (TextView) rowView.findViewById(R.id.txtLikes);
-        RatingBar rateBar = (RatingBar) rowView.findViewById(R.id.ratingBar);
+        TextView txtName = (TextView) rowView.findViewById(R.id.txtBand);
+        TextView txtTracks = (TextView) rowView.findViewById(R.id.txtTracks);
+        TextView txtAuthor = (TextView) rowView.findViewById(R.id.txtAuthor);
         final ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
-        final myInterface item = items.get(position);
+        final Band item = items.get(position);
 
-        txtTitle.setText(item.getTitle());
-        txtLikes.setText(Float.toString(item.getLikes()));
-        rateBar.setRating((float)item.getRating());
+        txtName.setText(item.getName());
+        txtAuthor.setText(item.getAuthor());
+        txtTracks.setText(item.getTracks().size());
+        //imageView.setImageBitmap();
 
+        /*
         rowView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, context2);
                 context.startActivity(i);
             }
-        });
+        });*/
         return rowView;
     }
 }

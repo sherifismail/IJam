@@ -59,7 +59,7 @@ public class TopTracks extends Fragment {
         }
 
         ListView lvTracks = (ListView) v.findViewById(R.id.lvTracks);
-        myAdapter tracksAdap = new myAdapter(getActivity(), MainActivity.class, (ArrayList<myInterface>) (ArrayList<?>) tracksList);
+        trackAdapter tracksAdap = new trackAdapter(getActivity(), MainActivity.class, (ArrayList<trackInterface>) (ArrayList<?>) tracksList);
         lvTracks.setAdapter(tracksAdap);
         return v;
     }

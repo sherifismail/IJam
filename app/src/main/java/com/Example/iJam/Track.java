@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * Created by Khodary on 7/5/15.
  */
-public class Track implements myInterface {
+public class Track implements trackInterface {
     private String title;                //track name
     private String uploader;            //track auploader name
     private boolean band;               //true it the uploader is band
