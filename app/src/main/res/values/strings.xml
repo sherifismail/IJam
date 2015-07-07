@@ -22,4 +22,6 @@
     <string name="title_activity_signup">signup</string>
     <string name="title_activity_signin">signin</string>
     <string name="title_activity_testsignup">testsignup</string>
+    <string name="title_activity_uploadtrack">Uploadtrack</string>
+    <string name="title_activity_recordtrack">Recordtrack</string>
 </resources>

@@ -2,18 +2,10 @@ package com.Example.iJam;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 /**
  * Created by Mostafa on 7/6/2015.
@@ -35,7 +27,7 @@ public class LogInTask extends HttpPostTask {
             }
             else {
                 Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
-                Intent inte = new Intent(ctx, ThirdActivity.class);
+                Intent inte = new Intent(ctx, MainActivity.class);
                 inte.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 ctx.startActivity(inte);
             }

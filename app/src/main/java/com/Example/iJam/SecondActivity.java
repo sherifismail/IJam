@@ -59,7 +59,7 @@ public class SecondActivity extends ActionBarActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(SecondActivity.this, ThirdActivity.class);
+                Intent i = new Intent(SecondActivity.this, MainActivity.class);
                 startActivity(i);
             }
         });

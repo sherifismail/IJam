@@ -8,11 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class SecondFragment extends Fragment {
+public class Search extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_second_fragment, container, false);
+        View v = inflater.inflate(R.layout.activity_search, container, false);
 
         TextView tv = (TextView) v.findViewById(R.id.tvFragSecond);
         tv.setText(getArguments().getString("msg"));
@@ -20,9 +20,9 @@ public class SecondFragment extends Fragment {
         return v;
     }
 
-    public static SecondFragment newInstance(String text) {
+    public static Search newInstance(String text) {
 
-        SecondFragment f = new SecondFragment();
+        Search f = new Search();
         Bundle b = new Bundle();
         b.putString("msg", text);
 

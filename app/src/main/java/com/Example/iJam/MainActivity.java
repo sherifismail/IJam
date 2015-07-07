@@ -1,96 +1,47 @@
 package com.Example.iJam;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
-    private static final String SELECTED_ITEM_ID = "selected_item_id";
-    private static final String FIRST_TIME = "first_time";
     private Toolbar mToolbar;
-    private NavigationView mDrawer;
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private int mSelectedId;
-    private boolean mUserSawDrawer = false;
+    private TabLayout mTabLayout;
+    private ViewPager mPager;
+    private MyPagerAdapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mToolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(mToolbar);
-        mDrawer = (NavigationView) findViewById(R.id.main_drawer);
-        mDrawer.setNavigationItemSelectedListener(this);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this,
-                mDrawerLayout,
-                mToolbar,
-                R.string.drawer_open,
-                R.string.drawer_close);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerToggle.syncState();
-        if (!didUserSeeDrawer()) {
-            showDrawer();
-            markDrawerSeen();
-        } else {
-            hideDrawer();
-        }
-        mSelectedId = savedInstanceState == null ? R.id.navigation_item_1 : savedInstanceState.getInt(SELECTED_ITEM_ID);
-        navigate(mSelectedId);
-    }
+        mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setAdapter(mAdapter);
+        mTabLayout.setTabsFromPagerAdapter(mAdapter);
 
-    private boolean didUserSeeDrawer() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mUserSawDrawer = sharedPreferences.getBoolean(FIRST_TIME, false);
-        return mUserSawDrawer;
-    }
+        mTabLayout.setupWithViewPager(mPager);
+        mPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
 
-    private void markDrawerSeen() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mUserSawDrawer = true;
-        sharedPreferences.edit().putBoolean(FIRST_TIME, mUserSawDrawer).apply();
-    }
 
-    private void showDrawer() {
-        mDrawerLayout.openDrawer(GravityCompat.START);
     }
-
-    private void hideDrawer() {
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-    }
-
-    private void navigate(int mSelectedId) {
-        Intent intent = null;
-        if (mSelectedId == R.id.navigation_item_1) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-            intent = new Intent(this, signin.class);
-            startActivity(intent);
-        }
-        if (mSelectedId == R.id.navigation_item_2) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-            intent = new Intent(this, ThirdActivity.class);
-            startActivity(intent);
-        }
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_third, menu);
         return true;
     }
 
@@ -100,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -108,34 +60,53 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
+    public static class MyFragment extends Fragment {
+        public static final java.lang.String ARG_PAGE = "arg_page";
 
-    @Override
-    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        public MyFragment() {
 
-        menuItem.setChecked(true);
-        mSelectedId = menuItem.getItemId();
+        }
 
-        navigate(mSelectedId);
-        return true;
-    }
+        public static MyFragment newInstance(int pageNumber) {
+            MyFragment myFragment = new MyFragment();
+            Bundle arguments = new Bundle();
+            arguments.putInt(ARG_PAGE, pageNumber);
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(SELECTED_ITEM_ID, mSelectedId);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+            myFragment.setArguments(arguments);
+            return myFragment;
         }
     }
 }
+
+class MyPagerAdapter extends FragmentStatePagerAdapter {
+
+    public MyPagerAdapter(FragmentManager fm) {
+        super(fm);
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+
+        if(position==0)
+        return TopTracks.newInstance("TopTracks, Instance 1");
+
+        else if(position==1)
+            return Search.newInstance("Search, Instance 1");
+        else if (position==2)
+            return ThirdFragment.newInstance("ThirdFragment, Instance 1");
+        //MainActivity.MyFragment myFragment = MainActivity.MyFragment.newInstance(position);
+        //return myFragment;
+        return null;
+    }
+
+    @Override
+    public int getCount() {
+        return 3;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return "Tab " + (position + 1);
+    }
+}
+

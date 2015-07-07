@@ -3,13 +3,14 @@ package com.Example.iJam;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,11 +18,18 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 
-public class FirstFragment extends Fragment {
+public class TopTracks extends Fragment {
 
+    private FloatingActionButton mFAB;
+
+    private RelativeLayout mRoot;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_first_fragment, container, false);
+        View v = inflater.inflate(R.layout.activity_top_tracks, container, false);
+
+        mRoot = (RelativeLayout) v.findViewById(R.id.root_activity_second);
+        mFAB = (FloatingActionButton) v.findViewById(R.id.fab);
+        mFAB.setOnClickListener(mFabClickListener);
 
         ArrayList<Track> tracksList = new ArrayList<Track>();
         String strJ = "[\n" +
@@ -57,9 +65,9 @@ public class FirstFragment extends Fragment {
         return v;
     }
 
-    public static FirstFragment newInstance(String text) {
+    public static TopTracks newInstance(String text) {
 
-        FirstFragment f = new FirstFragment();
+        TopTracks f = new TopTracks();
         Bundle b = new Bundle();
         b.putString("msg", text);
 
@@ -67,4 +75,11 @@ public class FirstFragment extends Fragment {
 
         return f;
     }
+    private View.OnClickListener mFabClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent i=new Intent(getActivity(),Recordtrack.class);
+            startActivity(i);
+        }
+    };
 }
