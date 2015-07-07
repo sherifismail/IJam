@@ -21,7 +21,7 @@ ListView listV;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_profile, container, false);
-        String[] profitems=new String[]{"Profile","Settings","My Tracks","About us"};
+        String[] profitems=new String[]{"Profile","Settings","My Tracks","About us","Sign Out"};
         listV=(ListView)v.findViewById(R.id.listView2);
         final ArrayList<String> list = new ArrayList<String>();
 
@@ -43,6 +43,11 @@ listV.setOnItemClickListener(new  AdapterView.OnItemClickListener(){
         }
         else if (position==3){
 
+        }
+
+        else if (position==4){
+Intent intent=new Intent(getActivity(),signin.class);
+        startActivity(intent);
         }
     }
 });

@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,7 +27,8 @@ public class Upload extends ActionBarActivity {
         final EditText et_insturment = (EditText) findViewById(R.id.et_trackinstrument);
         final EditText et_tags = (EditText) findViewById(R.id.et_tracktags);
         Button btn_upload = (Button) findViewById(R.id.btn_uploadtrack);
-
+        ProgressBar recordprogress=(ProgressBar) findViewById(R.id.progressBar);
+recordprogress.setVisibility(View.INVISIBLE);
         btn_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +58,7 @@ public class Upload extends ActionBarActivity {
             }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

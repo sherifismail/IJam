@@ -109,7 +109,16 @@ class MyPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return "Tab " + (position + 1);
+        if(position==0)
+            return "Top Tracks";
+        else if(position==1)
+            return "Search";
+        else if(position==2)
+            return "Bands";
+        else if(position==3)
+            return "Profile";
+
+         return "Tab " + (position + 1);
     }
 }
 
