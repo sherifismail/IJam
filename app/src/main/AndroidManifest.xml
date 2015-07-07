@@ -66,10 +66,6 @@
             android:name=".Upload"
             android:label="@string/title_activity_recordtrack" >
         </activity>
-        <activity
-            android:name="slidenerd.vivz.navigationviewdemo.TrackDetailsActivity"
-            android:label="@string/title_activity_track_details" >
-        </activity>
     </application>
 
 </manifest>

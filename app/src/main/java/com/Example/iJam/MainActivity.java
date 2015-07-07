@@ -94,6 +94,9 @@ class MyPagerAdapter extends FragmentStatePagerAdapter {
             return Search.newInstance("Search, Instance 1");
         else if (position==2)
             return Bands.newInstance("Bands, Instance 1");
+        else if (position==3)
+            return Profile.newInstance("Profile, Instance 1");
+
         //MainActivity.MyFragment myFragment = MainActivity.MyFragment.newInstance(position);
         //return myFragment;
         return null;
@@ -101,7 +104,7 @@ class MyPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Override

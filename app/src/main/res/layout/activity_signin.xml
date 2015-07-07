@@ -69,7 +69,6 @@
             android:layout_height="wrap_content"
             android:text="Sign up"
             android:id="@+id/button2"
-            android:layout_gravity="center_horizontal"
             android:background="@android:color/holo_orange_dark"
             android:textColor="@android:color/white" />
     </LinearLayout>
