@@ -28,5 +28,6 @@
         <item>Tracks</item>
         <item>Bands</item>
     </string-array>
+    <string name="title_activity_profile">Profile</string>
 
 </resources>
