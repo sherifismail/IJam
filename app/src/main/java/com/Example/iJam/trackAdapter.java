@@ -1,6 +1,7 @@
 package com.Example.iJam;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,16 +46,17 @@ public class trackAdapter extends ArrayAdapter<trackInterface> {
 
         txtTitle.setText(item.getTitle());
         txtLikes.setText(Float.toString(item.getLikes()));
-        rateBar.setRating((float)item.getRating());
+        rateBar.setRating((float) item.getRating());
+        rateBar.setEnabled(false);
 
-        /*
+
         rowView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, context2);
                 context.startActivity(i);
             }
-        });*/
+        });
         return rowView;
     }
 }

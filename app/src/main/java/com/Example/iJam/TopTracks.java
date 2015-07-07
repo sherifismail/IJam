@@ -1,6 +1,7 @@
 package com.Example.iJam;
 //import android.app.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -22,6 +24,8 @@ public class TopTracks extends Fragment {
     private FloatingActionButton mFAB;
 
     private RelativeLayout mRoot;
+
+    public static ArrayList<Track> topTracks = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_top_tracks, container, false);
@@ -81,4 +85,19 @@ public class TopTracks extends Fragment {
             startActivity(i);
         }
     };
+    public void getTopTracks(Context context){
+        JSONObject ob = new JSONObject();
+        new HttpPostTask(ServerManager.getServerURL()+"/tracks/top_tracks.php",context){
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                try {
+                    JSONArray j = new JSONArray(s);
+                    topTracks = Track.parseJson(j);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute(ob);
+    }
 }
