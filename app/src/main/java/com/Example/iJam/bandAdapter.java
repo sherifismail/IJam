@@ -7,24 +7,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by Khodary on 7/5/15.
+ * Created by Khodary on 7/7/15.
  */
-public class trackAdapter extends ArrayAdapter<trackInterface> {
+public class bandAdapter extends ArrayAdapter<Band>{
     private final Activity context;
     private final Class<?> context2;
-    ArrayList<trackInterface> items;
+    ArrayList<Band> items;
 
     public static HashMap<String, Bitmap> myImages = new HashMap<String, Bitmap>();
 
 
-    public trackAdapter(Activity context, Class<?> context2, ArrayList<trackInterface> items) {
+    public bandAdapter(Activity context, Class<?> context2, ArrayList<Band> items) {
         super(context, R.layout.track_row_layout, items);
         this.items = items;
         this.context = context;
@@ -35,17 +34,16 @@ public class trackAdapter extends ArrayAdapter<trackInterface> {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = context.getLayoutInflater();
-        View rowView = inflater.inflate(R.layout.track_row_layout, null, true);
+        View rowView = inflater.inflate(R.layout.band_row_layout, null, true);
 
-        TextView txtTitle = (TextView) rowView.findViewById(R.id.txtTitle);
-        TextView txtLikes = (TextView) rowView.findViewById(R.id.txtLikes);
-        RatingBar rateBar = (RatingBar) rowView.findViewById(R.id.ratingBar);
+        TextView txtName = (TextView) rowView.findViewById(R.id.txtBand);
+        TextView txtTracks = (TextView) rowView.findViewById(R.id.txtTracks);
+        //RatingBar rateBar = (RatingBar) rowView.findViewById(R.id.ratingBar);
         final ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
-        final trackInterface item = items.get(position);
+        final Band item = items.get(position);
 
-        txtTitle.setText(item.getTitle());
-        txtLikes.setText(Float.toString(item.getLikes()));
-        rateBar.setRating((float)item.getRating());
+        txtName.setText(item.getName());
+        txtTracks.setText(item.getAuthor());
 
         /*
         rowView.setOnClickListener(new View.OnClickListener(){
