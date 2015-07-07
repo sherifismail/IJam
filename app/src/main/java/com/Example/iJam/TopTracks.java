@@ -4,7 +4,6 @@ package com.Example.iJam;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +77,7 @@ public class TopTracks extends Fragment {
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent i=new Intent(getActivity(),Recordtrack.class);
+            Intent i=new Intent(getActivity(),Upload.class);
             startActivity(i);
         }
     };

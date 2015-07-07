@@ -1,6 +1,5 @@
 package com.Example.iJam;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -53,7 +52,7 @@ public class signin extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(signin.this, testsignup.class);
+                Intent i = new Intent(signin.this, com.Example.iJam.signup.class);
                 startActivity(i);
             }
         });

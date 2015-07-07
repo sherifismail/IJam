@@ -24,4 +24,9 @@
     <string name="title_activity_testsignup">testsignup</string>
     <string name="title_activity_uploadtrack">Uploadtrack</string>
     <string name="title_activity_recordtrack">Recordtrack</string>
+    <string-array name="searchitems">
+        <item>Tracks</item>
+        <item>Bands</item>
+    </string-array>
+
 </resources>
