@@ -4,14 +4,29 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 
 public class TrackDetailsActivity extends ActionBarActivity {
+    TextView txtAuthor;
+    TextView txtTitle;
+    TextView txtLikes;
+    TextView txtRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_track_details);
+
+        String title = getIntent().getStringExtra("title");
+        String likes = getIntent().getStringExtra("likes");
+        String rating = getIntent().getStringExtra("rating");
+        String author = getIntent().getStringExtra("author");
+
+        txtLikes = (TextView)findViewById(R.id.track_txt_likes);
+        txtRating = (TextView)findViewById(R.id.track_txt_rating);
+        txtTitle = (TextView)findViewById(R.id.track_txt_title);
+        txtAuthor = (TextView)findViewById(R.id.track_txt_author);
     }
 
     @Override

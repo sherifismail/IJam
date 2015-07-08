@@ -39,20 +39,28 @@ public class trackAdapter extends ArrayAdapter<trackInterface> {
 
         TextView txtTitle = (TextView) rowView.findViewById(R.id.txtTitle);
         TextView txtLikes = (TextView) rowView.findViewById(R.id.txtLikes);
-        TextView rateBar = (TextView) rowView.findViewById(R.id.txtRating);
+        TextView txtRating = (TextView) rowView.findViewById(R.id.txtRating);
         final ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
         final trackInterface item = items.get(position);
 
-        txtTitle.setText(item.getTitle());
-        txtLikes.setText(Float.toString(item.getLikes()));
-        rateBar.setText(Double.toString(item.getRating()));
-        rateBar.setEnabled(false);
+        String title = item.getTitle();
+        String likes = Integer.toString(item.getLikes());
+        String rating = Double.toString(item.getRating());
+
+        txtTitle.setText(title);
+        txtLikes.setText(likes);
+        txtRating.setText(rating);
+
+        txtRating.setEnabled(false);
 
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, context2);
+                i.putExtra("title", title);
+                i.putExtra("likes", likes);
+                i.putExtra("rating", rating);
                 context.startActivity(i);
             }
         });
