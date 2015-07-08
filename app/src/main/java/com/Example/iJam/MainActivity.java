@@ -111,11 +111,11 @@ class MyPagerAdapter extends FragmentStatePagerAdapter {
         if(position==0)
             return "Top Tracks";
         else if(position==1)
-            return "fragmentSearch";
+            return "Search";
         else if(position==2)
-            return "fragmentBands";
+            return "Bands";
         else if(position==3)
-            return "fragmentProfile";
+            return "Profile";
 
          return "Tab " + (position + 1);
     }
