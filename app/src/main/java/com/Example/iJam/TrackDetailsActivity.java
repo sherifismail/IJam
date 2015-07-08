@@ -18,15 +18,25 @@ public class TrackDetailsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_track_details);
 
-        String title = getIntent().getStringExtra("title");
-        String likes = getIntent().getStringExtra("likes");
-        String rating = getIntent().getStringExtra("rating");
-        String author = getIntent().getStringExtra("author");
+        try {
+            String title = getIntent().getStringExtra("title");
+            String likes = getIntent().getStringExtra("likes");
+            String rating = getIntent().getStringExtra("rating");
+            String author = getIntent().getStringExtra("author");
 
-        txtLikes = (TextView)findViewById(R.id.track_txt_likes);
-        txtRating = (TextView)findViewById(R.id.track_txt_rating);
-        txtTitle = (TextView)findViewById(R.id.track_txt_title);
-        txtAuthor = (TextView)findViewById(R.id.track_txt_author);
+            txtLikes = (TextView) findViewById(R.id.track_txt_likes);
+            txtRating = (TextView) findViewById(R.id.track_txt_rating);
+            txtTitle = (TextView) findViewById(R.id.track_txt_title);
+            txtAuthor = (TextView) findViewById(R.id.track_txt_author);
+
+            txtRating.setText(rating);
+            txtLikes.setText(likes);
+            txtAuthor.setText(author);
+            txtTitle.setText(title);
+
+        }catch(Exception ee){
+            ee.printStackTrace();
+        }
     }
 
     @Override

@@ -59,10 +59,14 @@ public class trackAdapter extends ArrayAdapter<trackInterface> {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, context2);
-                i.putExtra("title", title);
-                i.putExtra("likes", likes);
-                i.putExtra("rating", rating);
-                i.putExtra("author", author);
+                try {
+                    i.putExtra("title", title);
+                    i.putExtra("likes", likes);
+                    i.putExtra("rating", rating);
+                    i.putExtra("author", author);
+                }catch (Exception ee){
+                    ee.printStackTrace();
+                }
                 context.startActivity(i);
             }
         });
