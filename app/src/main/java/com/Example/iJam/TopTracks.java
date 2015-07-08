@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,40 +34,9 @@ public class TopTracks extends Fragment {
         mRoot = (RelativeLayout) v.findViewById(R.id.root_activity_second);
         mFAB = (FloatingActionButton) v.findViewById(R.id.fab);
         mFAB.setOnClickListener(mFabClickListener);
-        ListView lvTracks = (ListView) v.findViewById(R.id.lvTracks);
+        lvTracks = (ListView) v.findViewById(R.id.lvTracks);
 
         getTopTracks(getActivity());
-        //getTopTracks(getActivity());
-
-        /*ArrayList<Track> tracksList = new ArrayList<Track>();
-        String strJ = "[\n" +
-                "    {\n" +
-                "        \"Title\":\"Title1\",\n" +
-                "        \"Uploader\":\"Uploader1\",\n" +
-                "        \"Duration\":90,\n" +
-                "        \"Likes\": 120,\n" +
-                "        \"Rating\":3,\n" +
-                "        \"Instrument\":\"Violin\",\n" +
-                "        \"Tags\":\n" +
-                "        [\n" +
-                "            {\n" +
-                "                \"Tag0\":\"#Tag1\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"Tag1\":\"Tag2\"\n" +
-                "            }\n" +
-                "      ]\n" +
-                "    }\n" +
-                "]";
-
-        try {
-            JSONArray j = new JSONArray(strJ);
-            tracksList = Track.parseJson(j);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-
-
         return v;
     }
 
