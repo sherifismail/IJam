@@ -27,7 +27,9 @@ public class InsertUserTask extends HttpPostTask {
             }
             else {
                 Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
+                int uid = response.getInt("user_id");
                 Intent inte = new Intent(ctx, MainActivity.class);
+                inte.putExtra("user_id", uid);
                 inte.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 ctx.startActivity(inte);
             }

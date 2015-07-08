@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,29 +35,58 @@ public class activitySignIn extends AppCompatActivity {
         TextView mTextView=(TextView)findViewById(R.id.txtview_forget);
         mTextView.setPaintFlags(mTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         mTextView.setText("Forget Password");
+
         mTextView.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-Intent intent=new Intent(activitySignIn.this,activitySignUp.class);
+                Intent intent=new Intent(activitySignIn.this,activitySignUp.class);
                 startActivity(intent);
             }
         });
+
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String user_name = et_user_name.getText().toString().trim();
                 String password = et_password.getText().toString().trim();
 
-                JSONObject login_info = new JSONObject();
-                try {
-                    login_info.put("user_name", user_name);
-                    login_info.put("password", password);
+                if (!(user_name.equals("") || password.equals(""))) {
+                    JSONObject login_info = new JSONObject();
+                    try {
+                        login_info.put("user_name", user_name);
+                        login_info.put("password", password);
 
-                    LogInTask logInTask = new LogInTask(getApplicationContext());
-                    logInTask.execute(login_info);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                        new LogInTask(getApplicationContext()) {
+                            @Override
+                            protected void onPostExecute(String s) {
+                                try {
+                                    JSONObject response = new JSONObject(s);
+                                    String status = response.getString("status");
+                                    if (status.equals("fail")) {
+                                        Toast.makeText(ctx, "Log in failed! " + response.getString("error"), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
+                                        JSONObject user_info = response.getJSONObject("user");
+
+                                        Intent inte = new Intent(ctx, MainActivity.class);
+                                        inte.putExtra("user_id", user_info.getInt("user_id"));
+                                        inte.putExtra("user_name", user_info.getString("user_name"));
+                                        inte.putExtra("password", user_info.getString("password"));
+                                        inte.putExtra("first_name", user_info.getString("first_name"));
+                                        inte.putExtra("last_name", user_info.getString("last_name"));
+                                        inte.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        ctx.startActivity(inte);
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }.execute(login_info);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

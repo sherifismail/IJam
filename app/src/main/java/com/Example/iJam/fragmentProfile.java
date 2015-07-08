@@ -25,15 +25,12 @@ public class fragmentProfile extends Fragment {
         View v = inflater.inflate(R.layout.activity_profile, container, false);
         String[] profitems = new String[]{"Profile", "Settings", "My Tracks", "About us", "Sign Out"};
         listV = (ListView) v.findViewById(R.id.listView2);
-        //linearList = (LinearLayout) v.findViewById(R.id.linearLayout);
-        //ListAdapter testlist=
+
         final ArrayList<String> list = new ArrayList<String>();
         profileimage = (ImageView) v.findViewById(R.id.imageView2);
         profileimage.setImageResource(R.drawable.x);
 
         for (int i = 0; i < profitems.length; ++i) {
-            //View item=
-            //linearList.addView(testlist,null,null);
             list.add(profitems[i]);
         }
         listV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -63,17 +60,9 @@ public class fragmentProfile extends Fragment {
                 return (event.getAction() == MotionEvent.ACTION_MOVE);
             }
         });
-        //listV.setScrollContainer(false);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, profitems);
         listV.setAdapter(adapter);
-        /*
-        for(int i = 0; i < adapter.getCount(); i++) {
-            View item = adapter.getView(i, null, null);
-            linearList.addView(item);
-        }*/
-        //TextView tv = (TextView) v.findViewById(R.id.tvFragSecond);
-        //tv.setText(getArguments().getString("msg"));
 
         return v;
     }
