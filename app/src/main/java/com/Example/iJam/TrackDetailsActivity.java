@@ -1,4 +1,4 @@
-/*package slidenerd.vivz.navigationviewdemo;
+package com.Example.iJam;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -35,4 +35,4 @@ public class TrackDetailsActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-}*/
+}

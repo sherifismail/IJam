@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class TopTracks extends Fragment {
         mFAB.setOnClickListener(mFabClickListener);
         ListView lvTracks = (ListView) v.findViewById(R.id.lvTracks);
 
+        getTopTracks(getActivity());
         //getTopTracks(getActivity());
 
         /*ArrayList<Track> tracksList = new ArrayList<Track>();
@@ -93,6 +95,7 @@ public class TopTracks extends Fragment {
             protected void onPostExecute(String s) {
                 try {
                     JSONObject response = new JSONObject(s);
+                    Log.i("response", s);
                     if(response.getString("status").equals("success")) {
                         JSONArray jArray = new JSONArray(response.getString("results"));
                         topTracks = Track.parseJson(jArray);
