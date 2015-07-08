@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -40,17 +39,17 @@ public class trackAdapter extends ArrayAdapter<trackInterface> {
 
         TextView txtTitle = (TextView) rowView.findViewById(R.id.txtTitle);
         TextView txtLikes = (TextView) rowView.findViewById(R.id.txtLikes);
-        RatingBar rateBar = (RatingBar) rowView.findViewById(R.id.ratingBar);
+        TextView rateBar = (TextView) rowView.findViewById(R.id.txtRating);
         final ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
         final trackInterface item = items.get(position);
 
         txtTitle.setText(item.getTitle());
         txtLikes.setText(Float.toString(item.getLikes()));
-        rateBar.setRating((float) item.getRating());
+        rateBar.setText(Double.toString(item.getRating()));
         rateBar.setEnabled(false);
 
 
-        rowView.setOnClickListener(new View.OnClickListener(){
+        rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, context2);
