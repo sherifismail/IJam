@@ -26,6 +26,7 @@ public class Upload extends ActionBarActivity {
     private MediaRecorder myAudioRecorder;
     private String outputFile = null;
     ImageView trackimage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
