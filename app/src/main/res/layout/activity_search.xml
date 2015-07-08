@@ -20,7 +20,7 @@
             android:hint="Search"/>
 
         <Spinner
-            android:layout_width="144dp"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:id="@+id/spinner"
             android:spinnerMode="dropdown"

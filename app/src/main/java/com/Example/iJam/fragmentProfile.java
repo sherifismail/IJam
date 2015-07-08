@@ -23,7 +23,7 @@ public class fragmentProfile extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_profile, container, false);
-        String[] profitems = new String[]{"fragmentProfile", "Settings", "My Tracks", "About us", "Sign Out"};
+        String[] profitems = new String[]{"Profile", "Settings", "My Tracks", "About us", "Sign Out"};
         listV = (ListView) v.findViewById(R.id.listView2);
         //linearList = (LinearLayout) v.findViewById(R.id.linearLayout);
         //ListAdapter testlist=
