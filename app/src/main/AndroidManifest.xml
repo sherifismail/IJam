@@ -15,16 +15,19 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_third" >
+            android:label="@string/title_activity_third"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".activityTrackDetails"
-            android:label="Track Search">
+            android:label="Track Search"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activitySignIn"
-            android:label="Jam Hub" >
+            android:label="Jam Hub"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,11 +36,13 @@
         </activity>
         <activity
             android:name=".activitySignUp"
-            android:label="@string/title_activity_testsignup" >
+            android:label="@string/title_activity_testsignup"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activityUpload"
-            android:label="@string/title_activity_recordtrack" >
+            android:label="@string/title_activity_recordtrack"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 </manifest>
