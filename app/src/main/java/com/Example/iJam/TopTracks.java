@@ -59,13 +59,11 @@ public class TopTracks extends Fragment {
     };
 
     public void getTopTracks(Context context){
-        JSONObject ob = new JSONObject();
-        new HttpPostTask(ServerManager.getServerURL()+"/tracks/top_tracks.php",context){
+        new HttpGetTask(ServerManager.getServerURL()+"/tracks/top_tracks.php",context){
             @Override
             protected void onPostExecute(String s) {
                 try {
                     JSONObject response = new JSONObject(s);
-                    Log.i("response", s);
                     if(response.getString("status").equals("success")) {
                         JSONArray jArray = new JSONArray(response.getString("results"));
                         topTracks = Track.parseJson(jArray);
@@ -77,6 +75,6 @@ public class TopTracks extends Fragment {
                     e.printStackTrace();
                 }
             }
-        }.execute(ob);
+        }.execute();
     }
 }
