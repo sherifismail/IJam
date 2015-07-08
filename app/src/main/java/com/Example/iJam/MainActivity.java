@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -88,14 +87,14 @@ class MyPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
 
         if(position==0)
-        return TopTracks.newInstance("TopTracks, Instance 1");
+        return fragmentTopTracks.newInstance("fragmentTopTracks, Instance 1");
 
         else if(position==1)
-            return Search.newInstance("Search, Instance 1");
+            return fragmentSearch.newInstance("fragmentSearch, Instance 1");
         else if (position==2)
-            return Bands.newInstance("Bands, Instance 1");
+            return fragmentBands.newInstance("fragmentBands, Instance 1");
         else if (position==3)
-            return Profile.newInstance("Profile, Instance 1");
+            return fragmentProfile.newInstance("fragmentProfile, Instance 1");
 
         //MainActivity.MyFragment myFragment = MainActivity.MyFragment.newInstance(position);
         //return myFragment;
@@ -112,11 +111,11 @@ class MyPagerAdapter extends FragmentStatePagerAdapter {
         if(position==0)
             return "Top Tracks";
         else if(position==1)
-            return "Search";
+            return "fragmentSearch";
         else if(position==2)
-            return "Bands";
+            return "fragmentBands";
         else if(position==3)
-            return "Profile";
+            return "fragmentProfile";
 
          return "Tab " + (position + 1);
     }

@@ -13,48 +13,17 @@
         android:icon="@mipmap/picture1"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
-        <!--
-        <activity
-            android:name="com.Example.iJam.MainActivity"
-            android:label="@string/title_activity_main" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        -->
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_third" >
+        </activity>
 
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
-        </activity>
         <activity
-            android:name=".TopTracks"
-            android:label="@string/title_activity_first_fragment" >
-        </activity>
-        <activity
-            android:name=".Search"
-            android:label="@string/title_activity_second_fragment" >
-        </activity>
-        <activity
-            android:name=".Bands"
-            android:label="@string/title_activity_third_fragment" >
-        </activity>
-        <activity
-            android:name=".TrackDetailsActivity"
+            android:name=".activityTrackDetails"
             android:label="Track Search">
         </activity>
         <activity
-            android:name=".signin"
+            android:name=".activitySignIn"
             android:label="Jam Hub" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,11 +32,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".signup"
+            android:name=".activitySignUp"
             android:label="@string/title_activity_testsignup" >
         </activity>
         <activity
-            android:name=".Upload"
+            android:name=".activityUpload"
             android:label="@string/title_activity_recordtrack" >
         </activity>
     </application>

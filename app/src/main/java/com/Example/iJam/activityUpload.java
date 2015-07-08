@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class Upload extends ActionBarActivity {
+public class activityUpload extends ActionBarActivity {
     Button stop,record;
     private MediaRecorder myAudioRecorder;
     private String outputFile = null;

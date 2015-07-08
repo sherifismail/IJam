@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-public class Bands extends Fragment {
+public class fragmentBands extends Fragment {
 
     private FloatingActionButton mFAB;
 
@@ -25,9 +25,9 @@ public class Bands extends Fragment {
         return v;
     }
 
-    public static Bands newInstance(String text) {
+    public static fragmentBands newInstance(String text) {
 
-        Bands f = new Bands();
+        fragmentBands f = new fragmentBands();
         Bundle b = new Bundle();
         b.putString("msg", text);
 
@@ -39,7 +39,7 @@ public class Bands extends Fragment {
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent i=new Intent(getActivity(),Upload.class);
+            Intent i=new Intent(getActivity(),activityUpload.class);
             startActivity(i);
         }
     };

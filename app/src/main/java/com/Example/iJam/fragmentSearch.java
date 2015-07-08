@@ -22,7 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-public class Search extends Fragment {
+public class fragmentSearch extends Fragment {
     private FloatingActionButton mFAB;
     private RelativeLayout mRoot;
     ListView searchList;
@@ -50,9 +50,9 @@ public class Search extends Fragment {
         return v;
     }
 
-    public static Search newInstance(String text) {
+    public static fragmentSearch newInstance(String text) {
 
-        Search f = new Search();
+        fragmentSearch f = new fragmentSearch();
         Bundle b = new Bundle();
         b.putString("msg", text);
 
@@ -64,7 +64,7 @@ public class Search extends Fragment {
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent i=new Intent(getActivity(),Upload.class);
+            Intent i=new Intent(getActivity(),activityUpload.class);
             startActivity(i);
         }
     };

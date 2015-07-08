@@ -7,7 +7,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 
-public class TrackDetailsActivity extends ActionBarActivity {
+public class activityTrackDetails extends ActionBarActivity {
     TextView txtAuthor;
     TextView txtTitle;
     TextView txtLikes;

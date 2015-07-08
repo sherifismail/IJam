@@ -19,7 +19,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class TopTracks extends Fragment {
+public class fragmentTopTracks extends Fragment {
 
     private FloatingActionButton mFAB;
     private RelativeLayout mRoot;
@@ -38,9 +38,9 @@ public class TopTracks extends Fragment {
         return v;
     }
 
-    public static TopTracks newInstance(String text) {
+    public static fragmentTopTracks newInstance(String text) {
 
-        TopTracks f = new TopTracks();
+        fragmentTopTracks f = new fragmentTopTracks();
         Bundle b = new Bundle();
         b.putString("msg", text);
 
@@ -51,7 +51,7 @@ public class TopTracks extends Fragment {
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent i=new Intent(getActivity(),Upload.class);
+            Intent i=new Intent(getActivity(),activityUpload.class);
             startActivity(i);
         }
     };
@@ -66,7 +66,7 @@ public class TopTracks extends Fragment {
                         JSONArray jArray = new JSONArray(response.getString("results"));
                         topTracks = Track.parseJson(jArray);
 
-                        trackAdapter tracksAdap = new trackAdapter(getActivity(), TrackDetailsActivity.class, (ArrayList<trackInterface>) (ArrayList<?>) topTracks);
+                        trackAdapter tracksAdap = new trackAdapter(getActivity(), activityTrackDetails.class, (ArrayList<trackInterface>) (ArrayList<?>) topTracks);
                         lvTracks.setAdapter(tracksAdap);
                     }
                 } catch (JSONException e) {

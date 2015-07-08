@@ -1,8 +1,6 @@
 package com.Example.iJam;
 
-import android.app.ListFragment;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 //import android.app.Fragment;
 import android.os.Bundle;
@@ -13,14 +11,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
-public class Profile extends Fragment {
+public class fragmentProfile extends Fragment {
     ListView listV;
     ImageView profileimage;
     //LinearLayout linearList;
@@ -28,7 +23,7 @@ public class Profile extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_profile, container, false);
-        String[] profitems = new String[]{"Profile", "Settings", "My Tracks", "About us", "Sign Out"};
+        String[] profitems = new String[]{"fragmentProfile", "Settings", "My Tracks", "About us", "Sign Out"};
         listV = (ListView) v.findViewById(R.id.listView2);
         //linearList = (LinearLayout) v.findViewById(R.id.linearLayout);
         //ListAdapter testlist=
@@ -54,7 +49,7 @@ public class Profile extends Fragment {
                 } else if (position == 3) {
 
                 } else if (position == 4) {
-                    Intent intent = new Intent(getActivity(), signin.class);
+                    Intent intent = new Intent(getActivity(), activitySignIn.class);
                     startActivity(intent);
                     getActivity().finish();
                 }
@@ -83,9 +78,9 @@ public class Profile extends Fragment {
         return v;
     }
 
-    public static Profile newInstance(String text) {
+    public static fragmentProfile newInstance(String text) {
 
-        Profile f = new Profile();
+        fragmentProfile f = new fragmentProfile();
         Bundle b = new Bundle();
         b.putString("msg", text);
 

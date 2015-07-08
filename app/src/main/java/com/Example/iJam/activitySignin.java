@@ -15,7 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class signin extends AppCompatActivity {
+public class activitySignIn extends AppCompatActivity {
 
     EditText et_user_name;
     EditText et_password;
@@ -38,7 +38,7 @@ public class signin extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-Intent intent=new Intent(signin.this,signup.class);
+Intent intent=new Intent(activitySignIn.this,activitySignUp.class);
                 startActivity(intent);
             }
         });
@@ -64,7 +64,7 @@ Intent intent=new Intent(signin.this,signup.class);
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(signin.this, com.Example.iJam.signup.class);
+                Intent i = new Intent(activitySignIn.this, activitySignUp.class);
                 startActivity(i);
             }
         });

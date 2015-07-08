@@ -14,7 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class signup extends ActionBarActivity {
+public class activitySignUp extends ActionBarActivity {
 
     EditText et_username;
     EditText et_pass;
