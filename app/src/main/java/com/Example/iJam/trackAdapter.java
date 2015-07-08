@@ -46,6 +46,7 @@ public class trackAdapter extends ArrayAdapter<trackInterface> {
         final String title = item.getTitle();
         final String likes = Integer.toString(item.getLikes());
         final String rating = Double.toString(item.getRating());
+        final String author = (item.getUploader());
 
         txtTitle.setText(title);
         txtLikes.setText(likes);
@@ -61,6 +62,7 @@ public class trackAdapter extends ArrayAdapter<trackInterface> {
                 i.putExtra("title", title);
                 i.putExtra("likes", likes);
                 i.putExtra("rating", rating);
+                i.putExtra("author", author);
                 context.startActivity(i);
             }
         });
