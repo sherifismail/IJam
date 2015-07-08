@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -16,12 +18,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class Search extends Fragment {
     private FloatingActionButton mFAB;
     private RelativeLayout mRoot;
     ListView searchList;
+    EditText search_name;
     public static ArrayList<Track> searchRes = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,9 +35,17 @@ public class Search extends Fragment {
         mRoot = (RelativeLayout) v.findViewById(R.id.root_activity_search);
         mFAB = (FloatingActionButton) v.findViewById(R.id.fab);
         mFAB.setOnClickListener(mFabClickListener);
+        search_name = (EditText) v.findViewById(R.id.et_searchTracks);
+        Button search = (Button) v.findViewById(R.id.btn_searchTracks);
         searchList = (ListView) v.findViewById(R.id.listview_search);
 
-        SearchTracks(getActivity());
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = search_name.getText().toString().trim();
+                SearchTracks(name, getActivity());
+            }
+        });
 
         return v;
     }
@@ -56,9 +69,21 @@ public class Search extends Fragment {
         }
     };
 
-    private void SearchTracks(Context context){
-        String url="";
-        new HttpGetTask(url, context){
+    private void SearchTracks(String val, Context context){
+
+        StringBuilder paramsBuilder = new StringBuilder();
+        try{
+            paramsBuilder.append("?name=");
+            paramsBuilder.append(URLEncoder.encode(val, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        String encodedParams = paramsBuilder.toString();
+        String APIurl= ServerManager.getServerURL()+"/tracks/search_tracks.php"+encodedParams;
+
+        new HttpGetTask(APIurl, context){
             @Override
             protected void onPostExecute(String s) {
                 try {

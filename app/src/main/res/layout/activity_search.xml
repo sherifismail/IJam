@@ -15,7 +15,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText15"
+            android:id="@+id/et_searchTracks"
             android:layout_weight="1"
             android:hint="Search"/>
 
@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Search"
-        android:id="@+id/button8"
+        android:id="@+id/btn_searchTracks"
         android:layout_gravity="center_horizontal"
         android:layout_below="@+id/listview_search"
         android:layout_centerHorizontal="true" />
