@@ -66,6 +66,7 @@
             android:layout_height="wrap_content"
             android:text="Play track"
             android:layout_weight="0.5"
+            android:layout_marginRight="0.5dp"
             android:background="@android:color/holo_orange_dark"
             android:textColor="@android:color/white" />
 
@@ -74,6 +75,7 @@
             android:layout_height="wrap_content"
             android:text="Jam Over"
             android:layout_weight="0.5"
+            android:layout_marginLeft="0.5dp"
             android:background="@android:color/holo_orange_dark"
             android:textColor="@android:color/white" />
     </LinearLayout>
