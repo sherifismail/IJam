@@ -12,6 +12,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -23,12 +28,32 @@ public class fragmentProfile extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_profile, container, false);
+
         String[] profitems = new String[]{"Profile", "Settings", "My Tracks", "About us", "Sign Out"};
         listV = (ListView) v.findViewById(R.id.listView2);
 
         final ArrayList<String> list = new ArrayList<String>();
         profileimage = (ImageView) v.findViewById(R.id.imageView2);
         profileimage.setImageResource(R.drawable.x);
+
+        TextView userName = (TextView) v.findViewById(R.id.tv_profilename);
+        final TextView userShows = (TextView) v.findViewById(R.id.tv_profiletracks);
+
+        userName.setText(MainActivity.user.getUser_name());
+
+        new HttpGetTask(ServerManager.getServerURL()+"/tracks/my_tracks.php?uid="+MainActivity.user.getUser_id(), getActivity()){
+            @Override
+            protected void onPostExecute(String s) {
+                try {
+                    JSONObject response = new JSONObject(s);
+                    if(response.getString("status").equals("success"))
+                        userShows.setText(response.getString("count") + " uploaded tracks");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute();
+
 
         for (int i = 0; i < profitems.length; ++i) {
             list.add(profitems[i]);
@@ -38,7 +63,6 @@ public class fragmentProfile extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
-
                 } else if (position == 1) {
 
                 } else if (position == 2) {

@@ -77,6 +77,7 @@ public class activitySignIn extends AppCompatActivity {
                                         inte.putExtra("last_name", user_info.getString("last_name"));
                                         inte.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         ctx.startActivity(inte);
+                                        finish();
                                     }
 
                                 } catch (JSONException e) {

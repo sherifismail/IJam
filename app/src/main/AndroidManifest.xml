@@ -40,7 +40,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activityUpload"
+            android:name=".activityUploadTrack"
             android:label="@string/title_activity_recordtrack"
             android:screenOrientation="portrait">
         </activity>

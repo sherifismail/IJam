@@ -79,6 +79,7 @@ public class activitySignUp extends ActionBarActivity {
                                         inte.putExtra("last_name", lname);
                                         inte.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         ctx.startActivity(inte);
+                                        finish();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
