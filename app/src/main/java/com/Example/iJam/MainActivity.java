@@ -14,7 +14,7 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
+    //private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager mPager;
     private MyPagerAdapter mAdapter;
@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        mToolbar = (Toolbar) findViewById(R.id.app_bar);
-        setSupportActionBar(mToolbar);
+        //mToolbar = (Toolbar) findViewById(R.id.app_bar);
+        //setSupportActionBar(mToolbar);
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
@@ -109,7 +109,16 @@ class MyPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return "Tab " + (position + 1);
+        if(position==0)
+            return "Top Tracks";
+        else if(position==1)
+            return "Search";
+        else if(position==2)
+            return "Bands";
+        else if(position==3)
+            return "Profile";
+
+         return "Tab " + (position + 1);
     }
 }
 

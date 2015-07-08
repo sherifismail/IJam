@@ -1,6 +1,7 @@
 package com.Example.iJam;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,8 +20,7 @@ public class signin extends AppCompatActivity {
     EditText et_user_name;
     EditText et_password;
     Button signup;
-    Button signin;
-
+    Button signin;;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,17 @@ public class signin extends AppCompatActivity {
         signin = (Button)findViewById(R.id.button);
         signup = (Button)findViewById(R.id.button2);
 
+        TextView mTextView=(TextView)findViewById(R.id.txtview_forget);
+        mTextView.setPaintFlags(mTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        mTextView.setText("Forget Password");
+        mTextView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+Intent intent=new Intent(signin.this,signup.class);
+                startActivity(intent);
+            }
+        });
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

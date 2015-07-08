@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -22,11 +23,13 @@ public class signup extends ActionBarActivity {
     EditText et_fname;
     EditText et_lname;
     Button btn_signup_;
+    ImageView profileimage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
+        profileimage=(ImageView)findViewById(R.id.imageView4);
+        profileimage.setImageResource(R.drawable.x);
         et_username=(EditText) findViewById(R.id.editText);
         et_pass=(EditText) findViewById(R.id.editText2);
         et_confirm_pass=(EditText) findViewById(R.id.editText3);
