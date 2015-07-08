@@ -71,8 +71,25 @@ public class activityUpload extends ActionBarActivity {
                     json_track.put("img_url", "http:/ahourl");
                     json_track.put("track_url", "http:/wahokamanwa7ed");
 
-                    InsertTrackTask insertTrackTask = new InsertTrackTask(getApplicationContext());
-                    insertTrackTask.execute(json_track);
+                    new InsertTrackTask(getApplicationContext()){
+                        @Override
+                        protected void onPostExecute(String s) {
+                            try{
+                                JSONObject response = new JSONObject(s);
+                                String status = response.getString("status");
+                                ServerManager.setServerStatus(status);
+                                if(status.equals("fail")) {
+                                    Toast.makeText(ctx, "Failed to upload track! " + response.getString("error"), Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.execute(json_track);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

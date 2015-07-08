@@ -23,7 +23,7 @@
             android:label="Track Search">
         </activity>
         <activity
-            android:name=".activitySingIn"
+            android:name=".activitySignIn"
             android:label="Jam Hub" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

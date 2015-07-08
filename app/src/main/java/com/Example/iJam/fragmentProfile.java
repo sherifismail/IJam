@@ -49,7 +49,7 @@ public class fragmentProfile extends Fragment {
                 } else if (position == 3) {
 
                 } else if (position == 4) {
-                    Intent intent = new Intent(getActivity(), activitySingIn.class);
+                    Intent intent = new Intent(getActivity(), activitySignIn.class);
                     startActivity(intent);
                     getActivity().finish();
                 }

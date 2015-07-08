@@ -92,7 +92,7 @@ public class fragmentSearch extends Fragment {
                         JSONArray jArray = new JSONArray(response.getString("results"));
                         searchRes = Track.parseJson(jArray);
 
-                        trackAdapter tracksAdap = new trackAdapter(getActivity(), MainActivity.class, (ArrayList<trackInterface>) (ArrayList<?>) searchRes);
+                        trackAdapter tracksAdap = new trackAdapter(getActivity(), activityTrackDetails.class, (ArrayList<trackInterface>) (ArrayList<?>) searchRes);
                         searchList.setAdapter(tracksAdap);
                     }
                 } catch (JSONException e) {
