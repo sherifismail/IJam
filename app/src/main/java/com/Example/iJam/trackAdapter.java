@@ -43,9 +43,9 @@ public class trackAdapter extends ArrayAdapter<trackInterface> {
         final ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
         final trackInterface item = items.get(position);
 
-        String title = item.getTitle();
-        String likes = Integer.toString(item.getLikes());
-        String rating = Double.toString(item.getRating());
+        final String title = item.getTitle();
+        final String likes = Integer.toString(item.getLikes());
+        final String rating = Double.toString(item.getRating());
 
         txtTitle.setText(title);
         txtLikes.setText(likes);
