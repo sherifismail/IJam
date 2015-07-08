@@ -58,7 +58,7 @@ public class TopTracks extends Fragment {
         }
     };
 
-    public void getTopTracks(Context context){
+    private void getTopTracks(Context context){
         new HttpGetTask(ServerManager.getServerURL()+"/tracks/top_tracks.php",context){
             @Override
             protected void onPostExecute(String s) {
