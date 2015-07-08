@@ -80,7 +80,7 @@ public class fragmentSearch extends Fragment {
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent i=new Intent(getActivity(),activityUpload.class);
+            Intent i=new Intent(getActivity(),activityUploadTrack.class);
             startActivity(i);
         }
     };

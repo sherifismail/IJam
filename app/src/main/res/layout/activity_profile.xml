@@ -48,15 +48,15 @@
             android:layout_height="wrap_content"
             android:text="Name:"
             android:layout_marginBottom="5dp"
-            android:id="@+id/textView10"
+            android:id="@+id/tv_profilename"
             android:textSize="20dp" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="No Tracks: "
-            android:id="@+id/textView11"
-            android:textSize="20dp" />
+            android:id="@+id/tv_profiletracks"
+            android:textSize="20dp"
+            android:text="Num" />
 
     </LinearLayout>
 

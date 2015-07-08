@@ -1,5 +1,6 @@
 package com.Example.iJam;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -17,12 +18,13 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
     private ViewPager mPager;
     private MyPagerAdapter mAdapter;
-
+    public static User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
         //mToolbar = (Toolbar) findViewById(R.id.app_bar);
         //setSupportActionBar(mToolbar);
@@ -34,7 +36,13 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mPager);
         mPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
 
-
+        Intent inte = getIntent();
+        int uid = inte.getIntExtra("user_id", 0);
+        String uname = inte.getStringExtra("user_name");
+        String password = inte.getStringExtra("password");
+        String fname = inte.getStringExtra("first_name");
+        String lname = inte.getStringExtra("last_name");
+        user = new User(uid, uname, password, fname, lname);
     }
 
     @Override

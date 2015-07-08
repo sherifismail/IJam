@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class activityUpload extends ActionBarActivity {
+public class activityUploadTrack extends ActionBarActivity {
     Button stop,record;
     private MediaRecorder myAudioRecorder;
     private String outputFile = null;
@@ -30,6 +30,7 @@ public class activityUpload extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_upload_tracks);
         record=(Button)findViewById(R.id.button5);
         stop=(Button)findViewById(R.id.button6);
@@ -63,10 +64,10 @@ public class activityUpload extends ActionBarActivity {
                     json_track.put("name", name);
                     json_track.put("band", val);
                     json_track.put("band_id", 4);
-                    json_track.put("user_id", 3);
+                    json_track.put("user_id", MainActivity.user.getUser_id());
                     json_track.put("instrument", instrument);
                     json_track.put("duration", 24);
-                    json_track.put("upload_date", new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+                    json_track.put("upload_date", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
                     json_track.put("tags", tags);
                     json_track.put("img_url", "http:/ahourl");
                     json_track.put("track_url", "http:/wahokamanwa7ed");
