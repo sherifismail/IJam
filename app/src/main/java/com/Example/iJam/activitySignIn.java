@@ -51,7 +51,9 @@ public class activitySignIn extends AppCompatActivity {
                 String user_name = et_user_name.getText().toString().trim();
                 String password = et_password.getText().toString().trim();
 
-                if (!(user_name.equals("") || password.equals(""))) {
+                if (user_name.equals("") || password.equals(""))
+                    Toast.makeText(getApplicationContext(), "one or more of the fields is empty!", Toast.LENGTH_SHORT).show();
+                else{
                     JSONObject login_info = new JSONObject();
                     try {
                         login_info.put("user_name", user_name);

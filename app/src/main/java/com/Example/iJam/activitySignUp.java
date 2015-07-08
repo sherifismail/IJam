@@ -39,59 +39,59 @@ public class activitySignUp extends ActionBarActivity {
         btn_signup_.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                do{
-                    password = et_pass.getText().toString().trim();
-                    confirm_pass = et_confirm_pass.getText().toString().trim();
-                    user_name = et_username.getText().toString().trim();
-                    email = et_email.getText().toString().trim();
-                    fname = et_fname.getText().toString().trim();
-                    lname = et_lname.getText().toString().trim();
-                }while(password.equals("") || confirm_pass.equals("") || user_name.equals("")|| email.equals("")
-                        || fname.equals("") || lname.equals(""));
+                password = et_pass.getText().toString().trim();
+                confirm_pass = et_confirm_pass.getText().toString().trim();
+                user_name = et_username.getText().toString().trim();
+                email = et_email.getText().toString().trim();
+                fname = et_fname.getText().toString().trim();
+                lname = et_lname.getText().toString().trim();
 
-                if(password.equals(confirm_pass)) {
-                    JSONObject user = new JSONObject();
-                    try{
-                        user.put("user_name", user_name);
-                        user.put("password", password);
-                        user.put("email", email);
-                        user.put("first_name", fname);
-                        user.put("last_name", lname);
+                if (password.equals("") || confirm_pass.equals("") || user_name.equals("") || email.equals("")
+                        || fname.equals("") || lname.equals(""))
+                    Toast.makeText(getApplicationContext(), "one or more of the fields is empyt!", Toast.LENGTH_SHORT).show();
+                else {
+                    if (password.equals(confirm_pass)) {
+                        JSONObject user = new JSONObject();
+                        try {
+                            user.put("user_name", user_name);
+                            user.put("password", password);
+                            user.put("email", email);
+                            user.put("first_name", fname);
+                            user.put("last_name", lname);
 
-                        new InsertUserTask(getApplicationContext()){
-                            @Override
-                            protected void onPostExecute(String s) {
-                                try{
-                                    JSONObject response = new JSONObject(s);
-                                    String status = response.getString("status");
-                                    ServerManager.setServerStatus(status);
-                                    if(status.equals("fail")) {
-                                        Toast.makeText(ctx, "Sign up failed! " + response.getString("error"), Toast.LENGTH_SHORT).show();
+                            new InsertUserTask(getApplicationContext()) {
+                                @Override
+                                protected void onPostExecute(String s) {
+                                    try {
+                                        JSONObject response = new JSONObject(s);
+                                        String status = response.getString("status");
+                                        ServerManager.setServerStatus(status);
+                                        if (status.equals("fail")) {
+                                            Toast.makeText(ctx, "Sign up failed! " + response.getString("error"), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
+                                            int uid = response.getInt("user_id");
+                                            Intent inte = new Intent(ctx, MainActivity.class);
+                                            inte.putExtra("user_id", uid);
+                                            inte.putExtra("user_name", user_name);
+                                            inte.putExtra("password", password);
+                                            inte.putExtra("first_name", fname);
+                                            inte.putExtra("last_name", lname);
+                                            inte.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            ctx.startActivity(inte);
+                                            finish();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-                                    else {
-                                        Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
-                                        int uid = response.getInt("user_id");
-                                        Intent inte = new Intent(ctx, MainActivity.class);
-                                        inte.putExtra("user_id", uid);
-                                        inte.putExtra("user_name", user_name);
-                                        inte.putExtra("password", password);
-                                        inte.putExtra("first_name", fname);
-                                        inte.putExtra("last_name", lname);
-                                        inte.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        ctx.startActivity(inte);
-                                        finish();
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
                                 }
-                            }
-                        }.execute(user);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                            }.execute(user);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else
+                        Toast.makeText(getApplicationContext(), "passwords mismatch!", Toast.LENGTH_SHORT).show();
                 }
-                else
-                    Toast.makeText(getApplicationContext(), "passwords mismatch!", Toast.LENGTH_SHORT).show();
             }
         });
     }
