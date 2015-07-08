@@ -49,12 +49,14 @@ listV.setOnItemClickListener(new  AdapterView.OnItemClickListener(){
         }
 
         else if (position==4){
-Intent intent=new Intent(getActivity(),signin.class);
+        Intent intent=new Intent(getActivity(),signin.class);
         startActivity(intent);
             getActivity().finish();
         }
     }
 });
+
+        listV.setScrollContainer(false);
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, profitems);
         listV.setAdapter(adapter);
         //TextView tv = (TextView) v.findViewById(R.id.tvFragSecond);

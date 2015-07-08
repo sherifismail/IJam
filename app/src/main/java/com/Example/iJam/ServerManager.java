@@ -17,8 +17,8 @@ public class ServerManager {
 
     public static String getServerURL() {
         //return "http://10.40.35.117/JamhubBackEnd";
-        return "http://192.168.1.103/JamHubBackEnd";
-        //return "http://10.40.39.198/JamHubBackEnd";
+       // return "http://192.168.1.103/JamHubBackEnd";
+        return "http://10.40.39.198/JamHubBackEnd";
     }
 
     public static String getServerStatus() {
