@@ -47,7 +47,7 @@ public class fragmentProfile extends Fragment {
                 try {
                     JSONObject response = new JSONObject(s);
                     if(response.getString("status").equals("success"))
-                        userShows.setText(response.getString("count") + " uploaded tracks");
+                        userShows.setText(response.getString("count") + " tracks");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

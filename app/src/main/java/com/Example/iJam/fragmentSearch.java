@@ -36,10 +36,12 @@ public class fragmentSearch extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_search, container, false);
         //getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE| WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         mRoot = (RelativeLayout) v.findViewById(R.id.root_activity_search);
         mFAB = (FloatingActionButton) v.findViewById(R.id.fab);
         mFAB.setOnClickListener(mFabClickListener);
         search_name = (EditText) v.findViewById(R.id.et_searchTracks);
+
         //Button search = (Button) v.findViewById(R.id.btn_searchTracks);
         searchList = (ListView) v.findViewById(R.id.listview_search);
         search_name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
