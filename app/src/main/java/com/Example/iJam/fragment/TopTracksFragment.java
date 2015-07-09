@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import com.example.iJam.activities.TrackDetailsActivity;
-import com.example.iJam.activities.UploadTrackActivity;
-import com.example.iJam.adapters.TrackAdapter;
+import com.example.iJam.activity.TrackDetailsActivity;
+import com.example.iJam.activity.UploadTrackActivity;
+import com.example.iJam.adapter.TrackAdapter;
 import com.example.iJam.network.HttpGetTask;
 import com.example.iJam.interfaces.TrackInterface;
 import com.example.iJam.models.Track;

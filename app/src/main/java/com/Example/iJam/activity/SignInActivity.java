@@ -1,4 +1,4 @@
-package com.example.iJam.activities;
+package com.example.iJam.activity;
 
 import android.content.Intent;
 import android.graphics.Paint;

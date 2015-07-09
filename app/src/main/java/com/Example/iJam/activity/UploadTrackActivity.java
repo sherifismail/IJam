@@ -1,4 +1,4 @@
-package com.example.iJam.activities;
+package com.example.iJam.activity;
 
 import android.media.MediaRecorder;
 import android.os.Bundle;

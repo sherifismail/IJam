@@ -1,4 +1,4 @@
-package com.example.iJam.adapters;
+package com.example.iJam.adapter;
 
 import android.app.Activity;
 import android.content.Intent;

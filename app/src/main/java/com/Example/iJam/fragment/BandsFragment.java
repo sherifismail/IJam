@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.example.iJam.activities.UploadTrackActivity;
+import com.example.iJam.activity.UploadTrackActivity;
 import com.example.iJam.R;
 
 public class BandsFragment extends Fragment {

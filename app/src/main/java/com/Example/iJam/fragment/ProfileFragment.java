@@ -14,8 +14,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.iJam.activities.MainActivity;
-import com.example.iJam.activities.SignInActivity;
+import com.example.iJam.activity.MainActivity;
+import com.example.iJam.activity.SignInActivity;
 import com.example.iJam.network.HttpGetTask;
 import com.example.iJam.R;
 import com.example.iJam.network.ServerManager;
