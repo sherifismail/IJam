@@ -1,4 +1,4 @@
-package com.example.iJam.activity;
+package com.Example.iJam.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.iJam.R;
+import com.Example.iJam.R;
 
 
 public class TrackDetailsActivity extends AppCompatActivity {

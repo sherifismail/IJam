@@ -1,4 +1,4 @@
-package com.example.iJam.activity;
+package com.Example.iJam.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.iJam.fragments.BandsFragment;
-import com.example.iJam.fragments.ProfileFragment;
-import com.example.iJam.fragments.SearchFragment;
-import com.example.iJam.fragments.TopTracksFragment;
-import com.example.iJam.models.User;
-import com.example.iJam.R;
+import com.Example.iJam.R;
+import com.Example.iJam.fragments.BandsFragment;
+import com.Example.iJam.fragments.ProfileFragment;
+import com.Example.iJam.fragments.SearchFragment;
+import com.Example.iJam.fragments.TopTracksFragment;
+import com.Example.iJam.models.User;
 
 
 public class MainActivity extends AppCompatActivity {

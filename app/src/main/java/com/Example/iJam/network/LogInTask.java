@@ -1,10 +1,10 @@
-package com.example.iJam.network;
+package com.Example.iJam.network;
 
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.example.iJam.activity.MainActivity;
+import com.Example.iJam.activities.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

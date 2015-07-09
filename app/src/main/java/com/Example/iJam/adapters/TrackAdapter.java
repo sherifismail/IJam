@@ -1,4 +1,4 @@
-package com.example.iJam.adapter;
+package com.Example.iJam.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.iJam.R;
-import com.example.iJam.interfaces.TrackInterface;
+import com.Example.iJam.R;
+import com.Example.iJam.interfaces.TrackInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;

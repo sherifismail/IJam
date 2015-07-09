@@ -1,4 +1,4 @@
-package com.example.iJam.fragments;
+package com.Example.iJam.fragments;
 //import android.app.Fragment;
 
 import android.content.Context;
@@ -12,14 +12,14 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import com.example.iJam.activity.TrackDetailsActivity;
-import com.example.iJam.activity.UploadTrackActivity;
-import com.example.iJam.adapter.TrackAdapter;
-import com.example.iJam.network.HttpGetTask;
-import com.example.iJam.interfaces.TrackInterface;
-import com.example.iJam.models.Track;
-import com.example.iJam.R;
-import com.example.iJam.network.ServerManager;
+import com.Example.iJam.activities.TrackDetailsActivity;
+import com.Example.iJam.activities.UploadTrackActivity;
+import com.Example.iJam.adapters.TrackAdapter;
+import com.Example.iJam.network.HttpGetTask;
+import com.Example.iJam.interfaces.TrackInterface;
+import com.Example.iJam.models.Track;
+import com.Example.iJam.R;
+import com.Example.iJam.network.ServerManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;

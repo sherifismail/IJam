@@ -1,4 +1,4 @@
-package com.example.iJam.fragments;
+package com.Example.iJam.fragments;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -14,11 +14,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.iJam.activity.MainActivity;
-import com.example.iJam.activity.SignInActivity;
-import com.example.iJam.network.HttpGetTask;
-import com.example.iJam.R;
-import com.example.iJam.network.ServerManager;
+import com.Example.iJam.activities.MainActivity;
+import com.Example.iJam.activities.SignInActivity;
+import com.Example.iJam.network.HttpGetTask;
+import com.Example.iJam.R;
+import com.Example.iJam.network.ServerManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;

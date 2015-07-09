@@ -1,6 +1,6 @@
-package com.example.iJam.models;
+package com.Example.iJam.models;
 
-import com.example.iJam.interfaces.TrackInterface;
+import com.Example.iJam.interfaces.TrackInterface;
 
 import org.json.JSONArray;
 import org.json.JSONException;

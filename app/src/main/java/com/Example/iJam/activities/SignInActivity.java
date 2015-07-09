@@ -1,4 +1,4 @@
-package com.example.iJam.activity;
+package com.Example.iJam.activities;
 
 import android.content.Intent;
 import android.graphics.Paint;
@@ -12,8 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.iJam.network.LogInTask;
-import com.example.iJam.R;
+import com.Example.iJam.network.LogInTask;
+import com.Example.iJam.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;

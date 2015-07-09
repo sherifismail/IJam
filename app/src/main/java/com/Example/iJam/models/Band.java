@@ -1,6 +1,6 @@
-package com.example.iJam.models;
+package com.Example.iJam.models;
 
-import com.example.iJam.interfaces.BandInterface;
+import com.Example.iJam.interfaces.BandInterface;
 
 import java.util.ArrayList;
 

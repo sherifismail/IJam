@@ -1,4 +1,4 @@
-package com.example.iJam.activity;
+package com.Example.iJam.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +11,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.iJam.network.InsertUserTask;
-import com.example.iJam.R;
-import com.example.iJam.network.ServerManager;
+import com.Example.iJam.network.InsertUserTask;
+import com.Example.iJam.R;
+import com.Example.iJam.network.ServerManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;

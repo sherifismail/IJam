@@ -1,4 +1,4 @@
-package com.example.iJam.adapter;
+package com.Example.iJam.adapters;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -9,8 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.iJam.models.Band;
-import com.example.iJam.R;
+import com.Example.iJam.models.Band;
+import com.Example.iJam.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

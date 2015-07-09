@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.iJam.UploadTracks">
+    tools:context="com.Example.iJam.UploadTracks">
 
     <ImageView
         android:id="@+id/trackupload_img_trackimage"

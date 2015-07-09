@@ -1,4 +1,4 @@
-package com.example.iJam.fragments;
+package com.Example.iJam.fragments;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.example.iJam.activity.UploadTrackActivity;
-import com.example.iJam.R;
+import com.Example.iJam.activities.UploadTrackActivity;
+import com.Example.iJam.R;
 
 public class BandsFragment extends Fragment {
 

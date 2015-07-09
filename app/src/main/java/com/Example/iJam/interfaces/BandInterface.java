@@ -1,7 +1,7 @@
-package com.example.iJam.interfaces;
+package com.Example.iJam.interfaces;
 
-import com.example.iJam.models.Track;
-import com.example.iJam.models.User;
+import com.Example.iJam.models.Track;
+import com.Example.iJam.models.User;
 
 import java.util.ArrayList;
 
