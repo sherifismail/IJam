@@ -27,9 +27,9 @@ public class activitySignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
-        et_user_name = (EditText) findViewById(R.id.editText7);
-        et_password = (EditText) findViewById(R.id.editText8);
-        signin = (Button)findViewById(R.id.button);
+        et_user_name = (EditText) findViewById(R.id.signin_et_username);
+        et_password = (EditText) findViewById(R.id.signin_et_pass);
+        signin = (Button)findViewById(R.id.signin_bt_signin);
         signup = (Button)findViewById(R.id.button2);
 
         TextView mTextView=(TextView)findViewById(R.id.txtview_forget);

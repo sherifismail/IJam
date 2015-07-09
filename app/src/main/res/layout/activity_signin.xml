@@ -24,7 +24,7 @@
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText7"
+                android:id="@+id/signin_et_username"
                 android:hint="User Name" />
 
             <EditText
@@ -34,7 +34,7 @@
                 android:hint="********"
                 android:layout_gravity="center"
                 android:ems="10"
-                android:id="@+id/editText8" />
+                android:id="@+id/signin_et_pass" />
 
         <TextView
             android:layout_width="122dp"
@@ -52,15 +52,14 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:weightSum="1"
-        android:id="@+id/linearLayout3">
+        android:weightSum="1">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign in"
             android:layout_gravity="bottom"
-            android:id="@+id/button"
+            android:id="@+id/signin_bt_signin"
             android:background="@android:color/holo_orange_dark"
             android:textColor="@android:color/white"
             android:layout_marginRight="0.5dp"
