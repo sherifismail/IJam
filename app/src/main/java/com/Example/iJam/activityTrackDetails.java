@@ -21,7 +21,7 @@ public class activityTrackDetails extends ActionBarActivity {
         setContentView(R.layout.activity_track_details);
 
         trackimage = (ImageView) findViewById(R.id.img_track);
-        trackimage.setImageResource(R.drawable.x);
+        trackimage.setImageResource(R.drawable.x);;
 
         try {
             String title = getIntent().getStringExtra("title");
