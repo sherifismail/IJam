@@ -52,6 +52,34 @@
             android:text="Author: "
             android:id="@+id/track_txt_author"
             android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="#solo #piano #musica"
+            android:id="@+id/track_txt_tags"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Piano"
+            android:id="@+id/track_txt_instrument"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="1:54"
+            android:id="@+id/track_txt_duration"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="09-07-2015"
+            android:id="@+id/track_txt_dateuploaded"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
 
@@ -68,7 +96,6 @@
             android:layout_weight="0.5"
             android:layout_marginRight="0.5dp"
             android:background="@android:color/holo_orange_dark"
-            android:layout_marginRight="0.5dp"
             android:textColor="@android:color/white" />
 
         <Button

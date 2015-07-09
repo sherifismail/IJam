@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -12,11 +13,15 @@ public class activityTrackDetails extends ActionBarActivity {
     TextView txtTitle;
     TextView txtLikes;
     TextView txtRating;
+    ImageView trackimage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_track_details);
+
+        trackimage = (ImageView) findViewById(R.id.img_track);
+        trackimage.setImageResource(R.drawable.x);
 
         try {
             String title = getIntent().getStringExtra("title");
