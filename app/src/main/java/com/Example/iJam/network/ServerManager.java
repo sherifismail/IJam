@@ -1,4 +1,4 @@
-package com.Example.iJam;
+package com.example.iJam.network;
 
 /**
  * Created by Mostafa on 7/5/2015.

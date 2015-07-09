@@ -1,27 +1,26 @@
-package com.Example.iJam;
+package com.example.iJam.activities;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.iJam.R;
 
-public class activityTrackDetails extends ActionBarActivity {
-    TextView txtAuthor;
-    TextView txtTitle;
-    TextView txtLikes;
-    TextView txtRating;
-    ImageView trackimage;
+
+public class TrackDetailsActivity extends AppCompatActivity {
+    TextView txtAuthor, txtTitle, txtLikes, txtRating;
+    ImageView imgTrack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_track_details);
 
-        trackimage = (ImageView) findViewById(R.id.img_track);
-        trackimage.setImageResource(R.drawable.x);
+        imgTrack = (ImageView) findViewById(R.id.img_track);
+        imgTrack.setImageResource(R.drawable.x);
 
         try {
             String title = getIntent().getStringExtra("title");

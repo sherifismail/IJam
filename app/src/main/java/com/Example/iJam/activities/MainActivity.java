@@ -1,4 +1,4 @@
-package com.Example.iJam;
+package com.example.iJam.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.iJam.fragments.BandsFragment;
+import com.example.iJam.fragments.ProfileFragment;
+import com.example.iJam.fragments.SearchFragment;
+import com.example.iJam.fragments.TopTracksFragment;
+import com.example.iJam.models.User;
+import com.example.iJam.R;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -95,14 +102,14 @@ class MyPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
 
         if(position==0)
-        return fragmentTopTracks.newInstance("fragmentTopTracks, Instance 1");
+        return TopTracksFragment.newInstance("TopTracksFragment, Instance 1");
 
         else if(position==1)
-            return fragmentSearch.newInstance("fragmentSearch, Instance 1");
+            return SearchFragment.newInstance("SearchFragment, Instance 1");
         else if (position==2)
-            return fragmentBands.newInstance("fragmentBands, Instance 1");
+            return BandsFragment.newInstance("BandsFragment, Instance 1");
         else if (position==3)
-            return fragmentProfile.newInstance("fragmentProfile, Instance 1");
+            return ProfileFragment.newInstance("ProfileFragment, Instance 1");
 
         //MainActivity.MyFragment myFragment = MainActivity.MyFragment.newInstance(position);
         //return myFragment;

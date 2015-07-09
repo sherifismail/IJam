@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.Example.iJam" >
+    package="com.example.iJam" >
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,18 +14,18 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.iJam.activities.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
-            android:name=".activityTrackDetails"
+            android:name="com.example.iJam.activities.TrackDetailsActivity"
             android:label="Track Search"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activitySignIn"
+            android:name="com.example.iJam.activities.SignInActivity"
             android:label="Jam Hub"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -35,12 +35,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activitySignUp"
+            android:name="com.example.iJam.activities.SignUpActivity"
             android:label="@string/title_activity_signup"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activityUploadTrack"
+            android:name="com.example.iJam.activities.UploadTrackActivity"
             android:label="@string/title_activity_recordtrack"
             android:screenOrientation="portrait">
         </activity>

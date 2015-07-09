@@ -1,11 +1,13 @@
-package com.Example.iJam;
+package com.example.iJam.interfaces;
+
+import com.example.iJam.models.Track;
 
 import java.util.ArrayList;
 
 /**
  * Created by Khodary on 7/5/15.
  */
-public interface trackInterface {
+public interface TrackInterface {
     public void setImageUrl(String imageUrl);
     public void setTitle(String title);
     public void setRating(double rating);

@@ -1,11 +1,14 @@
-package com.Example.iJam;
+package com.example.iJam.interfaces;
+
+import com.example.iJam.models.Track;
+import com.example.iJam.models.User;
 
 import java.util.ArrayList;
 
 /**
  * Created by Khodary on 7/7/15.
  */
-public interface bandInterface {
+public interface BandInterface {
     public int getID();
     public String getName();
     public ArrayList<Track> getTracks();

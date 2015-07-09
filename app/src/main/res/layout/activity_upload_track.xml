@@ -1,0 +1,101 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.iJam.UploadTracks">
+
+    <ImageView
+        android:id="@+id/trackupload_img_trackimage"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="26dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/x" />
+
+    <LinearLayout
+        android:id="@+id/trackupload_linear_1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/trackupload_img_trackimage"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/trackupload_bt_startrecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.5"
+            android:background="@android:color/holo_orange_dark"
+            android:text="Start Recording" />
+
+        <Button
+            android:id="@+id/trackupload_bt_stoprecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.5"
+            android:background="#ffdbdbdb"
+            android:text="Stop Recording"
+            android:enabled="false"
+            android:textColor="@android:color/black" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/trackupload_linear_1"
+        android:orientation="vertical"
+        android:layout_marginTop="42dp">
+
+        <EditText
+            android:id="@+id/trackupload_et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name" />
+
+        <EditText
+            android:id="@+id/trackupload_et_instrument"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Instrument" />
+
+        <EditText
+            android:id="@+id/trackupload_et_tags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:hint="Genre/Tag" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/trackupload_bt_storage"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="0.5dp"
+            android:layout_weight="0.4"
+            android:background="@android:color/holo_orange_dark"
+            android:text="Upload from storage" />
+
+        <Button
+            android:id="@+id/trackupload_bt_upload"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0.5dp"
+            android:layout_weight="0.6"
+            android:background="@android:color/holo_orange_dark"
+            android:text="Upload" />
+
+    </LinearLayout>
+
+</RelativeLayout>

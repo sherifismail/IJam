@@ -1,4 +1,4 @@
-package com.Example.iJam;
+package com.example.iJam.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,21 +10,24 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.iJam.R;
+import com.example.iJam.interfaces.TrackInterface;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * Created by Khodary on 7/5/15.
  */
-public class trackAdapter extends ArrayAdapter<trackInterface> {
+public class TrackAdapter extends ArrayAdapter<TrackInterface> {
     private final Activity context;
     private final Class<?> context2;
-    ArrayList<trackInterface> items;
+    ArrayList<TrackInterface> items;
 
     public static HashMap<String, Bitmap> myImages = new HashMap<String, Bitmap>();
 
 
-    public trackAdapter(Activity context, Class<?> context2, ArrayList<trackInterface> items) {
+    public TrackAdapter(Activity context, Class<?> context2, ArrayList<TrackInterface> items) {
         super(context, R.layout.track_row_layout, items);
         this.items = items;
         this.context = context;
@@ -41,7 +44,7 @@ public class trackAdapter extends ArrayAdapter<trackInterface> {
         TextView txtLikes = (TextView) rowView.findViewById(R.id.txtLikes);
         TextView txtRating = (TextView) rowView.findViewById(R.id.txtRating);
         final ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
-        final trackInterface item = items.get(position);
+        final TrackInterface item = items.get(position);
 
         final String title = item.getTitle();
         final String likes = Integer.toString(item.getLikes());

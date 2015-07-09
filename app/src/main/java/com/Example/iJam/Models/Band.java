@@ -1,11 +1,13 @@
-package com.Example.iJam;
+package com.example.iJam.models;
+
+import com.example.iJam.interfaces.BandInterface;
 
 import java.util.ArrayList;
 
 /**
  * Created by Mostafa on 6/29/2015.
  */
-public class Band implements bandInterface{
+public class Band implements BandInterface {
     private int band_id;
     private String imageUrl;
     private String name;

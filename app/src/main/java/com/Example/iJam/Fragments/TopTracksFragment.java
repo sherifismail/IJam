@@ -1,4 +1,4 @@
-package com.Example.iJam;
+package com.example.iJam.fragments;
 //import android.app.Fragment;
 
 import android.content.Context;
@@ -12,6 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.example.iJam.activities.TrackDetailsActivity;
+import com.example.iJam.activities.UploadTrackActivity;
+import com.example.iJam.adapters.TrackAdapter;
+import com.example.iJam.network.HttpGetTask;
+import com.example.iJam.interfaces.TrackInterface;
+import com.example.iJam.models.Track;
+import com.example.iJam.R;
+import com.example.iJam.network.ServerManager;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,7 +28,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class fragmentTopTracks extends Fragment {
+public class TopTracksFragment extends Fragment {
 
     private FloatingActionButton mFAB;
     private RelativeLayout mRoot;
@@ -30,17 +39,17 @@ public class fragmentTopTracks extends Fragment {
         View v = inflater.inflate(R.layout.activity_top_tracks, container, false);
 
         mRoot = (RelativeLayout) v.findViewById(R.id.root_activity_second);
-        mFAB = (FloatingActionButton) v.findViewById(R.id.fab);
+        mFAB = (FloatingActionButton) v.findViewById(R.id.toptracks_fab_add);
         mFAB.setOnClickListener(mFabClickListener);
-        lvTracks = (ListView) v.findViewById(R.id.lvTracks);
+        lvTracks = (ListView) v.findViewById(R.id.toptracks_lv_tracks);
 
         getTopTracks(getActivity());
         return v;
     }
 
-    public static fragmentTopTracks newInstance(String text) {
+    public static TopTracksFragment newInstance(String text) {
 
-        fragmentTopTracks f = new fragmentTopTracks();
+        TopTracksFragment f = new TopTracksFragment();
         Bundle b = new Bundle();
         b.putString("msg", text);
 
@@ -51,7 +60,7 @@ public class fragmentTopTracks extends Fragment {
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent i=new Intent(getActivity(),activityUploadTrack.class);
+            Intent i=new Intent(getActivity(),UploadTrackActivity.class);
             startActivity(i);
         }
     };
@@ -66,7 +75,7 @@ public class fragmentTopTracks extends Fragment {
                         JSONArray jArray = new JSONArray(response.getString("results"));
                         topTracks = Track.parseJson(jArray);
 
-                        trackAdapter tracksAdap = new trackAdapter(getActivity(), activityTrackDetails.class, (ArrayList<trackInterface>) (ArrayList<?>) topTracks);
+                        TrackAdapter tracksAdap = new TrackAdapter(getActivity(), TrackDetailsActivity.class, (ArrayList<TrackInterface>) (ArrayList<?>) topTracks);
                         lvTracks.setAdapter(tracksAdap);
                     }
                 } catch (JSONException e) {

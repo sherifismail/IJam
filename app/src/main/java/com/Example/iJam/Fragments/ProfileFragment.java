@@ -1,4 +1,4 @@
-package com.Example.iJam;
+package com.example.iJam.fragments;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -14,13 +14,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.iJam.activities.MainActivity;
+import com.example.iJam.activities.SignInActivity;
+import com.example.iJam.network.HttpGetTask;
+import com.example.iJam.R;
+import com.example.iJam.network.ServerManager;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class fragmentProfile extends Fragment {
+public class ProfileFragment extends Fragment {
     ListView listV;
     ImageView profileimage;
     //LinearLayout linearList;
@@ -70,7 +75,7 @@ public class fragmentProfile extends Fragment {
                 } else if (position == 3) {
 
                 } else if (position == 4) {
-                    Intent intent = new Intent(getActivity(), activitySignIn.class);
+                    Intent intent = new Intent(getActivity(), SignInActivity.class);
                     startActivity(intent);
                     getActivity().finish();
                 }
@@ -91,9 +96,9 @@ public class fragmentProfile extends Fragment {
         return v;
     }
 
-    public static fragmentProfile newInstance(String text) {
+    public static ProfileFragment newInstance(String text) {
 
-        fragmentProfile f = new fragmentProfile();
+        ProfileFragment f = new ProfileFragment();
         Bundle b = new Bundle();
         b.putString("msg", text);
 

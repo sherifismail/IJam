@@ -1,4 +1,4 @@
-package com.Example.iJam;
+package com.example.iJam.adapters;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -9,13 +9,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.iJam.models.Band;
+import com.example.iJam.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * Created by Khodary on 7/7/15.
  */
-public class bandAdapter extends ArrayAdapter<Band>{
+public class BandAdapter extends ArrayAdapter<Band>{
     private final Activity context;
     private final Class<?> context2;
     ArrayList<Band> items;
@@ -23,7 +26,7 @@ public class bandAdapter extends ArrayAdapter<Band>{
     public static HashMap<String, Bitmap> myImages = new HashMap<String, Bitmap>();
 
 
-    public bandAdapter(Activity context, Class<?> context2, ArrayList<Band> items) {
+    public BandAdapter(Activity context, Class<?> context2, ArrayList<Band> items) {
         super(context, R.layout.track_row_layout, items);
         this.items = items;
         this.context = context;

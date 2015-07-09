@@ -1,4 +1,6 @@
-package com.Example.iJam;
+package com.example.iJam.models;
+
+import com.example.iJam.interfaces.TrackInterface;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,7 +13,7 @@ import java.util.Date;
 /**
  * Created by Khodary on 7/5/15.
  */
-public class Track implements trackInterface {
+public class Track implements TrackInterface {
     private String title;                //track name
     private String uploader;            //track auploader name
     private boolean band;               //true it the uploader is band

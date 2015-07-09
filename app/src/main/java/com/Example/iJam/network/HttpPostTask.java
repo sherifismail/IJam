@@ -1,4 +1,4 @@
-package com.Example.iJam;
+package com.example.iJam.network;
 
 import android.content.Context;
 import android.os.AsyncTask;

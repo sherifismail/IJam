@@ -1,4 +1,4 @@
-package com.Example.iJam;
+package com.example.iJam.activities;
 
 import android.content.Intent;
 import android.graphics.Paint;
@@ -12,16 +12,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.iJam.network.LogInTask;
+import com.example.iJam.R;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class activitySignIn extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText et_user_name;
     EditText et_password;
     Button signup;
-    Button signin;;
+    Button signin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,30 +34,56 @@ public class activitySignIn extends AppCompatActivity {
         et_user_name = (EditText) findViewById(R.id.signin_et_username);
         et_password = (EditText) findViewById(R.id.signin_et_pass);
         signin = (Button)findViewById(R.id.signin_bt_signin);
-        signup = (Button)findViewById(R.id.button2);
+        signup = (Button)findViewById(R.id.signin_bt_signup);
 
-        TextView mTextView=(TextView)findViewById(R.id.txtview_forget);
+        TextView mTextView=(TextView)findViewById(R.id.signin_txt_forget);
         mTextView.setPaintFlags(mTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        mTextView.setText("Forget Password");
+        mTextView.setOnClickListener(this);
 
-        mTextView.setOnClickListener(new View.OnClickListener(){
+        signin.setOnClickListener(this);
+        signup.setOnClickListener(this);
+    }
 
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(activitySignIn.this,activitySignUp.class);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_signin, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.signin_txt_forget:
+                /*Intent intent=new Intent(SignInActivity.this,SignUpActivity.class);
                 startActivity(intent);
-            }
-        });
-
-        signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;*/
+            case R.id.signin_bt_signup:
+                Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.signin_bt_signin:
                 String user_name = et_user_name.getText().toString().trim();
                 String password = et_password.getText().toString().trim();
 
                 if (user_name.equals("") || password.equals(""))
                     Toast.makeText(getApplicationContext(), "one or more of the fields is empty!", Toast.LENGTH_SHORT).show();
-                else{
+                else {
                     JSONObject login_info = new JSONObject();
                     try {
                         login_info.put("user_name", user_name);
@@ -90,38 +120,9 @@ public class activitySignIn extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                 }
-            }
-        });
-
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(activitySignIn.this, activitySignUp.class);
-                startActivity(i);
-            }
-        });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_signin, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+                break;
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,4 +1,4 @@
-package com.Example.iJam;
+package com.example.iJam;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

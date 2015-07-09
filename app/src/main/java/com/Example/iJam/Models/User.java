@@ -1,4 +1,4 @@
-package com.Example.iJam;
+package com.example.iJam.models;
 
 import java.util.ArrayList;
 

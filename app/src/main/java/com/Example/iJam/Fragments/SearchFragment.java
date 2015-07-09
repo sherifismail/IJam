@@ -1,4 +1,4 @@
-package com.Example.iJam;
+package com.example.iJam.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,13 +10,20 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.example.iJam.activities.TrackDetailsActivity;
+import com.example.iJam.activities.UploadTrackActivity;
+import com.example.iJam.adapters.TrackAdapter;
+import com.example.iJam.network.HttpGetTask;
+import com.example.iJam.interfaces.TrackInterface;
+import com.example.iJam.models.Track;
+import com.example.iJam.R;
+import com.example.iJam.network.ServerManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,7 +33,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-public class fragmentSearch extends Fragment {
+public class SearchFragment extends Fragment {
     private FloatingActionButton mFAB;
     private RelativeLayout mRoot;
     ListView searchList;
@@ -38,12 +45,12 @@ public class fragmentSearch extends Fragment {
         //getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE| WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         mRoot = (RelativeLayout) v.findViewById(R.id.root_activity_search);
-        mFAB = (FloatingActionButton) v.findViewById(R.id.fab);
+        mFAB = (FloatingActionButton) v.findViewById(R.id.toptracks_fab_add);
         mFAB.setOnClickListener(mFabClickListener);
-        search_name = (EditText) v.findViewById(R.id.et_searchTracks);
+        search_name = (EditText) v.findViewById(R.id.search_et_searchTracks);
 
         //Button search = (Button) v.findViewById(R.id.btn_searchTracks);
-        searchList = (ListView) v.findViewById(R.id.listview_search);
+        searchList = (ListView) v.findViewById(R.id.search_lv_search);
         search_name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -68,9 +75,9 @@ public class fragmentSearch extends Fragment {
         return v;
     }
 
-    public static fragmentSearch newInstance(String text) {
+    public static SearchFragment newInstance(String text) {
 
-        fragmentSearch f = new fragmentSearch();
+        SearchFragment f = new SearchFragment();
         Bundle b = new Bundle();
         b.putString("msg", text);
 
@@ -82,7 +89,7 @@ public class fragmentSearch extends Fragment {
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent i=new Intent(getActivity(),activityUploadTrack.class);
+            Intent i=new Intent(getActivity(),UploadTrackActivity.class);
             startActivity(i);
         }
     };
@@ -110,7 +117,7 @@ public class fragmentSearch extends Fragment {
                         JSONArray jArray = new JSONArray(response.getString("results"));
                         searchRes = Track.parseJson(jArray);
 
-                        trackAdapter tracksAdap = new trackAdapter(getActivity(), activityTrackDetails.class, (ArrayList<trackInterface>) (ArrayList<?>) searchRes);
+                        TrackAdapter tracksAdap = new TrackAdapter(getActivity(), TrackDetailsActivity.class, (ArrayList<TrackInterface>) (ArrayList<?>) searchRes);
                         searchList.setAdapter(tracksAdap);
                     }
                 } catch (JSONException e) {
