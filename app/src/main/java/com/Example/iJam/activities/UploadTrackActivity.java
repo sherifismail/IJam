@@ -17,9 +17,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.Example.iJam.R;
-import com.Example.iJam.network.NetworkManager;
+import com.Example.iJam.network.ServerManager;
+import com.Example.iJam.network.UploadImageTask;
 
-import java.io.FileNotFoundException;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -92,10 +95,28 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                         Uri imageUri = data.getData();
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap i = BitmapFactory.decodeStream(imageStream);
-                        NetworkManager.uploadBitmap(i);
+                        //NetworkManager.uploadBitmap(i);
+                        new UploadImageTask(){
+                            @Override
+                            protected void onPostExecute(String s) {
+                                //super.onPostExecute(s);
+                                if(s.equals(null))
+                                    return;
+                                try {
+                                    JSONObject response = new JSONObject(s);
+                                    String status = response.getString("status");
+                                    ServerManager.setServerStatus(status);
+                                    if (status.equals("success")) {
+                                        Toast.makeText(getApplicationContext(), response.getString("url"), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), response.getString("status"), Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }.execute(i);
                         imgTrack.setImageBitmap(i);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

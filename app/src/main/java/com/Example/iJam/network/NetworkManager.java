@@ -11,7 +11,6 @@ import com.android.volley.toolbox.Volley;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -86,15 +85,10 @@ public class NetworkManager {
 		String contentType = "Content-Type: image/jpeg";
 		String lineEnd = "\r\n";
 		String hyphens = "--";
-		URL url;
 
-
-
-		url = new URL(ServerManager.getServerURL() + "/tracks/upload_image.php");
-
+		URL url = new URL(ServerManager.getServerURL() + "/tracks/upload_image.php");
 
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
 		connection.setRequestMethod("POST");
 		connection.setDoInput(true);
 		connection.setDoOutput(true);
@@ -112,6 +106,7 @@ public class NetworkManager {
 		connection.setRequestProperty("enctype", "multipart/form-data");
 		connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
 
+		/*
 		DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
 		outputStream.writeBytes(hyphens + boundary + lineEnd);
 		outputStream.writeBytes(contentDisposition + lineEnd);
@@ -122,9 +117,7 @@ public class NetworkManager {
 		outputStream.writeBytes(hyphens + boundary + hyphens + lineEnd);
 		outputStream.flush();
 		outputStream.close();
-
-
-
+		*/
 		StringBuilder responseBuilder = new StringBuilder();
 		BufferedReader buffer = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		String line;
