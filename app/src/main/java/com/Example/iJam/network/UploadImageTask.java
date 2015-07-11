@@ -24,7 +24,7 @@ public class UploadImageTask extends AsyncTask<Bitmap, Void, String> {
     @Override
     protected String doInBackground(Bitmap... params) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        params[0].compress(Bitmap.CompressFormat.JPEG, 100, bos);
+        params[0].compress(Bitmap.CompressFormat.JPEG, 20, bos);
 
 
         final String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(Calendar.getInstance().getTime());
