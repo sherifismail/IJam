@@ -10,12 +10,18 @@
         android:id="@+id/trackimg"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="1.06">
 
         <VideoView
             android:layout_width="wrap_content"
-            android:layout_height="138dp"
+            android:layout_height="160dp"
             android:id="@+id/player" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/testimg"></FrameLayout>
     </FrameLayout>
 
     <ListView
@@ -25,7 +31,7 @@
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/linearLayout3"
         android:layout_below="@+id/linearLayout2"
-        android:layout_weight="1.21" />
+        android:layout_weight="0.06" />
 
     <LinearLayout
         android:layout_width="fill_parent"

@@ -39,8 +39,8 @@ Button playtrack;
         playtrack=(Button) findViewById(R.id.play);
         //imgTrack = (ImageView) findViewById(R.id.img_track);
         //imgTrack.setImageResource(R.drawable.x);
-        //imgtrack=(FrameLayout)findViewById(R.id.trackimg);
-        //imgtrack.setBackgroundResource(R.drawable.x);
+        imgtrack=(FrameLayout)findViewById(R.id.testimg);
+        imgtrack.setBackgroundResource(R.drawable.x);
         String trackurl=ServerManager.getServerURL()+"/test_track.mp3";
         try {
 
