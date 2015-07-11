@@ -1,7 +1,9 @@
 package com.Example.iJam.network;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -19,16 +21,20 @@ import java.util.Locale;
 /**
  * Created by Khodary on 7/11/15.
  */
-public class UploadImageTask extends AsyncTask<Bitmap, Void, String> {
+public class HttpImageTask extends AsyncTask<Bitmap, Void, String> {
+    protected Context ctx;
+    protected String api_url;
+    public HttpImageTask(String api_url, Context ctx){
+        this.api_url = api_url;
+        this.ctx = ctx;
+    }
 
     @Override
     protected String doInBackground(Bitmap... params) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        params[0].compress(Bitmap.CompressFormat.JPEG, 20, bos);
-
+        params[0].compress(Bitmap.CompressFormat.JPEG, 50, bos);
 
         final String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(Calendar.getInstance().getTime());
-
         byte[] data = bos.toByteArray();
 
         String boundary = "====UPhonebookxsaiIASckasoapsck====";
@@ -37,10 +43,9 @@ public class UploadImageTask extends AsyncTask<Bitmap, Void, String> {
         String contentType = "Content-Type: image/jpeg";
         String lineEnd = "\r\n";
         String hyphens = "--";
-        URL url;
 
         try {
-            url = new URL(ServerManager.getServerURL() + "/tracks/upload_image.php");
+            URL url = new URL(api_url);
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -72,20 +77,19 @@ public class UploadImageTask extends AsyncTask<Bitmap, Void, String> {
             outputStream.flush();
             outputStream.close();
 
-
             StringBuilder responseBuilder = new StringBuilder();
             BufferedReader buffer = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String line;
-            while ((line = buffer.readLine()) != null)
-                responseBuilder.append(line + "\n");
-
+            while ((line = buffer.readLine()) != null) {
+                if (line.charAt(0) != '<')
+                    responseBuilder.append(line + "\n");
+                else
+                    Log.i("phpWarnings", line);
+            }
             buffer.close();
+
             return responseBuilder.toString().trim();
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

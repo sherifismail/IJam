@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.Example.iJam.R;
 import com.Example.iJam.network.ServerManager;
-import com.Example.iJam.network.UploadImageTask;
+import com.Example.iJam.network.HttpImageTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -94,33 +94,31 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                     try {
                         Uri imageUri = data.getData();
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                        final Bitmap i = BitmapFactory.decodeStream(imageStream);
-                        //NetworkManager.uploadBitmap(i);
-                        new UploadImageTask(){
+                        final Bitmap img = BitmapFactory.decodeStream(imageStream);
+
+                        new HttpImageTask(ServerManager.getServerURL() + "/tracks/upload_image.php", getApplicationContext()){
                             @Override
                             protected void onPostExecute(String s) {
-                                //super.onPostExecute(s);
-                                if(s.equals(null))
+                                if(s.equals(""))
                                     return;
                                 try {
                                     JSONObject response = new JSONObject(s);
-                                    String status = response.getString("status");
-                                    ServerManager.setServerStatus(status);
-                                    if (status.equals("success")) {
-                                        Toast.makeText(getApplicationContext(), response.getString("url"), Toast.LENGTH_SHORT).show();
+                                    if (response.getString("status").equals("success")) {
+                                        Toast.makeText(ctx, response.getString("url"), Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(getApplicationContext(), response.getString("status"), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ctx, response.getString("error"), Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
-                        }.execute(i);
-                        imgTrack.setImageBitmap(i);
+                        }.execute(img);
+                        imgTrack.setImageBitmap(img);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
+                break;
         }
     }
 

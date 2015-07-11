@@ -23,7 +23,7 @@ public class HttpGetTask extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... params) {
         try {
-             URL url = new URL(api_url);
+            URL url = new URL(api_url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
