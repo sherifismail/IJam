@@ -1,6 +1,10 @@
 package com.Example.iJam.activities;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -12,16 +16,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.Example.iJam.network.InsertTrackTask;
 import com.Example.iJam.R;
-import com.Example.iJam.network.ServerManager;
+import com.Example.iJam.network.NetworkManager;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.InputStream;
 
 
 public class UploadTrackActivity extends AppCompatActivity implements View.OnClickListener{
@@ -56,6 +56,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
         btUpload.setOnClickListener(this);
         btRecord.setOnClickListener(this);
         btStop.setOnClickListener(this);
+        imgTrack.setOnClickListener(this);
     }
 
 
@@ -82,8 +83,34 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    try {
+                        Uri imageUri = data.getData();
+                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                        final Bitmap i = BitmapFactory.decodeStream(imageStream);
+                        NetworkManager.uploadBitmap(i);
+                        imgTrack.setImageBitmap(i);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.trackupload_img_trackimage:
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, 1);
+                break;
             case R.id.trackupload_bt_stoprecord:
                 myAudioRecorder.stop();
                 myAudioRecorder.release();
@@ -109,6 +136,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
             case R.id.trackupload_bt_upload:
+                /*
                 String name = etName.getText().toString().trim();
                 String instrument = etInstrument.getText().toString().trim();
                 String tags = etTags.getText().toString().trim();
@@ -146,7 +174,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                     }.execute(json_track);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
+                }*/
                 break;
         }
     }
