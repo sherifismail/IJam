@@ -6,15 +6,15 @@ import java.util.ArrayList;
  * Created by Mostafa on 6/29/2015.
  */
 public class User {
-    private int user_id;
+    //private int user_id;
     private String user_name;
     private String password;
     private String first_name;
     private String last_name;
     private ArrayList<Track> tracks;
 
-    public User(int user_id, String user_name, String password, String fname, String lname){
-        this.user_id = user_id;
+    public User(/*int user_id,*/ String user_name, String password, String fname, String lname){
+        //this.user_id = user_id;
         this.user_name = user_name;
         this.password = password;
         this.first_name = fname;
@@ -22,13 +22,13 @@ public class User {
         tracks = null;
     }
 
-    public int getUser_id() {
+    /*public int getUser_id() {
         return user_id;
     }
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
-    }
+    }*/
 
     public String getUser_name() {
         return user_name;

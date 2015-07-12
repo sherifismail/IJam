@@ -102,7 +102,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                         JSONObject user_info = response.getJSONObject("user");
 
                                         Intent inte = new Intent(ctx, MainActivity.class);
-                                        inte.putExtra("user_id", user_info.getInt("user_id"));
+                                        //inte.putExtra("user_id", user_info.getInt("user_id"));
                                         inte.putExtra("user_name", user_info.getString("user_name"));
                                         inte.putExtra("password", user_info.getString("password"));
                                         inte.putExtra("first_name", user_info.getString("first_name"));

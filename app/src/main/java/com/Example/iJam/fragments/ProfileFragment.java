@@ -44,9 +44,10 @@ public class ProfileFragment extends Fragment {
         TextView userName = (TextView) v.findViewById(R.id.tv_profilename);
         final TextView userShows = (TextView) v.findViewById(R.id.tv_profiletracks);
 
-        userName.setText(MainActivity.user.getUser_name());
+        String uname = MainActivity.user.getUser_name();
+        userName.setText(uname);
 
-        new HttpGetTask(ServerManager.getServerURL()+"/tracks/my_tracks.php?uid="+MainActivity.user.getUser_id(), getActivity()){
+        new HttpGetTask(ServerManager.getServerURL()+"/tracks/my_tracks.php?uname="+uname, getActivity()){
             @Override
             protected void onPostExecute(String s) {
                 try {
