@@ -38,14 +38,6 @@ public class MainTrackDetailActivity extends AppCompatActivity {
 
         mTabLayout.setupWithViewPager(mPager);
         mPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
-
-        Intent inte = getIntent();
-        int uid = inte.getIntExtra("user_id", 0);
-        String uname = inte.getStringExtra("user_name");
-        String password = inte.getStringExtra("password");
-        String fname = inte.getStringExtra("first_name");
-        String lname = inte.getStringExtra("last_name");
-        user = new User(uid, uname, password, fname, lname);
     }
 
     @Override
