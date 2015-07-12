@@ -27,7 +27,7 @@ public class TrackDetailsActivity extends AppCompatActivity {
     VideoView trackplayer;
     MediaController mc;
     FrameLayout imgtrack;
-Button playtrack;
+//Button playtrack;
     final ArrayList<String> list = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ Button playtrack;
         setContentView(R.layout.activity_track_details);
         trackdetails=(ListView)findViewById(R.id.trackdetail_lv_tracks);
         trackplayer=(VideoView)findViewById(R.id.trackdetail_vp_player);
-        playtrack=(Button) findViewById(R.id.trackdetail_bt_playtrack);
+        //playtrack=(Button) findViewById(R.id.trackdetail_bt_playtrack);
         //imgTrack = (ImageView) findViewById(R.id.img_track);
         //imgTrack.setImageResource(R.drawable.x);
         imgtrack=(FrameLayout)findViewById(R.id.trackdetail_img_testimage);
@@ -52,15 +52,15 @@ Button playtrack;
                 list.add(trackitems[i]);
             }
             trackplayer.setVideoURI(Uri.parse(trackurl));
-            playtrack.setOnClickListener(new View.OnClickListener() {
+           /* playtrack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     trackplayer.start();
                 }
-            });
+            });*/
            mc=new MediaController(this);
             mc.setMediaPlayer(trackplayer);
-
+            trackplayer.start();
             mc.setAnchorView(trackplayer);
             trackplayer.setMediaController(mc);
 
