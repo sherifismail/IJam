@@ -1,7 +1,9 @@
 package com.Example.iJam.fragments;
 
 //import android.app.Fragment;
+import android.content.Intent;
 import android.media.MediaPlayer;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,11 +16,13 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.Example.iJam.R;
+import com.Example.iJam.activities.UploadTrackActivity;
 import com.Example.iJam.network.ServerManager;
 
 import java.util.ArrayList;
@@ -33,25 +37,22 @@ public class TrackDetailFragment extends Fragment {
     VideoView trackplayer;
     MediaController mc;
     FrameLayout imgtrack;
-    Button playtrack;
+    //Button playtrack;
+    private FloatingActionButton mFAB;
+    private RelativeLayout mRoot;
     String formatted="",title,likes,rating,author;
     final ArrayList<String> list = new ArrayList<String>();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_track_details, container, false);
-
+        mRoot = (RelativeLayout) v.findViewById(R.id.root_activity_trackDetails);
+        mFAB = (FloatingActionButton) v.findViewById(R.id.toptracks_fab_add);
+        mFAB.setOnClickListener(mFabClickListener);
         trackdetails=(ListView)v.findViewById(R.id.trackdetail_lv_tracks);
         trackplayer=(VideoView)v.findViewById(R.id.trackdetail_vp_player);
-        playtrack=(Button) v.findViewById(R.id.trackdetail_bt_playtrack);
-        //imgTrack = (ImageView) findViewById(R.id.img_track);
-        //imgTrack.setImageResource(R.drawable.x);
+        //playtrack=(Button) v.findViewById(R.id.trackdetail_bt_playtrack);
         imgtrack=(FrameLayout)v.findViewById(R.id.trackdetail_img_testimage);
         imgtrack.setBackgroundResource(R.drawable.x);
-        /*int hours = time / 3600;
-        int minutes = (time / 60) - (hours * 60);
-        int seconds = time - (hours * 3600) - (minutes * 60) ;
-        String trackdurationmin=String.valueOf(minutes);
-        String trackduration=trackdurationmin+":"+String.valueOf(seconds);*/
         String trackurl= ServerManager.getServerURL()+"/test_track.mp3";
         try {
             title = getActivity().getIntent().getStringExtra("title");
@@ -86,16 +87,16 @@ public class TrackDetailFragment extends Fragment {
                 }
             });
 
-            playtrack.setOnClickListener(new View.OnClickListener() {
+          /*  playtrack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     trackplayer.start();
 
                 }
-            });
+            });*/
             mc=new MediaController(getActivity());
             mc.setMediaPlayer(trackplayer);
-
+            trackplayer.start();
             //int length = mc.getDuration();
 
             mc.setAnchorView(trackplayer);
@@ -119,7 +120,13 @@ public class TrackDetailFragment extends Fragment {
 
         return v;
     }
-
+    private View.OnClickListener mFabClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent i=new Intent(getActivity(),UploadTrackActivity.class);
+            startActivity(i);
+        }
+    };
     public static TrackDetailFragment newInstance(String text) {
 
         TrackDetailFragment f = new TrackDetailFragment();

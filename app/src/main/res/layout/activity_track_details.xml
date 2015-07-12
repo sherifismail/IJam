@@ -1,7 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/root_activity_trackDetails"
     tools:context="com.Example.iJam.activities.TrackDetailsActivity">
 
     <FrameLayout
@@ -37,24 +39,35 @@
         android:id="@+id/trackdetail_layout_1"
         android:gravity="bottom">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Play track"
-            android:layout_weight="0.5"
-            android:layout_marginRight="0.5dp"
-            android:background="@android:color/holo_orange_dark"
-            android:textColor="@android:color/white"
-            android:id="@+id/trackdetail_bt_playtrack" />
+        <!--         <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Play track"
+                    android:layout_weight="0.5"
+                    android:layout_marginRight="0.5dp"
+                    android:background="@android:color/holo_orange_dark"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/trackdetail_bt_playtrack" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Jam Over"
-            android:layout_weight="0.5"
-            android:layout_marginLeft="0.5dp"
-            android:background="@android:color/holo_orange_dark"
-            android:textColor="@android:color/white" />
+               <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jam Over"
+                    android:layout_weight="0.5"
+                    android:layout_marginLeft="0.5dp"
+                    android:background="@android:color/holo_orange_dark"
+                    android:textColor="@android:color/white" />!-->
     </LinearLayout>
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/toptracks_fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/j"
+        app:borderWidth="2dp"
+        app:fabSize="normal"
+        app:rippleColor="@color/colorPrimaryDark" />
 </RelativeLayout>
