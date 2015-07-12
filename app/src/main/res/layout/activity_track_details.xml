@@ -1,90 +1,45 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.Example.iJam.activities.TrackDetailsActivity">
+    tools:context="com.Example.iJam.activities.TrackDetailsActivity"
+    android:orientation="vertical"
+    android:weightSum="1">
 
-    <ImageView
-        android:id="@+id/img_track"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
+    <FrameLayout
+        android:id="@+id/trackimg"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/img_track"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical">
+        android:layout_weight="1.06">
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Track Title: "
-            android:id="@+id/track_txt_title"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <VideoView
+            android:layout_width="wrap_content"
+            android:layout_height="175dp"
+            android:id="@+id/player" />
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Track Rating: "
-            android:id="@+id/track_txt_rating"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:id="@+id/testimg"></FrameLayout>
+    </FrameLayout>
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Likes:"
-            android:layout_marginTop="10dp"
-            android:id="@+id/track_txt_likes"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Author: "
-            android:id="@+id/track_txt_author"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="#solo #piano #musica"
-            android:id="@+id/track_txt_tags"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Piano"
-            android:id="@+id/track_txt_instrument"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="1:54"
-            android:id="@+id/track_txt_duration"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="09-07-2015"
-            android:id="@+id/track_txt_dateuploaded"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    </LinearLayout>
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="345dp"
+        android:id="@+id/track_detail_listview"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/linearLayout3"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_weight="0.06" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:id="@+id/linearLayout3"
+        android:gravity="bottom">
 
         <Button
             android:layout_width="wrap_content"
@@ -93,7 +48,8 @@
             android:layout_weight="0.5"
             android:layout_marginRight="0.5dp"
             android:background="@android:color/holo_orange_dark"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:id="@+id/play" />
 
         <Button
             android:layout_width="wrap_content"
@@ -105,4 +61,4 @@
             android:textColor="@android:color/white" />
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

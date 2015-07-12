@@ -24,5 +24,7 @@
         <item>Bands</item>
     </string-array>
     <string name="title_activity_track_details">TrackDetailsActivity</string>
+    <string name="title_activity_main_track_detail">MainTrackDetailActivity</string>
+    <string name="title_activity_track_parent">TrackParent</string>
 
 </resources>

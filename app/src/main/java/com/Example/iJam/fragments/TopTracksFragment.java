@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.Example.iJam.activities.MainTrackDetailActivity;
 import com.Example.iJam.activities.TrackDetailsActivity;
 import com.Example.iJam.activities.UploadTrackActivity;
 import com.Example.iJam.adapters.TrackAdapter;
@@ -75,7 +76,7 @@ public class TopTracksFragment extends Fragment {
                         JSONArray jArray = new JSONArray(response.getString("results"));
                         topTracks = Track.parseJson(jArray);
 
-                        TrackAdapter tracksAdap = new TrackAdapter(getActivity(), TrackDetailsActivity.class, (ArrayList<TrackInterface>) (ArrayList<?>) topTracks);
+                        TrackAdapter tracksAdap = new TrackAdapter(getActivity(), MainTrackDetailActivity.class, (ArrayList<TrackInterface>) (ArrayList<?>) topTracks);
                         lvTracks.setAdapter(tracksAdap);
                     }
                 } catch (JSONException e) {
