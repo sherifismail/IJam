@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.Example.iJam.R;
 import com.Example.iJam.interfaces.TrackInterface;
+import com.Example.iJam.network.NetworkManager;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,6 +60,22 @@ public class TrackAdapter extends ArrayAdapter<TrackInterface> {
 
         txtRating.setEnabled(false);
 
+        NetworkManager.getInstance(context).getImageLoader().get("URL",
+                new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                        Bitmap image = response.getBitmap();
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }/*, 100, 100, ImageView.ScaleType.CENTER*/);
+
+        /*NetworkImageView iv = (NetworkImageView) imageView.findViewById(R.id.txtRating);
+        iv.setImageUrl("URL", NetworkManager.getInstance(context).getImageLoader());*/
+
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +86,7 @@ public class TrackAdapter extends ArrayAdapter<TrackInterface> {
                     i.putExtra("likes", likes);
                     i.putExtra("rating", rating);
                     i.putExtra("author", author);
-                }catch (Exception ee){
+                } catch (Exception ee) {
                     ee.printStackTrace();
                 }
                 context.startActivity(i);
