@@ -2,24 +2,27 @@ package com.Example.iJam.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.Example.iJam.R;
-import com.Example.iJam.fragments.MyPagerAdapter;
+import com.Example.iJam.adapters.MyPagerAdapter;
 import com.Example.iJam.models.User;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     //private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager mPager;
     private MyPagerAdapter mAdapter;
+    private FloatingActionButton FAB;
     public static User user;
 
     @Override
@@ -34,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
         mTabLayout.setTabsFromPagerAdapter(mAdapter);
+        FAB = (FloatingActionButton)findViewById(R.id.main_fab_add);
+        FAB.setOnClickListener(this);
 
         mTabLayout.setupWithViewPager(mPager);
         mPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
@@ -67,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent i = new Intent(this, UploadTrackActivity.class);
+        startActivity(i);
     }
 
     public static class MyFragment extends Fragment {

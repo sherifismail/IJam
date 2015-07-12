@@ -1,6 +1,5 @@
 package com.Example.iJam.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,7 +10,6 @@ import android.view.MenuItem;
 
 import com.Example.iJam.R;
 import com.Example.iJam.adapters.TrackDetailAdapter;
-import com.Example.iJam.fragments.MyPagerAdapter;
 import com.Example.iJam.models.User;
 
 

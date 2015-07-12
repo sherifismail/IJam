@@ -1,9 +1,8 @@
 package com.Example.iJam.fragments;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-//import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,10 +13,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.Example.iJam.R;
 import com.Example.iJam.activities.MainActivity;
 import com.Example.iJam.activities.SignInActivity;
 import com.Example.iJam.network.HttpGetTask;
-import com.Example.iJam.R;
 import com.Example.iJam.network.ServerManager;
 
 import org.json.JSONException;
@@ -25,9 +24,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+//import android.app.Fragment;
+
 public class ProfileFragment extends Fragment {
     ListView listV;
     ImageView profileimage;
+    //private FloatingActionButton FAB;
     //LinearLayout linearList;
 
     @Override
@@ -39,6 +41,8 @@ public class ProfileFragment extends Fragment {
 
         final ArrayList<String> list = new ArrayList<String>();
         profileimage = (ImageView) v.findViewById(R.id.imageView2);
+        //FAB = (FloatingActionButton)v.findViewById(R.id.main_fab_add);
+
         profileimage.setImageResource(R.drawable.x);
 
         TextView userName = (TextView) v.findViewById(R.id.tv_profilename);

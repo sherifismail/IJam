@@ -1,11 +1,8 @@
 package com.Example.iJam.fragments;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-//import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,14 +13,12 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.Example.iJam.R;
 import com.Example.iJam.activities.MainTrackDetailActivity;
-import com.Example.iJam.activities.TrackDetailsActivity;
-import com.Example.iJam.activities.UploadTrackActivity;
 import com.Example.iJam.adapters.TrackAdapter;
-import com.Example.iJam.network.HttpGetTask;
 import com.Example.iJam.interfaces.TrackInterface;
 import com.Example.iJam.models.Track;
-import com.Example.iJam.R;
+import com.Example.iJam.network.HttpGetTask;
 import com.Example.iJam.network.ServerManager;
 
 import org.json.JSONArray;
@@ -34,8 +29,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+//import android.app.Fragment;
+
 public class SearchFragment extends Fragment {
-    private FloatingActionButton mFAB;
     private RelativeLayout mRoot;
     ListView searchList;
     EditText search_name;
@@ -46,8 +42,6 @@ public class SearchFragment extends Fragment {
         //getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE| WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         mRoot = (RelativeLayout) v.findViewById(R.id.root_activity_search);
-        mFAB = (FloatingActionButton) v.findViewById(R.id.toptracks_fab_add);
-        mFAB.setOnClickListener(mFabClickListener);
         search_name = (EditText) v.findViewById(R.id.search_et_searchTracks);
 
         //Button search = (Button) v.findViewById(R.id.btn_searchTracks);
@@ -86,14 +80,6 @@ public class SearchFragment extends Fragment {
 
         return f;
     }
-
-    private View.OnClickListener mFabClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent i=new Intent(getActivity(),UploadTrackActivity.class);
-            startActivity(i);
-        }
-    };
 
     private void SearchTracks(String val, Context context){
 

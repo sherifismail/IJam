@@ -8,9 +8,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/lvBands"
-        android:background="@android:color/white" />
-
+        android:id="@+id/lvBands" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/toptracks_fab_add"
