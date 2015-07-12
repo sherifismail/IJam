@@ -46,6 +46,10 @@
             android:name=".activities.MainTrackDetailActivity"
             android:label="@string/title_activity_main_track_detail" >
         </activity>
+        <activity
+            android:name=".fragments.TrackParentFragment"
+            android:label="@string/title_activity_track_parent" >
+        </activity>
     </application>
 
 </manifest>
