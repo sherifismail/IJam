@@ -17,16 +17,15 @@
             android:id="@+id/txtTitle"
             android:layout_marginBottom="5dp"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/imageView" />
+            android:layout_toEndOf="@+id/img_trackimage" />
 
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:id="@+id/imageView"
+        <com.android.volley.toolbox.NetworkImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/img_trackimage"
+            android:layout_gravity="center_horizontal"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignBottom="@+id/txtRating"
-            />
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="fill_parent"
@@ -35,7 +34,7 @@
             android:text="Likes"
             android:id="@+id/txtLikes"
             android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@+id/imageView"
+            android:layout_toEndOf="@+id/img_trackimage"
             android:layout_below="@+id/txtTitle"/>
 
         <TextView
@@ -43,7 +42,7 @@
             android:layout_height="wrap_content"
             android:text="Rating: "
             android:id="@+id/txtRating"
-            android:layout_toEndOf="@+id/imageView"
+            android:layout_toEndOf="@+id/img_trackimage"
             android:layout_below="@+id/txtLikes" />
 
     </RelativeLayout>

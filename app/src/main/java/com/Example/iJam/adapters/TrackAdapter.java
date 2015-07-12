@@ -7,14 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.Example.iJam.R;
 import com.Example.iJam.interfaces.TrackInterface;
 import com.Example.iJam.network.NetworkManager;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,20 +44,24 @@ public class TrackAdapter extends ArrayAdapter<TrackInterface> {
         TextView txtTitle = (TextView) rowView.findViewById(R.id.txtTitle);
         TextView txtLikes = (TextView) rowView.findViewById(R.id.txtLikes);
         TextView txtRating = (TextView) rowView.findViewById(R.id.txtRating);
-        final ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
+        NetworkImageView iv = (NetworkImageView) rowView.findViewById(R.id.img_trackimage);
+        //final ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
+
         final TrackInterface item = items.get(position);
 
         final String title = item.getTitle();
         final String likes = Integer.toString(item.getLikes());
         final String rating = Double.toString(item.getRating());
         final String author = (item.getUploader());
+        final String imgUrl = item.getImageUrl();
 
         txtTitle.setText(title);
         txtLikes.setText(likes);
         txtRating.setText(rating);
-
         txtRating.setEnabled(false);
 
+        iv.setImageUrl(imgUrl, NetworkManager.getInstance(context).getImageLoader());
+        /*
         NetworkManager.getInstance(context).getImageLoader().get("URL",
                 new ImageLoader.ImageListener() {
                     @Override
@@ -71,11 +73,8 @@ public class TrackAdapter extends ArrayAdapter<TrackInterface> {
                     public void onErrorResponse(VolleyError error) {
 
                     }
-                }/*, 100, 100, ImageView.ScaleType.CENTER*/);
-
-        /*NetworkImageView iv = (NetworkImageView) imageView.findViewById(R.id.txtRating);
-        iv.setImageUrl("URL", NetworkManager.getInstance(context).getImageLoader());*/
-
+                }//, 100, 100, ImageView.ScaleType.CENTER);
+        */
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -42,7 +42,7 @@ public class BandAdapter extends ArrayAdapter<Band>{
         TextView txtName = (TextView) rowView.findViewById(R.id.txtBand);
         TextView txtTracks = (TextView) rowView.findViewById(R.id.txtTracks);
         TextView txtAuthor = (TextView) rowView.findViewById(R.id.txtAuthor);
-        final ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
+        final ImageView imageView = (ImageView) rowView.findViewById(R.id.ivBand);
         final Band item = items.get(position);
 
         txtName.setText(item.getName());

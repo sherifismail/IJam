@@ -48,8 +48,5 @@
             android:id="@+id/txtAuthor"
             android:layout_toEndOf="@id/ivBand"
             android:layout_below="@id/txtTracks"/>
-
-
-
     </RelativeLayout>
 </LinearLayout>
