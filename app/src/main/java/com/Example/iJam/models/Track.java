@@ -100,17 +100,15 @@ public class Track implements TrackInterface {
     public JSONObject toJSONObject(){
         JSONObject trackOb= new JSONObject();
         try {
-            //String encodedImage = convertToBase64();
 
-            trackOb.put("Title", this.getTitle());
-            trackOb.put("Uploader", this.getUploader());
-            trackOb.put("Duration", this.getDuration());
-            trackOb.put("Tags", this.getTags());
-            trackOb.put("Likes", this.getLikes());
-            trackOb.put("Duration", this.getDuration());
-            trackOb.put("Rating", this.getRating());
-            trackOb.put("Instrument", this.getInstrument());
-            //contact.put("Image", encodedImage);
+            trackOb.put("name", this.getTitle());
+            trackOb.put("imageurl", this.getImageUrl());
+            trackOb.put("author", this.getUploader());
+            trackOb.put("duration", this.getDuration());
+            trackOb.put("tags", this.getTags());
+            trackOb.put("likes", this.getLikes());
+            trackOb.put("rating", this.getRating());
+            trackOb.put("instrument", this.getInstrument());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -130,9 +128,10 @@ public class Track implements TrackInterface {
                 int likes = ob.getInt("likes");
                 double rating = ob.getDouble("rating");
                 String title = ob.getString("name");
-                //String uploader = ob.getString("");
+                String uploader = ob.getString("user_name");
                 String instrument = ob.getString("instrument");
-                ArrayList<String> tags = new ArrayList<>();
+                String imgUrl = ob.getString("img_url");
+                //ArrayList<String> tags = new ArrayList<>();
 
                 /*JSONArray t = ob.getJSONArray("Tags");
                 for(int j = 0; j < t.length(); j++ ){
@@ -142,10 +141,11 @@ public class Track implements TrackInterface {
                     tags.add(tag);
                 }*/
                 track.setDuration(duration);
+                track.setImageUrl(imgUrl);
                 track.setLikes(likes);
                 track.setRating(rating);
                 track.setTitle(title);
-                track.setUploader("batee5");
+                track.setUploader(uploader);
                 track.setInstrument(instrument);
                 //track.setTags(tags);
 

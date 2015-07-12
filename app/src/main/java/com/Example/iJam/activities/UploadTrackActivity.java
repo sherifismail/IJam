@@ -1,8 +1,8 @@
 package com.Example.iJam.activities;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -18,15 +18,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.Example.iJam.R;
+import com.Example.iJam.network.HttpImageTask;
 import com.Example.iJam.network.InsertTrackTask;
 import com.Example.iJam.network.ServerManager;
-import com.Example.iJam.network.HttpImageTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -89,22 +88,47 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
         return super.onOptionsItemSelected(item);
     }
 
+    public void performCrop(Uri picUri) {
+        try {
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            //indicate image type and Uri
+            cropIntent.setDataAndType(picUri, "image/*");
+            //set crop properties
+            cropIntent.putExtra("crop", "true");
+            //indicate aspect of desired crop
+            cropIntent.putExtra("aspectX", 1);
+            cropIntent.putExtra("aspectY", 1);
+            //indicate output X and Y
+            cropIntent.putExtra("outputX", 256);
+            cropIntent.putExtra("outputY", 256);
+            //retrieve data on return
+            cropIntent.putExtra("return-data", true);
+            //start the activity - we handle returning in onActivityResult
+            startActivityForResult(cropIntent, 2);
+
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case 1:
-                if (resultCode == RESULT_OK) {
-                    try {
-                        Uri imageUri = data.getData();
-                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                        final Bitmap img = BitmapFactory.decodeStream(imageStream);
-                        imgTrack.setImageBitmap(img);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                break;
+
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 1:
+                    Uri imageUri = data.getData();
+                    performCrop(imageUri);
+                    break;
+                case 2:
+                    //get the returned data
+                    Bundle extras = data.getExtras();
+                    //get the cropped bitmap
+                    Bitmap thePic = extras.getParcelable("data");
+                    imgTrack.setImageBitmap(thePic);
+                    break;
+            }
         }
     }
 
