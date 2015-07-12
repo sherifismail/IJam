@@ -1,44 +1,40 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.Example.iJam.activities.TrackDetailsActivity"
-    android:orientation="vertical"
-    android:weightSum="1">
+    tools:context="com.Example.iJam.activities.TrackDetailsActivity">
 
     <FrameLayout
-        android:id="@+id/trackimg"
+        android:id="@+id/trackdetail_frame_mi"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.06">
+        android:layout_height="175dp">
 
         <VideoView
-            android:layout_width="wrap_content"
-            android:layout_height="175dp"
-            android:id="@+id/player" />
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/trackdetail_vp_player" />
 
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="175dp"
-            android:id="@+id/testimg"></FrameLayout>
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/trackdetail_img_testimage">
+        </FrameLayout>
     </FrameLayout>
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="345dp"
-        android:id="@+id/track_detail_listview"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/linearLayout3"
-        android:layout_below="@+id/linearLayout2"
-        android:layout_weight="0.06" />
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/trackdetail_lv_tracks"
+        android:layout_above="@+id/trackdetail_layout_1"
+        android:layout_below="@+id/trackdetail_frame_mi" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:id="@+id/linearLayout3"
+        android:id="@+id/trackdetail_layout_1"
         android:gravity="bottom">
 
         <Button
@@ -49,7 +45,7 @@
             android:layout_marginRight="0.5dp"
             android:background="@android:color/holo_orange_dark"
             android:textColor="@android:color/white"
-            android:id="@+id/play" />
+            android:id="@+id/trackdetail_bt_playtrack" />
 
         <Button
             android:layout_width="wrap_content"
@@ -61,4 +57,4 @@
             android:textColor="@android:color/white" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

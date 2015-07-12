@@ -40,12 +40,12 @@ public class TrackDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_track_details, container, false);
 
-        trackdetails=(ListView)v.findViewById(R.id.track_detail_listview);
-        trackplayer=(VideoView)v.findViewById(R.id.player);
-        playtrack=(Button) v.findViewById(R.id.play);
+        trackdetails=(ListView)v.findViewById(R.id.trackdetail_lv_tracks);
+        trackplayer=(VideoView)v.findViewById(R.id.trackdetail_vp_player);
+        playtrack=(Button) v.findViewById(R.id.trackdetail_bt_playtrack);
         //imgTrack = (ImageView) findViewById(R.id.img_track);
         //imgTrack.setImageResource(R.drawable.x);
-        imgtrack=(FrameLayout)v.findViewById(R.id.testimg);
+        imgtrack=(FrameLayout)v.findViewById(R.id.trackdetail_img_testimage);
         imgtrack.setBackgroundResource(R.drawable.x);
         /*int hours = time / 3600;
         int minutes = (time / 60) - (hours * 60);
@@ -73,10 +73,10 @@ public class TrackDetailFragment extends Fragment {
                     int hours = duration / 3600;
                     int minutes = (duration / 60) - (hours * 60);
                     int seconds = duration - (hours * 3600) - (minutes * 60);
-                   formatted = String.format("%02d:%02d", minutes, seconds);
+                    formatted = String.format("%02d:%02d", minutes, seconds);
                     Log.i("trackduration", formatted);
                     Toast.makeText(getActivity().getApplicationContext(), "duration is " + formatted, Toast.LENGTH_LONG).show();
-                    String[] trackitems = new String[]{title, likes, rating, author,"#solo#musica#piano", "Piano",formatted,"11-07-2015"};
+                    String[] trackitems = new String[]{title, likes, rating, author, "#solo#musica#piano", "Piano", formatted, "11-07-2015"};
                     for (int i = 0; i < trackitems.length; ++i) {
                         list.add(trackitems[i]);
                     }

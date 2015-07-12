@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.TextView;
@@ -34,12 +33,12 @@ Button playtrack;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_track_details);
-        trackdetails=(ListView)findViewById(R.id.track_detail_listview);
-        trackplayer=(VideoView)findViewById(R.id.player);
-        playtrack=(Button) findViewById(R.id.play);
+        trackdetails=(ListView)findViewById(R.id.trackdetail_lv_tracks);
+        trackplayer=(VideoView)findViewById(R.id.trackdetail_vp_player);
+        playtrack=(Button) findViewById(R.id.trackdetail_bt_playtrack);
         //imgTrack = (ImageView) findViewById(R.id.img_track);
         //imgTrack.setImageResource(R.drawable.x);
-        imgtrack=(FrameLayout)findViewById(R.id.testimg);
+        imgtrack=(FrameLayout)findViewById(R.id.trackdetail_img_testimage);
         imgtrack.setBackgroundResource(R.drawable.x);
         String trackurl=ServerManager.getServerURL()+"/test_track.mp3";
         try {
