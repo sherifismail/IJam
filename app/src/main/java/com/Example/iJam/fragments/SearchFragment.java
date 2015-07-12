@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.Example.iJam.activities.MainTrackDetailActivity;
 import com.Example.iJam.activities.TrackDetailsActivity;
 import com.Example.iJam.activities.UploadTrackActivity;
 import com.Example.iJam.adapters.TrackAdapter;
@@ -117,7 +118,7 @@ public class SearchFragment extends Fragment {
                         JSONArray jArray = new JSONArray(response.getString("results"));
                         searchRes = Track.parseJson(jArray);
 
-                        TrackAdapter tracksAdap = new TrackAdapter(getActivity(), TrackDetailsActivity.class, (ArrayList<TrackInterface>) (ArrayList<?>) searchRes);
+                        TrackAdapter tracksAdap = new TrackAdapter(getActivity(), MainTrackDetailActivity.class, (ArrayList<TrackInterface>) (ArrayList<?>) searchRes);
                         searchList.setAdapter(tracksAdap);
                     }
                 } catch (JSONException e) {
