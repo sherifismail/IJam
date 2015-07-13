@@ -1,19 +1,17 @@
 package com.Example.iJam.fragments;
 
 //import android.app.Fragment;
+
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
@@ -23,7 +21,9 @@ import android.widget.VideoView;
 
 import com.Example.iJam.R;
 import com.Example.iJam.activities.UploadTrackActivity;
-import com.Example.iJam.network.ServerManager;
+import com.Example.iJam.models.Track;
+import com.Example.iJam.network.NetworkManager;
+import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
 
@@ -36,34 +36,46 @@ public class TrackDetailFragment extends Fragment {
     ListView trackdetails;
     VideoView trackplayer;
     MediaController mc;
-    FrameLayout imgtrack;
+    NetworkImageView imgtrack;
     //Button playtrack;
     private FloatingActionButton mFAB;
     private RelativeLayout mRoot;
-    String formatted="",title,likes,rating,author;
+
     final ArrayList<String> list = new ArrayList<String>();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_track_details, container, false);
+
         mRoot = (RelativeLayout) v.findViewById(R.id.root_activity_trackDetails);
         mFAB = (FloatingActionButton) v.findViewById(R.id.toptracks_fab_add);
         mFAB.setOnClickListener(mFabClickListener);
         trackdetails=(ListView)v.findViewById(R.id.trackdetail_lv_tracks);
         trackplayer=(VideoView)v.findViewById(R.id.trackdetail_vp_player);
         //playtrack=(Button) v.findViewById(R.id.trackdetail_bt_playtrack);
-        imgtrack=(FrameLayout)v.findViewById(R.id.trackdetail_img_testimage);
-        imgtrack.setBackgroundResource(R.drawable.x);
-        String trackurl= ServerManager.getServerURL()+"/test_track.mp3";
+        imgtrack=(NetworkImageView)v.findViewById(R.id.trackdetail_img_testimage);
+        //imgtrack.setBackgroundResource(R.drawable.x);
+
+
+        Track myTrack = (Track) getActivity().getIntent().getSerializableExtra("track");
+
         try {
-            title = getActivity().getIntent().getStringExtra("title");
-            likes = getActivity().getIntent().getStringExtra("likes");
-            rating = getActivity().getIntent().getStringExtra("rating");
-            author = getActivity().getIntent().getStringExtra("author");
+            final String title = myTrack.getTitle();
+            final String likes = Integer.toString(myTrack.getLikes());
+            final String rating = Double.toString(myTrack.getRating());
+            final String uploader = myTrack.getUploader();
+            final String tags = myTrack.getTags();
+            final String instrument = myTrack.getInstrument();
+            final String imgUrl = myTrack.getImageUrl();
+            final String duration = Integer.toString(myTrack.getDuration());
+            final String uploadDate = myTrack.getUpload_date();
+            final String trackUrl= myTrack.getTrackUrl();//ServerManager.getServerURL()+"/test_track.mp3";
 
-            trackplayer.setVideoURI(Uri.parse(trackurl));
+            imgtrack.setImageUrl(imgUrl, NetworkManager.getInstance(getActivity()).getImageLoader());
 
-            int time=trackplayer.getDuration();
-            String tracktime=String.valueOf(time);
+            trackplayer.setVideoURI(Uri.parse(trackUrl));
+
+            //int time = trackplayer.getDuration();
+            //String tracktime = String.valueOf(time);
             //Log.i("trackduration", tracktime);
             trackplayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 
@@ -74,18 +86,21 @@ public class TrackDetailFragment extends Fragment {
                     int hours = duration / 3600;
                     int minutes = (duration / 60) - (hours * 60);
                     int seconds = duration - (hours * 3600) - (minutes * 60);
-                    formatted = String.format("%02d:%02d", minutes, seconds);
-                    Log.i("trackduration", formatted);
+                    String formatted = String.format("%02d:%02d", minutes, seconds);
+                    //Log.i("trackduration", formatted);
                     Toast.makeText(getActivity().getApplicationContext(), "duration is " + formatted, Toast.LENGTH_LONG).show();
-                    String[] trackitems = new String[]{title, likes, rating, author, "#solo#musica#piano", "Piano", formatted, "11-07-2015"};
-                    for (int i = 0; i < trackitems.length; ++i) {
-                        list.add(trackitems[i]);
-                    }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, trackitems);
-                    trackdetails.setAdapter(adapter);
                 }
             });
+            String[] trackItems = new String[]{"Title: "+ title, "Likes Count: " + likes,
+                    "Rating: " + rating, "Uploader:" + uploader,
+                    "Tags: " + tags, "Instrument: " + instrument,
+                    "Song Duration: " + duration, "Upload Date: " + uploadDate};
+            for (int i = 0; i < trackItems.length; ++i) {
+                list.add(trackItems[i]);
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, trackItems);
+            trackdetails.setAdapter(adapter);
 
           /*  playtrack.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -94,12 +109,12 @@ public class TrackDetailFragment extends Fragment {
 
                 }
             });*/
-            mc=new MediaController(getActivity());
+            mc = new MediaController(getActivity());
             mc.setMediaPlayer(trackplayer);
             trackplayer.start();
             //int length = mc.getDuration();
 
-            mc.setAnchorView(trackplayer);
+            //mc.setAnchorView(trackplayer);
             trackplayer.setMediaController(mc);
 
             // mc.setPadding(0, 0, 0, 1200);
@@ -116,7 +131,6 @@ public class TrackDetailFragment extends Fragment {
         }catch(Exception ee){
             ee.printStackTrace();
         }
-
 
         return v;
     }

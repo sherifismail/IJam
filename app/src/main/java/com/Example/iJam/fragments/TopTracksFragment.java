@@ -9,11 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.Example.iJam.R;
 import com.Example.iJam.activities.MainTrackDetailActivity;
 import com.Example.iJam.adapters.TrackAdapter;
-import com.Example.iJam.interfaces.TrackInterface;
 import com.Example.iJam.models.Track;
 import com.Example.iJam.network.HttpGetTask;
 import com.Example.iJam.network.ServerManager;
@@ -60,10 +60,16 @@ public class TopTracksFragment extends Fragment {
                     JSONObject response = new JSONObject(s);
                     if(response.getString("status").equals("success")) {
                         JSONArray jArray = new JSONArray(response.getString("results"));
-                        topTracks = Track.parseJson(jArray);
+                        try {
 
-                        TrackAdapter tracksAdap = new TrackAdapter(getActivity(), MainTrackDetailActivity.class, (ArrayList<TrackInterface>) (ArrayList<?>) topTracks);
-                        lvTracks.setAdapter(tracksAdap);
+                            topTracks = Track.parseJson(jArray);
+                            TrackAdapter tracksAdap = new TrackAdapter(getActivity(), MainTrackDetailActivity.class, topTracks);
+                            lvTracks.setAdapter(tracksAdap);
+
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                            Toast.makeText(getActivity(), "Failed to retreive data!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

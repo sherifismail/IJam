@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.Example.iJam.R;
 import com.Example.iJam.activities.MainTrackDetailActivity;
 import com.Example.iJam.adapters.TrackAdapter;
-import com.Example.iJam.interfaces.TrackInterface;
 import com.Example.iJam.models.Track;
 import com.Example.iJam.network.HttpGetTask;
 import com.Example.iJam.network.ServerManager;
@@ -104,7 +103,7 @@ public class SearchFragment extends Fragment {
                         JSONArray jArray = new JSONArray(response.getString("results"));
                         searchRes = Track.parseJson(jArray);
 
-                        TrackAdapter tracksAdap = new TrackAdapter(getActivity(), MainTrackDetailActivity.class, (ArrayList<TrackInterface>) (ArrayList<?>) searchRes);
+                        TrackAdapter tracksAdap = new TrackAdapter(getActivity(), MainTrackDetailActivity.class, searchRes);
                         searchList.setAdapter(tracksAdap);
                     }
                 } catch (JSONException e) {

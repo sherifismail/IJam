@@ -62,7 +62,7 @@ public class User {
         this.password = password;
     }
 
-    public void addTrack(String trackName, int duration, String imgurl, ArrayList<String> tags, String instrument){
+    public void addTrack(String trackName, int duration, String imgurl, String tags, String instrument){
         Track temp = new Track(trackName, user_name, false, duration, imgurl, tags, instrument);
         tracks.add(temp);
     }

@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.Example.iJam.R;
-import com.Example.iJam.interfaces.TrackInterface;
+import com.Example.iJam.models.Track;
 import com.Example.iJam.network.NetworkManager;
 import com.android.volley.toolbox.NetworkImageView;
 
@@ -20,15 +20,15 @@ import java.util.HashMap;
 /**
  * Created by Khodary on 7/5/15.
  */
-public class TrackAdapter extends ArrayAdapter<TrackInterface> {
+public class TrackAdapter extends ArrayAdapter<Track> {
     private final Activity context;
     private final Class<?> context2;
-    ArrayList<TrackInterface> items;
+    ArrayList<Track> items;
 
     public static HashMap<String, Bitmap> myImages = new HashMap<String, Bitmap>();
 
 
-    public TrackAdapter(Activity context, Class<?> context2, ArrayList<TrackInterface> items) {
+    public TrackAdapter(Activity context, Class<?> context2, ArrayList<Track> items) {
         super(context, R.layout.track_row_layout, items);
         this.items = items;
         this.context = context;
@@ -47,12 +47,12 @@ public class TrackAdapter extends ArrayAdapter<TrackInterface> {
         NetworkImageView iv = (NetworkImageView) rowView.findViewById(R.id.img_trackimage);
         //final ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
 
-        final TrackInterface item = items.get(position);
+        final Track item = items.get(position);
 
         final String title = item.getTitle();
         final String likes = Integer.toString(item.getLikes());
         final String rating = Double.toString(item.getRating());
-        final String author = (item.getUploader());
+        //final String author = (item.getUploader());
         final String imgUrl = item.getImageUrl();
 
         txtTitle.setText(title);
@@ -80,14 +80,18 @@ public class TrackAdapter extends ArrayAdapter<TrackInterface> {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, context2);
-                try {
+                //Bundle b = new Bundle();
+
+                i.putExtra("track", item);
+                /*try {
                     i.putExtra("title", title);
                     i.putExtra("likes", likes);
                     i.putExtra("rating", rating);
                     i.putExtra("author", author);
+
                 } catch (Exception ee) {
                     ee.printStackTrace();
-                }
+                }*/
                 context.startActivity(i);
             }
         });

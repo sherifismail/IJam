@@ -6,23 +6,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Khodary on 7/5/15.
  */
-public class Track implements TrackInterface {
+public class Track implements TrackInterface, Serializable {
     private String title;                //track name
     private String uploader;            //track auploader name
-    private boolean band;               //true it the uploader is band
+    //private String band;               //true it the uploader is band
     private int id;                //track id
     private int duration;               //in seconds
     private String imageUrl;              //image source location
+    private String trackUrl;
     private String upload_date;           //track upload date
-    private ArrayList<String> tags;     //track tags
-    private Track ancestor;             //ID of ancestor track, null if solo
+    private String tags;     //track tags
+    private int ancestor;             //ID of ancestor track, null if solo
     private ArrayList<Track> children;          //ID of children tracks, empty if last jam
     //private ArrayList<String> contributors;         //names of contributing users
     //private ArrayList<String> instruments;          //names of instrucments involved
@@ -31,34 +31,31 @@ public class Track implements TrackInterface {
     private double rating;
     private int raters;
 
-
-    public Track(String name, String uploader, boolean band, int duration, String imageUrl, ArrayList<String> tags, String instrument){
+    public Track(String title, String uploader, int id, int duration, String imageUrl, String trackUrl,
+                 String upload_date, String tags, int ancestor,
+                 String instrument, int likes, double rating) {
         this.title = title;
-        this.uploader = uploader;
-        this.band = band;
-        //trackID = ++id;
+        this.id = id;
         this.duration = duration;
         this.imageUrl = imageUrl;
-        Date date = new Date();
-        upload_date = new SimpleDateFormat("dd-MM-yyyy").format(date);
+        this.trackUrl = trackUrl;
+        this.upload_date = upload_date;
         this.tags = tags;
-        ancestor = null;
-        children = null;
-        //contributors = null;
+        this.ancestor = ancestor;
         this.instrument = instrument;
-        likes = 0;
-        rating = 0;
-        raters = 0;
+        this.likes = likes;
+        this.rating = rating;
+        this.uploader = uploader;
     }
 
-    public Track(String uploader, boolean band, String instrument, Track ancestor){
+    public Track(String uploader, boolean band, String instrument, Track ancestor) {
         this.title = ancestor.title;
         this.uploader = uploader;
-        this.band = band;
+        //this.band = band;
         //trackID = ++id;
         this.duration = ancestor.duration;
         this.tags = ancestor.tags;
-        this.ancestor = ancestor;
+        this.ancestor = ancestor.getID();
         children = null;
         //contributors = ancestor.contributors;
         //contributors.add(ancestor.uploader);
@@ -70,35 +67,35 @@ public class Track implements TrackInterface {
         ancestor.children.add(this);
     }
 
-    public Track(){
+    public Track() {
         title = null;
         uploader = null;
-        band = false;
+        //band = 0;
         id = 0;
         duration = 0;
         imageUrl = null;
         upload_date = null;
         tags = null;
-        ancestor = null;
-        children =  null;
+        ancestor = 0;
+        children = null;
         //contributors;
         //instruments;
-        instrument = null ;
+        instrument = null;
         likes = 0;
         rating = 0.0;
         raters = 0;
     }
 
-    public static JSONArray toJsonArray(ArrayList<Track> tracks){
+    public static JSONArray toJsonArray(ArrayList<Track> tracks) {
         JSONArray trackArray = new JSONArray();
-        for(Track track : tracks){
+        for (Track track : tracks) {
             trackArray.put(track.toJSONObject());
         }
         return trackArray;
     }
 
-    public JSONObject toJSONObject(){
-        JSONObject trackOb= new JSONObject();
+    public JSONObject toJSONObject() {
+        JSONObject trackOb = new JSONObject();
         try {
 
             trackOb.put("name", this.getTitle());
@@ -116,22 +113,26 @@ public class Track implements TrackInterface {
         return trackOb;
     }
 
-    public static ArrayList<Track> parseJson(JSONArray jArray){
+    public static ArrayList<Track> parseJson(JSONArray jArray) throws JSONException {
         ArrayList<Track> myTracks = new ArrayList<>();
 
-        for(int i = 0; i < jArray.length(); i++){
-            try {
-                Track track = new Track();
-                JSONObject ob = jArray.getJSONObject(i);
+        for (int i = 0; i < jArray.length(); i++) {
+            JSONObject ob = jArray.getJSONObject(i);
 
-                int duration = ob.getInt("duration");
-                int likes = ob.getInt("likes");
-                double rating = ob.getDouble("rating");
-                String title = ob.getString("name");
-                String uploader = ob.getString("user_name");
-                String instrument = ob.getString("instrument");
-                String imgUrl = ob.getString("img_url");
-                //ArrayList<String> tags = new ArrayList<>();
+            int duration = ob.getInt("duration");
+            int likes = ob.getInt("likes");
+            int id = ob.getInt("track_id");
+            double rating = ob.getDouble("rating");
+            String title = ob.getString("track_name");
+            String uploadDate = ob.getString("upload_date");
+            String instrument = ob.getString("instrument");
+            String imgUrl = ob.getString("img_url");
+            String tags = ob.getString("tags");
+            String band = ob.getString("band_name");
+            String trackUrl = ob.getString("track_url");
+            String user_name = ob.getString("user_name");
+            int ancestor = ob.getInt("ancestor_id");
+            //ArrayList<String> tags = new ArrayList<>();
 
                 /*JSONArray t = ob.getJSONArray("Tags");
                 for(int j = 0; j < t.length(); j++ ){
@@ -140,23 +141,17 @@ public class Track implements TrackInterface {
                     String tag = ob2.getString("Tag"+Integer.toString(j));
                     tags.add(tag);
                 }*/
-                track.setDuration(duration);
-                track.setImageUrl(imgUrl);
-                track.setLikes(likes);
-                track.setRating(rating);
-                track.setTitle(title);
-                track.setUploader(uploader);
-                track.setInstrument(instrument);
-                //track.setTags(tags);
+            Track track;
 
-                myTracks.add(track);
+            if (user_name == null)
+                track = new Track(title, band, id, duration, imgUrl, trackUrl,
+                        uploadDate, tags, ancestor, instrument, likes, rating);
+            else
+                track = new Track(title, user_name, id, duration, imgUrl, trackUrl,
+                        uploadDate, tags, ancestor, instrument, likes, rating);
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
+            myTracks.add(track);
         }
-
         return myTracks;
     }
 
@@ -191,12 +186,12 @@ public class Track implements TrackInterface {
     }
 
     @Override
-    public void setTags(ArrayList<String> tags) {
+    public void setTags(String tags) {
         this.tags = tags;
     }
 
     @Override
-    public void setAncestor(Track ancestor) {
+    public void setAncestor(int ancestor) {
         this.ancestor = ancestor;
     }
 
@@ -218,6 +213,21 @@ public class Track implements TrackInterface {
     @Override
     public void setUpload_date(String date) {
         this.upload_date = date;
+    }
+
+    @Override
+    public void setTrackUrl(String trackUrl) {
+        this.trackUrl = trackUrl;
+    }
+
+    @Override
+    public ArrayList<Track> getChildren() {
+        return children;
+    }
+
+    @Override
+    public String getTrackUrl() {
+        return trackUrl;
     }
 
     @Override
@@ -251,12 +261,12 @@ public class Track implements TrackInterface {
     }
 
     @Override
-    public ArrayList<String> getTags() {
+    public String getTags() {
         return tags;
     }
 
     @Override
-    public Track getAncestor() {
+    public int getAncestor() {
         return ancestor;
     }
 
@@ -275,22 +285,22 @@ public class Track implements TrackInterface {
         return this.upload_date;
     }
 
-    public ArrayList<String> getContributors(){
+    public ArrayList<String> getContributors() {
         ArrayList<String> contributors = new ArrayList<String>();
         Track node = this;
-        do{
+        do {
             contributors.add(node.getUploader());
-        }while(node.getAncestor()!=null);
+        } while (node.getAncestor() != 0);
 
         return contributors;
     }
 
-    public ArrayList<String> getInstruments(){
+    public ArrayList<String> getInstruments() {
         ArrayList<String> instruments = new ArrayList<String>();
         Track node = this;
-        do{
+        do {
             instruments.add(node.getInstrument());
-        }while(node.getAncestor()!=null);
+        } while (node.getAncestor() != 0);
 
         return instruments;
     }
