@@ -41,7 +41,7 @@ public class ProfileFragment extends Fragment {
 
         final String[] profItems = new String[]{"Profile", "Settings", "My Tracks", "About us", "Sign Out"};
         final ArrayList<String> list = new ArrayList<String>();
-        final String uName = MainActivity.user.getUser_name();
+        final String uName = MainActivity.user.getTitle();
         final String imgUrl = MainActivity.user.getImgUrl();
 
         listV = (ListView) v.findViewById(R.id.listView2);

@@ -1,5 +1,7 @@
 package com.Example.iJam.models;
 
+import com.Example.iJam.interfaces.JamHUBInterface;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,23 +11,16 @@ import java.util.ArrayList;
 /**
  * Created by Mostafa on 6/29/2015.
  */
-public class User implements Serializable {
-    //private int user_id;
+public class User implements JamHUBInterface, Serializable {
+    private int user_id;
     private String user_name;
     private String password;
     private String first_name;
     private String last_name;
     private String imgUrl;
     private String email;
+    private String upload_date;
     private ArrayList<Track> tracks;
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
 
     public String getEmail() {
         return email;
@@ -55,12 +50,44 @@ public class User implements Serializable {
         this.user_id = user_id;
     }*/
 
-    public String getUser_name() {
+    @Override
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    @Override
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    @Override
+    public String getTitle() {
         return user_name;
     }
 
-    public void setUser_name(String user_name) {
+    @Override
+    public int getID() {
+        return user_id;
+    }
+
+    @Override
+    public String getUpload_date() {
+        return upload_date;
+    }
+
+    @Override
+    public void setTitle(String user_name) {
         this.user_name = user_name;
+    }
+
+    @Override
+    public void setID(int id) {
+        this.user_id = id;
+    }
+
+    @Override
+    public void setUpload_date(String upload_date) {
+        this.upload_date = upload_date;
     }
 
     public String getPassword() {
@@ -96,6 +123,7 @@ public class User implements Serializable {
         Track temp = new Track(user_name, false, instrument, original);
         tracks.add(temp);
     }
+
     public JSONObject toJSONObject() throws JSONException{
         JSONObject userOb = new JSONObject();
 

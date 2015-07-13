@@ -65,7 +65,7 @@ public class TrackDetailFragment extends Fragment {
             final String uploader = myTrack.getUploader();
             final String tags = myTrack.getTags();
             final String instrument = myTrack.getInstrument();
-            final String imgUrl = myTrack.getImageUrl();
+            final String imgUrl = myTrack.getImgUrl();
             final String duration = Integer.toString(myTrack.getDuration());
             final String uploadDate = myTrack.getUpload_date();
             final String trackUrl= myTrack.getTrackUrl();
