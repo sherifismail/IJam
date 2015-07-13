@@ -26,5 +26,6 @@
     <string name="title_activity_track_details">TrackDetailsActivity</string>
     <string name="title_activity_main_track_detail">MainTrackDetailActivity</string>
     <string name="title_activity_track_parent">TrackParent</string>
+    <string name="title_activity_record">RecordActivity</string>
 
 </resources>

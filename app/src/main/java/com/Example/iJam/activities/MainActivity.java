@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Intent i = new Intent(this, UploadTrackActivity.class);
+        Intent i = new Intent(this, RecordActivity.class);
         startActivity(i);
     }
 
