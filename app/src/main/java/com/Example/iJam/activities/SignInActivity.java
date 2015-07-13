@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.Example.iJam.models.User;
 import com.Example.iJam.network.LogInTask;
 import com.Example.iJam.R;
 
@@ -103,12 +104,15 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
                                         Intent inte = new Intent(ctx, MainActivity.class);
                                         //inte.putExtra("user_id", user_info.getInt("user_id"));
-                                        inte.putExtra("user_name", user_info.getString("user_name"));
-                                        inte.putExtra("password", user_info.getString("password"));
-                                        inte.putExtra("first_name", user_info.getString("first_name"));
-                                        inte.putExtra("last_name", user_info.getString("last_name"));
-                                        inte.putExtra("img_url", user_info.getString("img_url"));
-                                        inte.putExtra("email", user_info.getString("email"));
+                                        String user_name = user_info.getString("user_name");
+                                        String password = user_info.getString("password");
+                                        String fname = user_info.getString("first_name");
+                                        String lname = user_info.getString("last_name");
+                                        String img_url = user_info.getString("img_url");
+                                        String email = user_info.getString("email");
+
+                                        final User u = new User(user_name, password, fname, lname, img_url, email);
+                                        inte.putExtra("user", u);
                                         inte.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         ctx.startActivity(inte);
                                         finish();

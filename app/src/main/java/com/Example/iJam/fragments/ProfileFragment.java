@@ -42,7 +42,6 @@ public class ProfileFragment extends Fragment {
         final String[] profItems = new String[]{"Profile", "Settings", "My Tracks", "About us", "Sign Out"};
         final ArrayList<String> list = new ArrayList<String>();
         final String uName = MainActivity.user.getTitle();
-        final String uName = MainActivity.user.getTitle();
         final String fName = MainActivity.user.getFirst_name();
         final String imgUrl = MainActivity.user.getImgUrl();
 
