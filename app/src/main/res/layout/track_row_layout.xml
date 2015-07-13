@@ -16,6 +16,7 @@
             android:text="TrackTitle:"
             android:id="@+id/txtTitle"
             android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/img_trackimage" />
 
@@ -23,6 +24,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/img_trackimage"
+            android:layout_marginBottom="36dp"
             android:layout_gravity="center_horizontal"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true" />
@@ -34,6 +36,7 @@
             android:text="Likes"
             android:id="@+id/txtLikes"
             android:layout_marginBottom="5dp"
+            android:layout_alignStart="@+id/txtTitle"
             android:layout_toEndOf="@+id/img_trackimage"
             android:layout_below="@+id/txtTitle"/>
 
@@ -42,6 +45,7 @@
             android:layout_height="wrap_content"
             android:text="Rating: "
             android:id="@+id/txtRating"
+            android:layout_alignStart="@id/txtTitle"
             android:layout_toEndOf="@+id/img_trackimage"
             android:layout_below="@+id/txtLikes" />
 

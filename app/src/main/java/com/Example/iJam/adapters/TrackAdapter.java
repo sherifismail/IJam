@@ -55,11 +55,9 @@ public class TrackAdapter extends ArrayAdapter<Track> {
         //final String author = (item.getUploader());
         final String imgUrl = item.getImageUrl();
 
-        txtTitle.setText(title);
-        txtLikes.setText(likes);
-        txtRating.setText(rating);
-        txtRating.setEnabled(false);
-
+        txtTitle.setText("Title: " + title);
+        txtLikes.setText("Likes Count: " + likes);
+        txtRating.setText("Rating: " + rating + "/5");
         iv.setImageUrl(imgUrl, NetworkManager.getInstance(context).getImageLoader());
         /*
         NetworkManager.getInstance(context).getImageLoader().get("URL",
