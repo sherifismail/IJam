@@ -62,10 +62,10 @@ public class User {
         this.password = password;
     }
 
-    public void addTrack(String trackName, int duration, String imgurl, String tags, String instrument){
+    /*public void addTrack(String trackName, int duration, String imgurl, String tags, String instrument){
         Track temp = new Track(trackName, user_name, false, duration, imgurl, tags, instrument);
         tracks.add(temp);
-    }
+    }*/
 
     public void jamOn(Track original, String instrument){
         Track temp = new Track(user_name, false, instrument, original);

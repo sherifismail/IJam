@@ -2,13 +2,10 @@ package com.Example.iJam.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,14 +20,10 @@ import com.Example.iJam.network.HttpImageTask;
 import com.Example.iJam.network.HttpTrackTask;
 import com.Example.iJam.network.InsertTrackTask;
 import com.Example.iJam.network.ServerManager;
-import com.Example.iJam.network.HttpImageTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -50,14 +43,14 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_track);
 
-        btRecord = (Button)findViewById(R.id.trackupload_bt_startrecord);
-        btStop = (Button)findViewById(R.id.trackupload_bt_stoprecord);
+        //btRecord = (Button)findViewById(R.id.trackupload_bt_startrecord);
+        //btStop = (Button)findViewById(R.id.trackupload_bt_stoprecord);
         imgTrack = (ImageView)findViewById(R.id.trackupload_img_trackimage);
         btUpload = (Button) findViewById(R.id.trackupload_bt_upload);
         etName = (EditText) findViewById(R.id.trackupload_et_name);
         etInstrument = (EditText) findViewById(R.id.trackupload_et_instrument);
         etTags = (EditText) findViewById(R.id.trackupload_et_tags);
-        btStorage = (Button) findViewById(R.id.trackupload_bt_storage);
+        //btStorage = (Button) findViewById(R.id.trackupload_bt_storage);
 
         myAudioRecorder = new MediaRecorder();
         myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -142,7 +135,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                 startActivityForResult(photoPickerIntent, 1);
                 break;
 
-            case R.id.trackupload_bt_storage:
+            /*case R.id.trackupload_bt_storage:
                 Intent musicPicker2 = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(musicPicker2, 2);
                 break;
@@ -171,7 +164,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                break;
+                break;*/
 
             case R.id.trackupload_bt_upload:
                 Upload();
