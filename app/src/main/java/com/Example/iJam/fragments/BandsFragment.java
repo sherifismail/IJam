@@ -15,18 +15,8 @@ import com.Example.iJam.R;
 
 public class BandsFragment extends Fragment {
 
-    private FloatingActionButton mFAB;
 
     private RelativeLayout mRoot;
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_bands, container, false);
-        mRoot = (RelativeLayout) v.findViewById(R.id.root_activity_bands);
-        mFAB = (FloatingActionButton) v.findViewById(R.id.toptracks_fab_add);
-        mFAB.setOnClickListener(mFabClickListener);
-
-        return v;
-    }
 
     public static BandsFragment newInstance(String text) {
 

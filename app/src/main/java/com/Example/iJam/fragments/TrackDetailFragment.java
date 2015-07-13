@@ -20,6 +20,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.Example.iJam.R;
+import com.Example.iJam.activities.JammingActivity;
 import com.Example.iJam.activities.UploadTrackActivity;
 import com.Example.iJam.models.Track;
 import com.Example.iJam.network.NetworkManager;
@@ -137,7 +138,7 @@ public class TrackDetailFragment extends Fragment {
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent i=new Intent(getActivity(),UploadTrackActivity.class);
+            Intent i=new Intent(getActivity(),JammingActivity.class);
             startActivity(i);
         }
     };

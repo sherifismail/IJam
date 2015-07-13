@@ -20,7 +20,7 @@ import com.Example.iJam.R;
 import java.io.IOException;
 
 public class RecordActivity extends ActionBarActivity implements View.OnClickListener {
-    Button next;
+    Button next,uploadstorage;
     private MediaRecorder myAudioRecorder;
     private String outputFile = null;
     TextView timer;
@@ -30,24 +30,21 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
     long timeSwapBuff = 0L;
     long updatedTime = 0L;
     ImageView recordbut,stopbut;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
+
         timer=(TextView)findViewById(R.id.timer);
         recordbut=(ImageView)findViewById(R.id.record_image_record);
-
         stopbut=(ImageView)findViewById(R.id.record_image_stop);
-        next=(Button)findViewById(R.id.record_button_next);
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.mp3";
-        myAudioRecorder = new MediaRecorder();
-        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-        myAudioRecorder.setOutputFile(outputFile);
+        next=(Button)findViewById(R.id.record_btn_next);
+        uploadstorage=(Button)findViewById(R.id.record_btn_upload);
         next.setOnClickListener(this);
         recordbut.setOnClickListener(this);
         stopbut.setOnClickListener(this);
+        uploadstorage.setOnClickListener(this);
     }
 
     @Override
@@ -73,19 +70,40 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 3:
+
+            }
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.record_button_next:
+            case R.id.record_btn_next:
                 Intent intent=new Intent(RecordActivity.this,UploadTrackActivity.class);
-                intent.putExtra("Filename",outputFile);
+                intent.putExtra("filename",outputFile);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.record_image_record:
                 try {
+                    outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.mp3";
+                    myAudioRecorder = new MediaRecorder();
+                    myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                    myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+                    myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+                    myAudioRecorder.setOutputFile(outputFile);
+
                     startTime = SystemClock.uptimeMillis();
                     customHandler.postDelayed(updateTimerThread, 0);
                     myAudioRecorder.prepare();
                     myAudioRecorder.start();
+
                     Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_LONG).show();
                     recordbut.setEnabled(false);
                     stopbut.setEnabled(true);
@@ -108,6 +126,10 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
                 stopbut.setEnabled(false);
 
                 Toast.makeText(getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.record_btn_upload:
+                Intent musicPicker2 = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(musicPicker2, 3);
                 break;
         }
     }
