@@ -49,7 +49,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String password = inte.getStringExtra("password");
         String fname = inte.getStringExtra("first_name");
         String lname = inte.getStringExtra("last_name");
+        String img_url = inte.getStringExtra("img_url");
+        String email = inte.getStringExtra("email");
         user = new User(uname, password, fname, lname);
+        user.setImgUrl(img_url);
+        user.setEmail(email);
     }
 
     @Override

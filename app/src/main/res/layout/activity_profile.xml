@@ -6,27 +6,35 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.Example.iJam.fragments.ProfileFragment">
 
-    <ImageView
+    <!--<ImageView
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:id="@+id/imageView2"
+        android:id="profile_img_userimage"
         android:layout_gravity="left"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />-->
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/profile_img_userimage"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView2"
+        android:layout_below="@+id/profile_img_userimage"
         android:layout_marginTop="5dp"
         android:id="@+id/linearLayout"
         android:layout_alignParentBottom="true">
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:scrollbars="none"
             android:id="@+id/listView2"
             android:layout_marginTop="10dp" />
@@ -39,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/imageView2"
+        android:layout_toRightOf="@+id/profile_img_userimage"
         android:layout_alignRight="@+id/linearLayout"
         android:layout_alignEnd="@+id/linearLayout">
 
@@ -55,8 +63,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tv_profiletracks"
-            android:textSize="20dp"
-            android:text="Num" />
+            android:textSize="15dp"
+            android:text="Total Tracks: " />
 
     </LinearLayout>
 

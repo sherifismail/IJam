@@ -11,7 +11,25 @@ public class User {
     private String password;
     private String first_name;
     private String last_name;
+    private String imgUrl;
+    private String email;
     private ArrayList<Track> tracks;
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public User(/*int user_id,*/ String user_name, String password, String fname, String lname){
         //this.user_id = user_id;

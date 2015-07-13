@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,7 +16,9 @@ import com.Example.iJam.R;
 import com.Example.iJam.activities.MainActivity;
 import com.Example.iJam.activities.SignInActivity;
 import com.Example.iJam.network.HttpGetTask;
+import com.Example.iJam.network.NetworkManager;
 import com.Example.iJam.network.ServerManager;
+import com.android.volley.toolbox.NetworkImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,7 +29,9 @@ import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment {
     ListView listV;
-    ImageView profileimage;
+    NetworkImageView profileImage;
+    TextView userName, userShows;
+
     //private FloatingActionButton FAB;
     //LinearLayout linearList;
 
@@ -36,22 +39,20 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_profile, container, false);
 
-        String[] profitems = new String[]{"Profile", "Settings", "My Tracks", "About us", "Sign Out"};
-        listV = (ListView) v.findViewById(R.id.listView2);
-
+        final String[] profItems = new String[]{"Profile", "Settings", "My Tracks", "About us", "Sign Out"};
         final ArrayList<String> list = new ArrayList<String>();
-        profileimage = (ImageView) v.findViewById(R.id.imageView2);
-        //FAB = (FloatingActionButton)v.findViewById(R.id.main_fab_add);
+        final String uName = MainActivity.user.getUser_name();
+        final String imgUrl = MainActivity.user.getImgUrl();
 
-        profileimage.setImageResource(R.drawable.x);
+        listV = (ListView) v.findViewById(R.id.listView2);
+        userName = (TextView) v.findViewById(R.id.tv_profilename);
+        userShows = (TextView) v.findViewById(R.id.tv_profiletracks);
+        profileImage = (NetworkImageView) v.findViewById(R.id.profile_img_userimage);
 
-        TextView userName = (TextView) v.findViewById(R.id.tv_profilename);
-        final TextView userShows = (TextView) v.findViewById(R.id.tv_profiletracks);
+        profileImage.setImageUrl(imgUrl, NetworkManager.getInstance(getActivity()).getImageLoader());
+        userName.setText(uName);
 
-        String uname = MainActivity.user.getUser_name();
-        userName.setText(uname);
-
-        new HttpGetTask(ServerManager.getServerURL()+"/tracks/my_tracks.php?uname="+uname, getActivity()){
+        new HttpGetTask(ServerManager.getServerURL()+"/tracks/my_tracks.php?uname="+uName, getActivity()){
             @Override
             protected void onPostExecute(String s) {
                 try {
@@ -65,8 +66,8 @@ public class ProfileFragment extends Fragment {
         }.execute();
 
 
-        for (int i = 0; i < profitems.length; ++i) {
-            list.add(profitems[i]);
+        for (int i = 0; i < profItems.length; ++i) {
+            list.add(profItems[i]);
         }
         listV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -95,7 +96,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, profitems);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, profItems);
         listV.setAdapter(adapter);
 
         return v;

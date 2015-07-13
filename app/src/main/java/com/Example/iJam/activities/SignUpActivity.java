@@ -29,6 +29,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     EditText et_username, et_pass, et_confirm_pass, et_email, et_fname, et_lname;
     Button btn_signup;
     ImageView profileImage;
+    String img_url = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +116,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         new HttpImageTask(ServerManager.getServerURL() + "/users/upload_image.php", getApplicationContext()) {
                             @Override
                             protected void onPostExecute(String s) {
-                                String img_url = null;
+
                                 if (s.equals(""))
                                     return;
                                 try {
@@ -157,6 +158,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                                     inte.putExtra("password", password);
                                                     inte.putExtra("first_name", fname);
                                                     inte.putExtra("last_name", lname);
+                                                    inte.putExtra("email", email);
+                                                    inte.putExtra("img_url", img_url);
                                                     inte.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                                     ctx.startActivity(inte);
                                                     finish();
