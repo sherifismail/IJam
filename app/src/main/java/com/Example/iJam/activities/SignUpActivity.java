@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.Example.iJam.R;
+import com.Example.iJam.models.User;
 import com.Example.iJam.network.HttpImageTask;
 import com.Example.iJam.network.InsertUserTask;
 import com.Example.iJam.network.ServerManager;
@@ -132,14 +133,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                 }
                                 //-------------------------------------------------------------------------------------------------------
                                 //UPLOAD USER RECORD TO THE DATABASE
-                                JSONObject user = new JSONObject();
+                                final User u = new User(user_name, password, fname, lname, img_url, email);
+
                                 try {
-                                    user.put("user_name", user_name);
-                                    user.put("password", password);
-                                    user.put("first_name", fname);
-                                    user.put("last_name", lname);
-                                    user.put("email", email);
-                                    user.put("img_url", img_url);
+                                    JSONObject user = u.toJSONObject();
 
                                     new InsertUserTask(getApplicationContext()) {
                                         @Override
@@ -152,16 +149,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                                 } else {
                                                     Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
                                                     //int uid = response.getInt("user_id");
-                                                    Intent inte = new Intent(ctx, MainActivity.class);
+                                                    Intent i = new Intent(ctx, MainActivity.class);
                                                     //inte.putExtra("user_id", uid);
-                                                    inte.putExtra("user_name", user_name);
-                                                    inte.putExtra("password", password);
-                                                    inte.putExtra("first_name", fname);
-                                                    inte.putExtra("last_name", lname);
-                                                    inte.putExtra("email", email);
-                                                    inte.putExtra("img_url", img_url);
-                                                    inte.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                    ctx.startActivity(inte);
+                                                    i.putExtra("user", u);
+                                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                    ctx.startActivity(i);
                                                     finish();
                                                 }
                                             } catch (JSONException e) {

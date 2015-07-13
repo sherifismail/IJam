@@ -3,12 +3,13 @@ package com.Example.iJam.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Mostafa on 6/29/2015.
  */
-public class User {
+public class User implements Serializable {
     //private int user_id;
     private String user_name;
     private String password;
@@ -34,12 +35,15 @@ public class User {
         this.email = email;
     }
 
-    public User(/*int user_id,*/ String user_name, String password, String fname, String lname){
+    public User(/*int user_id,*/ String user_name, String password, String fname,
+                String lname, String imgUrl, String email){
         //this.user_id = user_id;
         this.user_name = user_name;
         this.password = password;
         this.first_name = fname;
         this.last_name = lname;
+        this.imgUrl = imgUrl;
+        this.email = email;
         tracks = null;
     }
 
