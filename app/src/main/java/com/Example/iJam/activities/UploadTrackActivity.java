@@ -59,13 +59,10 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
         etTags = (EditText) findViewById(R.id.trackupload_et_tags);
         btStorage = (Button) findViewById(R.id.trackupload_bt_storage);
 
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.mp3";
-
         myAudioRecorder = new MediaRecorder();
         myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-        myAudioRecorder.setOutputFile(outputFile);
 
         btUpload.setOnClickListener(this);
         btRecord.setOnClickListener(this);
@@ -98,26 +95,21 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
     }
 
     public void performCrop(Uri picUri) {
-        try {
-            Intent cropIntent = new Intent("com.android.camera.action.CROP");
-            //indicate image type and Uri
-            cropIntent.setDataAndType(picUri, "image/*");
-            //set crop properties
-            cropIntent.putExtra("crop", "true");
-            //indicate aspect of desired crop
-            cropIntent.putExtra("aspectX", 1);
-            cropIntent.putExtra("aspectY", 1);
-            //indicate output X and Y
-            cropIntent.putExtra("outputX", 256);
-            cropIntent.putExtra("outputY", 256);
-            //retrieve data on return
-            cropIntent.putExtra("return-data", true);
-            //start the activity - we handle returning in onActivityResult
-            startActivityForResult(cropIntent, 2);
-
-        } catch (ActivityNotFoundException e) {
-            e.printStackTrace();
-        }
+        Intent cropIntent = new Intent("com.android.camera.action.CROP");
+        //indicate image type and Uri
+        cropIntent.setDataAndType(picUri, "image/*");
+        //set crop properties
+        cropIntent.putExtra("crop", "true");
+        //indicate aspect of desired crop
+        cropIntent.putExtra("aspectX", 1);
+        cropIntent.putExtra("aspectY", 1);
+        //indicate output X and Y
+        cropIntent.putExtra("outputX", 256);
+        cropIntent.putExtra("outputY", 256);
+        //retrieve data on return
+        cropIntent.putExtra("return-data", true);
+        //start the activity - we handle returning in onActivityResult
+        startActivityForResult(cropIntent, 2);
     }
 
     @Override
@@ -167,6 +159,8 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.trackupload_bt_startrecord:
                 try {
+                    outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.mp3";
+                    myAudioRecorder.setOutputFile(outputFile);
                     myAudioRecorder.prepare();
                     myAudioRecorder.start();
                     Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_LONG).show();
@@ -192,61 +186,68 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
 
         //----------------------------------------------------------------------------------------------------------------
         //AFTER VALIDATION
-        //UPLOAD IMAGE
+        if(name.equals("") || instrument.equals("") || tags.equals(""))
+            Toast.makeText(getApplicationContext() ,"one or more fields are left empty!", Toast.LENGTH_SHORT).show();
+        else {
+            if(outputFile==null)
+                Toast.makeText(getApplicationContext() ,"no track is selected for uploading", Toast.LENGTH_SHORT).show();
+            else {
 
-        Bitmap img = ((BitmapDrawable)imgTrack.getDrawable()).getBitmap();
+                Bitmap img = ((BitmapDrawable) imgTrack.getDrawable()).getBitmap();
 
-        new HttpImageTask(ServerManager.getServerURL() + "/tracks/upload_image.php", getApplicationContext()){
-            @Override
-            protected void onPostExecute(String s) {
-                if(s.equals(""))
-                    return;
-                try {
-                    JSONObject response = new JSONObject(s);
-                    if (response.getString("status").equals("success")) {
-                        img_url = ServerManager.getServerURL() + "/tracks/" + response.getString("url");
-                        Toast.makeText(ctx, img_url, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(ctx, response.getString("error"), Toast.LENGTH_SHORT).show();
+                new HttpImageTask(ServerManager.getServerURL() + "/tracks/upload_image.php", getApplicationContext()) {
+                    @Override
+                    protected void onPostExecute(String s) {
+                        if (s.equals(""))
+                            return;
+                        try {
+                            JSONObject response = new JSONObject(s);
+                            if (response.getString("status").equals("success")) {
+                                img_url = ServerManager.getServerURL() + "/tracks/" + response.getString("url");
+                                Toast.makeText(ctx, img_url, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(ctx, response.getString("error"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        //---------------------------------------------------------------------------------------------
+                        //UPLOAD TRACK TO DATABASE
+                        if (ready)
+                            UploadTrack(name, track_duration, instrument, tags, img_url, track_url);
+                        else
+                            ready = true;
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                }.execute(img);
 
-                //---------------------------------------------------------------------------------------------
-                //UPLOAD TRACK TO DATABASE
-                if(ready)
-                    UploadTrack(name, track_duration, instrument, tags, img_url, track_url);
-                else
-                    ready = true;
-            }
-        }.execute(img);
+                new HttpTrackTask(ServerManager.getServerURL() + "/tracks/upload_track.php", getApplicationContext()) {
+                    @Override
+                    protected void onPostExecute(String s) {
+                        if (s.equals(""))
+                            return;
+                        try {
+                            JSONObject response = new JSONObject(s);
+                            if (response.getString("status").equals("success")) {
+                                track_url = ServerManager.getServerURL() + "/tracks/" + response.getString("url");
+                                Toast.makeText(ctx, track_url, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(ctx, response.getString("error"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
-        new HttpTrackTask(ServerManager.getServerURL() + "/tracks/upload_track.php", getApplicationContext()){
-            @Override
-            protected void onPostExecute(String s) {
-                if(s.equals(""))
-                    return;
-                try {
-                    JSONObject response = new JSONObject(s);
-                    if (response.getString("status").equals("success")) {
-                        track_url = ServerManager.getServerURL() + "/tracks/" + response.getString("url");
-                        Toast.makeText(ctx, track_url, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(ctx, response.getString("error"), Toast.LENGTH_SHORT).show();
+                        //---------------------------------------------------------------------------------------------
+                        //UPLOAD TRACK TO DATABASE
+                        if (ready)
+                            UploadTrack(name, track_duration, instrument, tags, img_url, track_url);
+                        else
+                            ready = true;
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                //---------------------------------------------------------------------------------------------
-                //UPLOAD TRACK TO DATABASE
-                if(ready)
-                    UploadTrack(name, track_duration, instrument, tags, img_url, track_url);
-                else
-                    ready = true;
+                }.execute(outputFile);
             }
-        }.execute(outputFile);
+        }
     }
 
     private void UploadTrack(String name, String duration, String instrument, String tags, String img_url, String track_url){
@@ -272,8 +273,10 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                             Toast.makeText(ctx, "Failed to upload track! " + response.getString("error"), Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
-                            //finish();
+                            finish();
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
             }.execute(json_track);
