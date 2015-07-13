@@ -1,7 +1,10 @@
 package com.Example.iJam.activities;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -29,7 +32,7 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
     ImageView recordbut,stopbut;
     private MediaRecorder myAudioRecorder;
     private String outputFile = null;
-    TextView timer;
+    TextView timer,countdown;
     private long startTime = 0L;
     private Handler customHandler = new Handler();
     long timeInMilliseconds = 0L;
@@ -43,7 +46,7 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jamming);
 
-
+countdown=(TextView)findViewById(R.id.countdown);
         imagetrack=(FrameLayout)findViewById(R.id.jamming_img_testimage);
         imagetrack.setBackgroundResource(R.drawable.x);
         String trackurl= ServerManager.getServerURL()+"/test_track.mp3";
@@ -60,8 +63,12 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
 
         mc=new MediaController(this);
         mc.setMediaPlayer(trackplayer);
-        trackplayer.start();
+
         trackplayer.setMediaController(mc);
+         AudioManager m_amAudioManager;
+        m_amAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        m_amAudioManager.setMode(AudioManager.MODE_IN_CALL);
+        m_amAudioManager.setSpeakerphoneOn(false);
 
 
     }
@@ -92,29 +99,44 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()){
         case R.id.jamming_image_record:
-        try {
-            outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/testrecord.mp3";
-            myAudioRecorder = new MediaRecorder();
-            myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-            myAudioRecorder.setOutputFile(outputFile);
 
-            startTime = SystemClock.uptimeMillis();
-            customHandler.postDelayed(updateTimerThread, 0);
-            myAudioRecorder.prepare();
-            myAudioRecorder.start();
+            new CountDownTimer(5000,1000){
 
-            Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_LONG).show();
-            recordbut.setEnabled(false);
-            stopbut.setEnabled(true);
-        } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    countdown.setText(""+ millisUntilFinished / 1000);
+                }
+
+                @Override
+                public void onFinish() {
+                    try {
+                        countdown.setVisibility(View.INVISIBLE);
+                        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/testrecord.mp3";
+                        myAudioRecorder = new MediaRecorder();
+                        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+                        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+                        myAudioRecorder.setOutputFile(outputFile);
+                        trackplayer.start();
+                        startTime = SystemClock.uptimeMillis();
+                        customHandler.postDelayed(updateTimerThread, 0);
+                        myAudioRecorder.prepare();
+                        myAudioRecorder.start();
+
+                        Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_LONG).show();
+                        recordbut.setEnabled(false);
+                        stopbut.setEnabled(true);
+                    } catch (IllegalStateException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+
+
         break;
             case R.id.jamming_image_stop:
         timeSwapBuff += timeInMilliseconds;

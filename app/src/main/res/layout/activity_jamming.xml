@@ -50,4 +50,13 @@
         android:layout_above="@+id/timer"
         android:layout_alignRight="@+id/timer"
         android:layout_alignEnd="@+id/timer" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/countdown"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="51dp"
+        android:textSize="40dp" />
 </RelativeLayout>
