@@ -43,8 +43,8 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_track);
 
-        btRecord = (Button)findViewById(R.id.trackupload_bt_startrecord);
-        btStop = (Button)findViewById(R.id.trackupload_bt_stoprecord);
+       // btRecord = (Button)findViewById(R.id.trackupload_bt_startrecord);
+        //btStop = (Button)findViewById(R.id.trackupload_bt_stoprecord);
         imgTrack = (ImageView)findViewById(R.id.trackupload_img_trackimage);
         btUpload = (Button) findViewById(R.id.trackupload_bt_upload);
         etName = (EditText) findViewById(R.id.trackupload_et_name);
@@ -60,8 +60,8 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
         myAudioRecorder.setOutputFile(outputFile);
 
         btUpload.setOnClickListener(this);
-        btRecord.setOnClickListener(this);
-        btStop.setOnClickListener(this);
+       // btRecord.setOnClickListener(this);
+       // btStop.setOnClickListener(this);
         imgTrack.setOnClickListener(this);
     }
 
@@ -140,7 +140,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, 1);
                 break;
-            case R.id.trackupload_bt_stoprecord:
+           /* case R.id.trackupload_bt_stoprecord:
                 myAudioRecorder.stop();
                 myAudioRecorder.release();
                 myAudioRecorder = null;
@@ -163,7 +163,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                break;
+                break;*/
             case R.id.trackupload_bt_upload:
                 final String name = etName.getText().toString().trim();
                 final String instrument = etInstrument.getText().toString().trim();

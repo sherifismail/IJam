@@ -21,7 +21,7 @@
         android:layout_below="@+id/trackupload_img_trackimage"
         android:orientation="horizontal">
 
-        <Button
+       <!-- <Button
             android:id="@+id/trackupload_bt_startrecord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             android:background="#ffdbdbdb"
             android:text="Stop Recording"
             android:enabled="false"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black" />!-->
 
     </LinearLayout>
 
@@ -78,14 +78,14 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
-        <Button
+        <!--<Button
             android:id="@+id/trackupload_bt_storage"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="0.5dp"
             android:layout_weight="0.4"
             android:background="@android:color/holo_orange_dark"
-            android:text="Upload from storage" />
+            android:text="Upload from storage" />!-->
 
         <Button
             android:id="@+id/trackupload_bt_upload"

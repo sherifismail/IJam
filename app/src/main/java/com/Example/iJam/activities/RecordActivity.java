@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +20,7 @@ import com.Example.iJam.R;
 import java.io.IOException;
 
 public class RecordActivity extends ActionBarActivity implements View.OnClickListener {
-    Button record,stop,next;
+    Button next;
     private MediaRecorder myAudioRecorder;
     private String outputFile = null;
     TextView timer;
@@ -28,26 +29,25 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
     long timeInMilliseconds = 0L;
     long timeSwapBuff = 0L;
     long updatedTime = 0L;
-
+    ImageView recordbut,stopbut;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
         timer=(TextView)findViewById(R.id.timer);
+        recordbut=(ImageView)findViewById(R.id.record_image_record);
 
-        record=(Button)findViewById(R.id.record_button_record);
-        stop=(Button)findViewById(R.id.record_button_stop);
+        stopbut=(ImageView)findViewById(R.id.record_image_stop);
         next=(Button)findViewById(R.id.record_button_next);
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.3gp";
+        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.mp3";
         myAudioRecorder = new MediaRecorder();
         myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
         myAudioRecorder.setOutputFile(outputFile);
-        record.setOnClickListener(this);
-        stop.setOnClickListener(this);
         next.setOnClickListener(this);
-
+        recordbut.setOnClickListener(this);
+        stopbut.setOnClickListener(this);
     }
 
     @Override
@@ -75,15 +75,20 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.record_button_record:
+            case R.id.record_button_next:
+                Intent intent=new Intent(RecordActivity.this,UploadTrackActivity.class);
+                intent.putExtra("Filename",outputFile);
+                startActivity(intent);
+                break;
+            case R.id.record_image_record:
                 try {
                     startTime = SystemClock.uptimeMillis();
                     customHandler.postDelayed(updateTimerThread, 0);
                     myAudioRecorder.prepare();
                     myAudioRecorder.start();
                     Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_LONG).show();
-                    record.setEnabled(false);
-                    stop.setEnabled(true);
+                    recordbut.setEnabled(false);
+                    stopbut.setEnabled(true);
                 } catch (IllegalStateException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -92,9 +97,7 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
                     e.printStackTrace();
                 }
                 break;
-
-            case R.id.record_button_stop:
-
+            case R.id.record_image_stop:
                 timeSwapBuff += timeInMilliseconds;
                 customHandler.removeCallbacks(updateTimerThread);
 
@@ -102,15 +105,9 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
                 myAudioRecorder.release();
                 myAudioRecorder = null;
 
-                stop.setEnabled(false);
+                stopbut.setEnabled(false);
 
                 Toast.makeText(getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.record_button_next:
-                Intent intent=new Intent(RecordActivity.this,UploadTrackActivity.class);
-                intent.putExtra("Filename",outputFile);
-                startActivity(intent);
                 break;
         }
     }
