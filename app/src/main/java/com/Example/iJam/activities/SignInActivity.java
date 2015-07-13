@@ -107,6 +107,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                         inte.putExtra("password", user_info.getString("password"));
                                         inte.putExtra("first_name", user_info.getString("first_name"));
                                         inte.putExtra("last_name", user_info.getString("last_name"));
+                                        inte.putExtra("img_url", user_info.getString("img_url"));
+                                        inte.putExtra("email", user_info.getString("email"));
                                         inte.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         ctx.startActivity(inte);
                                         finish();

@@ -16,8 +16,8 @@
         android:layout_alignParentStart="true" />-->
 
     <com.android.volley.toolbox.NetworkImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:id="@+id/profile_img_userimage"
         android:layout_gravity="center_horizontal"
         android:layout_alignParentTop="true"
@@ -65,6 +65,13 @@
             android:id="@+id/tv_profiletracks"
             android:textSize="15dp"
             android:text="Total Tracks: " />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_profilejams"
+            android:textSize="15dp"
+            android:text="Total Jams:" />
 
     </LinearLayout>
 
