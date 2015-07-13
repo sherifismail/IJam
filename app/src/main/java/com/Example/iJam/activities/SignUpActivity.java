@@ -1,8 +1,8 @@
 package com.Example.iJam.activities;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,16 +15,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.Example.iJam.R;
 import com.Example.iJam.network.HttpImageTask;
 import com.Example.iJam.network.InsertUserTask;
-import com.Example.iJam.R;
 import com.Example.iJam.network.ServerManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
@@ -32,19 +29,20 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     EditText et_username, et_pass, et_confirm_pass, et_email, et_fname, et_lname;
     Button btn_signup;
     ImageView profileImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        profileImage =(ImageView)findViewById(R.id.signup_img_userimage);
-        et_username=(EditText) findViewById(R.id.signup_et_username);
-        et_pass=(EditText) findViewById(R.id.signup_et_pass);
-        et_confirm_pass=(EditText) findViewById(R.id.signup_et_conpass);
-        et_email=(EditText) findViewById(R.id.signup_et_email);
-        et_fname=(EditText) findViewById(R.id.signup_et_fname);
-        et_lname=(EditText) findViewById(R.id.signup_et_lname);
-        btn_signup =(Button) findViewById(R.id.signup_bt_signup);
+        profileImage = (ImageView) findViewById(R.id.signup_img_userimage);
+        et_username = (EditText) findViewById(R.id.signup_et_username);
+        et_pass = (EditText) findViewById(R.id.signup_et_pass);
+        et_confirm_pass = (EditText) findViewById(R.id.signup_et_conpass);
+        et_email = (EditText) findViewById(R.id.signup_et_email);
+        et_fname = (EditText) findViewById(R.id.signup_et_fname);
+        et_lname = (EditText) findViewById(R.id.signup_et_lname);
+        btn_signup = (Button) findViewById(R.id.signup_bt_signup);
         btn_signup.setOnClickListener(this);
         profileImage.setOnClickListener(this);
 
@@ -72,6 +70,29 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         return super.onOptionsItemSelected(item);
     }
 
+    public void performCrop(Uri picUri) {
+        try {
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            //indicate image type and Uri
+            cropIntent.setDataAndType(picUri, "image/*");
+            //set crop properties
+            cropIntent.putExtra("crop", "true");
+            //indicate aspect of desired crop
+            cropIntent.putExtra("aspectX", 1);
+            cropIntent.putExtra("aspectY", 1);
+            //indicate output X and Y
+            cropIntent.putExtra("outputX", 256);
+            cropIntent.putExtra("outputY", 256);
+            //retrieve data on return
+            cropIntent.putExtra("return-data", true);
+            //start the activity - we handle returning in onActivityResult
+            startActivityForResult(cropIntent, 2);
+
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -91,11 +112,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         //-------------------------------------------------------------------------------------------------------
                         //UPLOAD USER IMAGE TO THE SERVER
                         Bitmap img_bmp = ((BitmapDrawable) profileImage.getDrawable()).getBitmap();
-                        new HttpImageTask(ServerManager.getServerURL() + "/users/upload_image.php", getApplicationContext()){
+                        new HttpImageTask(ServerManager.getServerURL() + "/users/upload_image.php", getApplicationContext()) {
                             @Override
                             protected void onPostExecute(String s) {
                                 String img_url = null;
-                                if(s.equals(""))
+                                if (s.equals(""))
                                     return;
                                 try {
                                     JSONObject response = new JSONObject(s);
@@ -159,6 +180,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, 1);
+
                 break;
         }
     }
@@ -166,18 +188,25 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case 1:
-                if (resultCode == RESULT_OK) {
-                    try {
-                        Uri imageUri = data.getData();
-                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                        final Bitmap img = BitmapFactory.decodeStream(imageStream);
-                        profileImage.setImageBitmap(img);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 1:
+                    Uri imageUri = data.getData();
+                    //final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                    //final Bitmap img = BitmapFactory.decodeStream(imageStream);
+                    performCrop(imageUri);
+                    //profileImage.setImageBitmap(img);
+                    break;
+                case 2:
+                    //get the returned data
+                    Bundle extras = data.getExtras();
+                    //get the cropped bitmap
+                    Bitmap thePic = extras.getParcelable("data");
+                    profileImage.setImageBitmap(thePic);
+
+                    break;
+            }
+
         }
     }
 }
