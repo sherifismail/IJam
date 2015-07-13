@@ -21,7 +21,6 @@ import android.widget.VideoView;
 
 import com.Example.iJam.R;
 import com.Example.iJam.activities.JammingActivity;
-import com.Example.iJam.activities.UploadTrackActivity;
 import com.Example.iJam.models.Track;
 import com.Example.iJam.network.NetworkManager;
 import com.android.volley.toolbox.NetworkImageView;
@@ -69,17 +68,24 @@ public class TrackDetailFragment extends Fragment {
             final String imgUrl = myTrack.getImageUrl();
             final String duration = Integer.toString(myTrack.getDuration());
             final String uploadDate = myTrack.getUpload_date();
-            final String trackUrl= myTrack.getTrackUrl();//ServerManager.getServerURL()+"/test_track.mp3";
+            final String trackUrl= myTrack.getTrackUrl();
+                    //ServerManager.getServerURL()+"/php6EBA.tmp.mp3";
 
             imgtrack.setImageUrl(imgUrl, NetworkManager.getInstance(getActivity()).getImageLoader());
-
             trackplayer.setVideoURI(Uri.parse(trackUrl));
 
-            //int time = trackplayer.getDuration();
-            //String tracktime = String.valueOf(time);
-            //Log.i("trackduration", tracktime);
-            trackplayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            String[] trackItems = new String[]{"Title: "+ title, "Likes Count: " + likes,
+                    "Rating: " + rating, "Uploader:" + uploader,
+                    "Tags: " + tags, "Instrument: " + instrument,
+                    "Song Duration: " + duration, "Upload Date: " + uploadDate};
+            for (int i = 0; i < trackItems.length; ++i) {
+                list.add(trackItems[i]);
+            }
 
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, trackItems);
+            trackdetails.setAdapter(adapter);
+
+            trackplayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
                     // TODO Auto-generated method stub
@@ -93,42 +99,15 @@ public class TrackDetailFragment extends Fragment {
 
                 }
             });
-            String[] trackItems = new String[]{"Title: "+ title, "Likes Count: " + likes,
-                    "Rating: " + rating, "Uploader:" + uploader,
-                    "Tags: " + tags, "Instrument: " + instrument,
-                    "Song Duration: " + duration, "Upload Date: " + uploadDate};
-            for (int i = 0; i < trackItems.length; ++i) {
-                list.add(trackItems[i]);
-            }
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, trackItems);
-            trackdetails.setAdapter(adapter);
 
-          /*  playtrack.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    trackplayer.start();
-
-                }
-            });*/
             mc = new MediaController(getActivity());
             mc.setMediaPlayer(trackplayer);
             trackplayer.start();
             //int length = mc.getDuration();
 
-            //mc.setAnchorView(trackplayer);
+            mc.setAnchorView(trackplayer);
             trackplayer.setMediaController(mc);
 
-            // mc.setPadding(0, 0, 0, 1200);
-           /* txtLikes = (TextView) findViewById(R.id.track_txt_likes);
-            txtRating = (TextView) findViewById(R.id.track_txt_rating);
-            txtTitle = (TextView) findViewById(R.id.track_txt_title);
-            txtAuthor = (TextView) findViewById(R.id.track_txt_author);
-
-            txtRating.setText(rating);
-            txtLikes.setText(likes);
-            txtAuthor.setText(author);
-            txtTitle.setText(title);
-*/
         }catch(Exception ee){
             ee.printStackTrace();
         }

@@ -92,7 +92,7 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
                 break;
             case R.id.record_image_record:
                 try {
-                    outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.mp3";
+                    outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.3gp";
                     myAudioRecorder = new MediaRecorder();
                     myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
                     myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
