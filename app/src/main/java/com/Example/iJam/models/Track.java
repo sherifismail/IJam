@@ -86,7 +86,7 @@ public class Track implements TrackInterface, Serializable {
         raters = 0;
     }
 
-    public static JSONArray toJsonArray(ArrayList<Track> tracks) {
+    public static JSONArray toJsonArray(ArrayList<Track> tracks) throws JSONException {
         JSONArray trackArray = new JSONArray();
         for (Track track : tracks) {
             trackArray.put(track.toJSONObject());
@@ -94,22 +94,17 @@ public class Track implements TrackInterface, Serializable {
         return trackArray;
     }
 
-    public JSONObject toJSONObject() {
+    public JSONObject toJSONObject() throws JSONException {
         JSONObject trackOb = new JSONObject();
-        try {
+        trackOb.put("name", this.getTitle());
+        trackOb.put("imageurl", this.getImageUrl());
+        trackOb.put("author", this.getUploader());
+        trackOb.put("duration", this.getDuration());
+        trackOb.put("tags", this.getTags());
+        trackOb.put("likes", this.getLikes());
+        trackOb.put("rating", this.getRating());
+        trackOb.put("instrument", this.getInstrument());
 
-            trackOb.put("name", this.getTitle());
-            trackOb.put("imageurl", this.getImageUrl());
-            trackOb.put("author", this.getUploader());
-            trackOb.put("duration", this.getDuration());
-            trackOb.put("tags", this.getTags());
-            trackOb.put("likes", this.getLikes());
-            trackOb.put("rating", this.getRating());
-            trackOb.put("instrument", this.getInstrument());
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         return trackOb;
     }
 

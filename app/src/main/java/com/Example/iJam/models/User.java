@@ -1,5 +1,8 @@
 package com.Example.iJam.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -88,5 +91,17 @@ public class User {
     public void jamOn(Track original, String instrument){
         Track temp = new Track(user_name, false, instrument, original);
         tracks.add(temp);
+    }
+    public JSONObject toJSONObject() throws JSONException{
+        JSONObject userOb = new JSONObject();
+
+        userOb.put("user_name", user_name);
+        userOb.put("password", password);
+        userOb.put("first_name", first_name);
+        userOb.put("last_name", last_name);
+        userOb.put("email", email);
+        userOb.put("img_url", imgUrl);
+
+        return userOb;
     }
 }
