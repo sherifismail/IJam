@@ -50,14 +50,14 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_track);
 
-        btRecord = (Button)findViewById(R.id.trackupload_bt_startrecord);
-        btStop = (Button)findViewById(R.id.trackupload_bt_stoprecord);
+        Intent caller = getIntent();
+        outputFile = caller.getStringExtra("filename");
+
         imgTrack = (ImageView)findViewById(R.id.trackupload_img_trackimage);
         btUpload = (Button) findViewById(R.id.trackupload_bt_upload);
         etName = (EditText) findViewById(R.id.trackupload_et_name);
         etInstrument = (EditText) findViewById(R.id.trackupload_et_instrument);
         etTags = (EditText) findViewById(R.id.trackupload_et_tags);
-        btStorage = (Button) findViewById(R.id.trackupload_bt_storage);
 
         myAudioRecorder = new MediaRecorder();
         myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -65,10 +65,8 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
         myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
 
         btUpload.setOnClickListener(this);
-        btRecord.setOnClickListener(this);
-        btStop.setOnClickListener(this);
         imgTrack.setOnClickListener(this);
-        btStorage.setOnClickListener(this);
+        //btStorage.setOnClickListener(this);
     }
 
 
@@ -140,37 +138,6 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, 1);
-                break;
-
-            case R.id.trackupload_bt_storage:
-                Intent musicPicker2 = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(musicPicker2, 2);
-                break;
-
-            case R.id.trackupload_bt_stoprecord:
-                myAudioRecorder.stop();
-                myAudioRecorder.release();
-                myAudioRecorder = null;
-
-                btStop.setEnabled(false);
-
-                Toast.makeText(getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.trackupload_bt_startrecord:
-                try {
-                    outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.mp3";
-                    myAudioRecorder.setOutputFile(outputFile);
-                    myAudioRecorder.prepare();
-                    myAudioRecorder.start();
-                    Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_LONG).show();
-                    //myAudioRecorder.get
-                    btRecord.setEnabled(false);
-                    btStop.setEnabled(true);
-                } catch (IllegalStateException | IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
                 break;
 
             case R.id.trackupload_bt_upload:
