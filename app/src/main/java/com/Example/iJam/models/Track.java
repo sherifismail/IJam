@@ -1,6 +1,6 @@
 package com.Example.iJam.models;
 
-import com.Example.iJam.interfaces.TrackInterface;
+import com.Example.iJam.interfaces.JamHUBInterface;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by Khodary on 7/5/15.
  */
-public class Track implements TrackInterface, Serializable {
+public class Track implements JamHUBInterface, Serializable {
     private String title;                //track name
     private String uploader;            //track auploader name
     //private String band;               //true it the uploader is band
@@ -86,7 +86,7 @@ public class Track implements TrackInterface, Serializable {
         raters = 0;
     }
 
-    public static JSONArray toJsonArray(ArrayList<Track> tracks) {
+    public static JSONArray toJsonArray(ArrayList<Track> tracks) throws JSONException {
         JSONArray trackArray = new JSONArray();
         for (Track track : tracks) {
             trackArray.put(track.toJSONObject());
@@ -94,22 +94,17 @@ public class Track implements TrackInterface, Serializable {
         return trackArray;
     }
 
-    public JSONObject toJSONObject() {
+    public JSONObject toJSONObject() throws JSONException {
         JSONObject trackOb = new JSONObject();
-        try {
+        trackOb.put("name", this.getTitle());
+        trackOb.put("imageurl", this.getImgUrl());
+        trackOb.put("author", this.getUploader());
+        trackOb.put("duration", this.getDuration());
+        trackOb.put("tags", this.getTags());
+        trackOb.put("likes", this.getLikes());
+        trackOb.put("rating", this.getRating());
+        trackOb.put("instrument", this.getInstrument());
 
-            trackOb.put("name", this.getTitle());
-            trackOb.put("imageurl", this.getImageUrl());
-            trackOb.put("author", this.getUploader());
-            trackOb.put("duration", this.getDuration());
-            trackOb.put("tags", this.getTags());
-            trackOb.put("likes", this.getLikes());
-            trackOb.put("rating", this.getRating());
-            trackOb.put("instrument", this.getInstrument());
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         return trackOb;
     }
 
@@ -156,7 +151,7 @@ public class Track implements TrackInterface, Serializable {
     }
 
     @Override
-    public void setImageUrl(String imageUrl) {
+    public void setImgUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
@@ -166,72 +161,61 @@ public class Track implements TrackInterface, Serializable {
     }
 
     @Override
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    @Override
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
-
-    @Override
-    public void setUploader(String uploader) {
-        this.uploader = uploader;
-    }
-
-    @Override
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    @Override
-    public void setTags(String tags) {
-        this.tags = tags;
-    }
-
-    @Override
-    public void setAncestor(int ancestor) {
-        this.ancestor = ancestor;
-    }
-
-    @Override
     public void setID(int id) {
         this.id = id;
     }
 
     @Override
+    public void setUpload_date(String upload_date) {
+        this.upload_date = upload_date;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public void setUploader(String uploader) {
+        this.uploader = uploader;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public void setAncestor(int ancestor) {
+        this.ancestor = ancestor;
+    }
+
     public void setInstrument(String instrument) {
         this.instrument = instrument;
     }
 
-    @Override
     public void setChildren(ArrayList<Track> children) {
         this.children = children;
     }
 
-    @Override
-    public void setUpload_date(String date) {
-        this.upload_date = date;
-    }
-
-    @Override
     public void setTrackUrl(String trackUrl) {
         this.trackUrl = trackUrl;
     }
 
-    @Override
     public ArrayList<Track> getChildren() {
         return children;
     }
 
-    @Override
     public String getTrackUrl() {
         return trackUrl;
     }
 
     @Override
-    public String getImageUrl() {
+    public String getImgUrl() {
         return imageUrl;
     }
 
@@ -241,48 +225,41 @@ public class Track implements TrackInterface, Serializable {
     }
 
     @Override
-    public double getRating() {
-        return rating;
-    }
-
-    @Override
-    public int getLikes() {
-        return likes;
-    }
-
-    @Override
-    public String getUploader() {
-        return uploader;
-    }
-
-    @Override
-    public int getDuration() {
-        return duration;
-    }
-
-    @Override
-    public String getTags() {
-        return tags;
-    }
-
-    @Override
-    public int getAncestor() {
-        return ancestor;
-    }
-
-    @Override
     public int getID() {
         return id;
     }
 
     @Override
-    public String getInstrument() {
-        return instrument;
+    public String getUpload_date() {
+        return upload_date;
     }
 
-    @Override
-    public String getUpload_date() {
-        return this.upload_date;
+    public double getRating() {
+        return rating;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public String getUploader() {
+        return uploader;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public int getAncestor() {
+        return ancestor;
+    }
+
+    public String getInstrument() {
+        return instrument;
     }
 
     public ArrayList<String> getContributors() {

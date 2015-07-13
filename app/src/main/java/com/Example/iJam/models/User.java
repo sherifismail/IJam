@@ -1,27 +1,26 @@
 package com.Example.iJam.models;
 
+import com.Example.iJam.interfaces.JamHUBInterface;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Mostafa on 6/29/2015.
  */
-public class User {
-    //private int user_id;
+public class User implements JamHUBInterface, Serializable {
+    private int user_id;
     private String user_name;
     private String password;
     private String first_name;
     private String last_name;
     private String imgUrl;
     private String email;
+    private String upload_date;
     private ArrayList<Track> tracks;
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
 
     public String getEmail() {
         return email;
@@ -31,12 +30,15 @@ public class User {
         this.email = email;
     }
 
-    public User(/*int user_id,*/ String user_name, String password, String fname, String lname){
+    public User(/*int user_id,*/ String user_name, String password, String fname,
+                String lname, String imgUrl, String email){
         //this.user_id = user_id;
         this.user_name = user_name;
         this.password = password;
         this.first_name = fname;
         this.last_name = lname;
+        this.imgUrl = imgUrl;
+        this.email = email;
         tracks = null;
     }
 
@@ -48,12 +50,44 @@ public class User {
         this.user_id = user_id;
     }*/
 
-    public String getUser_name() {
+    @Override
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    @Override
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    @Override
+    public String getTitle() {
         return user_name;
     }
 
-    public void setUser_name(String user_name) {
+    @Override
+    public int getID() {
+        return user_id;
+    }
+
+    @Override
+    public String getUpload_date() {
+        return upload_date;
+    }
+
+    @Override
+    public void setTitle(String user_name) {
         this.user_name = user_name;
+    }
+
+    @Override
+    public void setID(int id) {
+        this.user_id = id;
+    }
+
+    @Override
+    public void setUpload_date(String upload_date) {
+        this.upload_date = upload_date;
     }
 
     public String getPassword() {
@@ -88,5 +122,18 @@ public class User {
     public void jamOn(Track original, String instrument){
         Track temp = new Track(user_name, false, instrument, original);
         tracks.add(temp);
+    }
+
+    public JSONObject toJSONObject() throws JSONException{
+        JSONObject userOb = new JSONObject();
+
+        userOb.put("user_name", user_name);
+        userOb.put("password", password);
+        userOb.put("first_name", first_name);
+        userOb.put("last_name", last_name);
+        userOb.put("email", email);
+        userOb.put("img_url", imgUrl);
+
+        return userOb;
     }
 }

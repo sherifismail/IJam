@@ -53,7 +53,7 @@ public class TrackAdapter extends ArrayAdapter<Track> {
         final String likes = Integer.toString(item.getLikes());
         final String rating = Double.toString(item.getRating());
         //final String author = (item.getUploader());
-        final String imgUrl = item.getImageUrl();
+        final String imgUrl = item.getImgUrl();
 
         txtTitle.setText("Title: " + title);
         txtLikes.setText("Likes Count: " + likes);
