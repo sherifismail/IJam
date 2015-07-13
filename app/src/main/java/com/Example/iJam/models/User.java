@@ -30,11 +30,11 @@ public class User implements JamHUBInterface, Serializable {
         this.email = email;
     }
 
-    public User(/*int user_id,*/ String user_name, String password, String fname,
-                String lname, String imgUrl, String email){
+    public User(/*int user_id,*/ String user_name /*, String password*/, String fname,
+                String lname, String imgUrl, String email) {
         //this.user_id = user_id;
         this.user_name = user_name;
-        this.password = password;
+        //this.password = password;
         this.first_name = fname;
         this.last_name = lname;
         this.imgUrl = imgUrl;
@@ -102,15 +102,15 @@ public class User implements JamHUBInterface, Serializable {
         return last_name;
     }
 
-    public void setFirst_name(String name){
+    public void setFirst_name(String name) {
         first_name = name;
     }
 
-    public void setLast_name(String name){
+    public void setLast_name(String name) {
         last_name = name;
     }
 
-    public void setPassword(String password){
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -119,12 +119,12 @@ public class User implements JamHUBInterface, Serializable {
         tracks.add(temp);
     }*/
 
-    public void jamOn(Track original, String instrument){
+    public void jamOn(Track original, String instrument) {
         Track temp = new Track(user_name, false, instrument, original);
         tracks.add(temp);
     }
 
-    public JSONObject toJSONObject() throws JSONException{
+    public JSONObject toJSONObject() throws JSONException {
         JSONObject userOb = new JSONObject();
 
         userOb.put("user_name", user_name);
@@ -135,5 +135,18 @@ public class User implements JamHUBInterface, Serializable {
         userOb.put("img_url", imgUrl);
 
         return userOb;
+    }
+
+    public static User parseJson(JSONObject jOb) throws JSONException {
+
+        String imgUrl = jOb.getString("img_url");
+        String email = jOb.getString("email");
+        String fName = jOb.getString("first_name");
+        String lName = jOb.getString("last_name");
+        String user_name = jOb.getString("user_name");
+
+        User user = new User(user_name, fName, lName, imgUrl, email);
+
+        return user;
     }
 }
