@@ -30,7 +30,7 @@ import java.util.ArrayList;
 public class ProfileFragment extends Fragment {
     ListView listV;
     NetworkImageView profileImage;
-    TextView userName, userShows;
+    TextView userName, userTracks, userJams;
 
     //private FloatingActionButton FAB;
     //LinearLayout linearList;
@@ -42,23 +42,28 @@ public class ProfileFragment extends Fragment {
         final String[] profItems = new String[]{"Profile", "Settings", "My Tracks", "About us", "Sign Out"};
         final ArrayList<String> list = new ArrayList<String>();
         final String uName = MainActivity.user.getTitle();
+        final String uName = MainActivity.user.getTitle();
+        final String fName = MainActivity.user.getFirst_name();
         final String imgUrl = MainActivity.user.getImgUrl();
 
         listV = (ListView) v.findViewById(R.id.listView2);
         userName = (TextView) v.findViewById(R.id.tv_profilename);
-        userShows = (TextView) v.findViewById(R.id.tv_profiletracks);
+        userTracks = (TextView) v.findViewById(R.id.tv_profiletracks);
+        userJams = (TextView) v.findViewById(R.id.tv_profilejams);
         profileImage = (NetworkImageView) v.findViewById(R.id.profile_img_userimage);
 
         profileImage.setImageUrl(imgUrl, NetworkManager.getInstance(getActivity()).getImageLoader());
-        userName.setText(uName);
+        userName.setText("Welcome, " + fName + "!");
 
         new HttpGetTask(ServerManager.getServerURL()+"/tracks/my_tracks.php?uname="+uName, getActivity()){
             @Override
             protected void onPostExecute(String s) {
                 try {
                     JSONObject response = new JSONObject(s);
-                    if(response.getString("status").equals("success"))
-                        userShows.setText(response.getString("count") + " tracks");
+                    if(response.getString("status").equals("success")) {
+                        userTracks.setText(response.getString("tracks") + " tracks");
+                        userJams.setText(response.getString("jams") + " jams");
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
