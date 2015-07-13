@@ -30,11 +30,11 @@ public class User implements JamHUBInterface, Serializable {
         this.email = email;
     }
 
-    public User(/*int user_id,*/ String user_name /*, String password*/, String fname,
+    public User(/*int user_id,*/ String user_name, String password, String fname,
                 String lname, String imgUrl, String email) {
         //this.user_id = user_id;
         this.user_name = user_name;
-        //this.password = password;
+        this.password = password;
         this.first_name = fname;
         this.last_name = lname;
         this.imgUrl = imgUrl;
@@ -145,7 +145,7 @@ public class User implements JamHUBInterface, Serializable {
         String lName = jOb.getString("last_name");
         String user_name = jOb.getString("user_name");
 
-        User user = new User(user_name, fName, lName, imgUrl, email);
+        User user = new User(user_name, "", fName, lName, imgUrl, email);
 
         return user;
     }
