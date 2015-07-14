@@ -23,6 +23,7 @@ import com.Example.iJam.R;
 import com.Example.iJam.activities.JammingActivity;
 import com.Example.iJam.models.Track;
 import com.Example.iJam.network.NetworkManager;
+import com.Example.iJam.network.ServerManager;
 import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class TrackDetailFragment extends Fragment {
     private FloatingActionButton mFAB;
     private RelativeLayout mRoot;
 
+
     final ArrayList<String> list = new ArrayList<String>();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class TrackDetailFragment extends Fragment {
         mFAB.setOnClickListener(mFabClickListener);
         trackdetails=(ListView)v.findViewById(R.id.trackdetail_lv_tracks);
         trackplayer=(VideoView)v.findViewById(R.id.trackdetail_vp_player);
+
         //playtrack=(Button) v.findViewById(R.id.trackdetail_bt_playtrack);
         imgtrack=(NetworkImageView)v.findViewById(R.id.trackdetail_img_testimage);
         //imgtrack.setBackgroundResource(R.drawable.x);
@@ -72,7 +75,9 @@ public class TrackDetailFragment extends Fragment {
                     //ServerManager.getServerURL()+"/php6EBA.tmp.mp3";
 
             imgtrack.setImageUrl(imgUrl, NetworkManager.getInstance(getActivity()).getImageLoader());
-            trackplayer.setVideoURI(Uri.parse(trackUrl));
+            //trackplayer.setVideoURI(Uri.parse(trackUrl));
+            trackplayer.setVideoURI(Uri.parse(ServerManager.getServerURL()+"/test_track.mp3"));
+
 
             String[] trackItems = new String[]{"Title: "+ title, "Likes Count: " + likes,
                     "Rating: " + rating, "Uploader:" + uploader,
@@ -88,6 +93,7 @@ public class TrackDetailFragment extends Fragment {
             trackplayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
+                    mp.setVolume(0.0f,0.5f);
                     // TODO Auto-generated method stub
                     int duration = mp.getDuration() / 1000;
                     int hours = duration / 3600;
@@ -102,6 +108,7 @@ public class TrackDetailFragment extends Fragment {
 
             mc = new MediaController(getActivity());
             mc.setMediaPlayer(trackplayer);
+
             trackplayer.start();
             //int length = mc.getDuration();
 
