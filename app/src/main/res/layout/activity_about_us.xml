@@ -7,12 +7,35 @@
     tools:context="com.Example.iJam.activities.AboutUsActivity">
 
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/jamhublogo3"
+        android:id="@+id/signin_img_logo"
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="About Us"
-        android:id="@+id/textView4"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="40dp" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Welcome to JamHub, this is our project for mobile development course which is jamming musics"
+        android:id="@+id/textView5"
+        android:layout_below="@+id/signin_img_logo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="51dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="@android:color/holo_orange_dark" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Developed by: Mostafa Ghoneimy             Mahmoud ElKhodary                                                                                                                       Sherif Ismail"
+        android:id="@+id/textView6"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

@@ -93,6 +93,7 @@ public class TrackDetailFragment extends Fragment {
             trackPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
+                    mp.setVolume(0.0f,0.5f);
                     // TODO Auto-generated method stub
                     int duration = mp.getDuration() / 1000;
                     int hours = duration / 3600;

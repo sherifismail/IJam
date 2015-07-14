@@ -103,7 +103,6 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
                     customHandler.postDelayed(updateTimerThread, 0);
                     myAudioRecorder.prepare();
                     myAudioRecorder.start();
-
                     Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_LONG).show();
                     recordbut.setEnabled(false);
                     stopbut.setEnabled(true);
