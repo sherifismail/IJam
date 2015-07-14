@@ -43,15 +43,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTabLayout.setupWithViewPager(mPager);
         mPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
 
-        //Intent inte = getIntent();
-        //int uid = inte.getIntExtra("user_id", 0);
-        /*String uname = inte.getStringExtra("user_name");
-        String password = inte.getStringExtra("password");
-        String fname = inte.getStringExtra("first_name");
-        String lname = inte.getStringExtra("last_name");
-        String img_url = inte.getStringExtra("img_url");
-        String email = inte.getStringExtra("email");
-        user = new User(uname, password, fname, lname);*/
         user = (User) getIntent().getSerializableExtra("user");
     }
 

@@ -100,18 +100,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                         Toast.makeText(ctx, "Log in failed! " + response.getString("error"), Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
-
                                         JSONObject user_info = response.getJSONObject("user");
-
                                         User u = User.parseJson(user_info);
 
                                         Intent i = new Intent(ctx, MainActivity.class);
                                         i.putExtra("user", u);
-                                        //inte.putExtra("user_id", user_info.getInt("user_id"));
-                                        /*i.putExtra("user_name", user_info.getString("user_name"));
-                                        i.putExtra("password", user_info.getString("password"));
-                                        i.putExtra("first_name", user_info.getString("first_name"));
-                                        i.putExtra("last_name", user_info.getString("last_name"));*/
                                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         ctx.startActivity(i);
                                         finish();

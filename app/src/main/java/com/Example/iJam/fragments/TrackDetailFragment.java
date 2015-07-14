@@ -32,14 +32,13 @@ import java.util.ArrayList;
  */
 public class TrackDetailFragment extends Fragment {
     TextView txtAuthor, txtTitle, txtLikes, txtRating;
-    //ImageView imgTrack;
     ListView trackdetails;
     VideoView trackplayer;
     MediaController mc;
     NetworkImageView imgtrack;
-    //Button playtrack;
     private FloatingActionButton mFAB;
     private RelativeLayout mRoot;
+    Track myTrack;
 
     final ArrayList<String> list = new ArrayList<String>();
 
@@ -51,12 +50,9 @@ public class TrackDetailFragment extends Fragment {
         mFAB.setOnClickListener(mFabClickListener);
         trackdetails=(ListView)v.findViewById(R.id.trackdetail_lv_tracks);
         trackplayer=(VideoView)v.findViewById(R.id.trackdetail_vp_player);
-        //playtrack=(Button) v.findViewById(R.id.trackdetail_bt_playtrack);
         imgtrack=(NetworkImageView)v.findViewById(R.id.trackdetail_img_testimage);
-        //imgtrack.setBackgroundResource(R.drawable.x);
 
-
-        Track myTrack = (Track) getActivity().getIntent().getSerializableExtra("track");
+        myTrack = (Track) getActivity().getIntent().getSerializableExtra("track");
 
         try {
             final String title = myTrack.getTitle();
@@ -117,10 +113,13 @@ public class TrackDetailFragment extends Fragment {
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent i=new Intent(getActivity(),JammingActivity.class);
+            Intent i = new Intent(getActivity(),JammingActivity.class);
+            i.putExtra("track", myTrack);
             startActivity(i);
+            getActivity().finish();
         }
     };
+
     public static TrackDetailFragment newInstance(String text) {
 
         TrackDetailFragment f = new TrackDetailFragment();
@@ -131,4 +130,4 @@ public class TrackDetailFragment extends Fragment {
 
         return f;
     }
-    }
+}
