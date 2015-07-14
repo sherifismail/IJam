@@ -231,6 +231,9 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                         String status = response.getString("status");
                         if (status.equals("fail")) {
                             Toast.makeText(ctx, "Failed to upload track! " + response.getString("error"), Toast.LENGTH_SHORT).show();
+                        } else if(status.equals("Ufail")){
+                            Toast.makeText(ctx, "Updating database failed! " + response.getString("error"), Toast.LENGTH_SHORT).show();
+                            finish();
                         } else {
                             Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
                             finish();
