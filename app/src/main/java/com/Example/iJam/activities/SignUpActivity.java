@@ -128,7 +128,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                 try {
                                     JSONObject response = new JSONObject(s);
                                     if (response.getString("status").equals("success")) {
-                                        img_url = /*ServerManager.getServerURL() + */"/users/" + response.getString("url");
+                                        img_url = "/users/" + response.getString("url");
                                         Toast.makeText(ctx, img_url, Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(ctx, response.getString("error"), Toast.LENGTH_SHORT).show();
