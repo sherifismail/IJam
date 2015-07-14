@@ -75,8 +75,7 @@ public class TrackDetailFragment extends Fragment {
                     //ServerManager.getServerURL()+"/php6EBA.tmp.mp3";
 
             imgtrack.setImageUrl(imgUrl, NetworkManager.getInstance(getActivity()).getImageLoader());
-            //trackplayer.setVideoURI(Uri.parse(trackUrl));
-            trackplayer.setVideoURI(Uri.parse(ServerManager.getServerURL()+"/test_track.mp3"));
+            trackplayer.setVideoURI(Uri.parse(trackUrl));
 
 
             String[] trackItems = new String[]{"Title: "+ title, "Likes Count: " + likes,
