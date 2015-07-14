@@ -40,7 +40,7 @@
         android:id="@+id/trackdetail_fab_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/like1Icon"
+        android:src="@drawable/like1icon"
         app:backgroundTint="@color/colorwhite"
         android:layout_marginBottom="20dp"
         android:layout_above="@+id/trackdetail_fab_jamover"
