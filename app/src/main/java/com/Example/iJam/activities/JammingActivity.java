@@ -23,6 +23,8 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.Example.iJam.R;
+import com.Example.iJam.models.Track;
+import com.Example.iJam.network.NetworkManager;
 import com.Example.iJam.network.ServerManager;
 
 import java.io.IOException;
@@ -41,36 +43,38 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
     FrameLayout imagetrack;
     MediaController mc;
     VideoView trackplayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jamming);
 
-countdown=(TextView)findViewById(R.id.countdown);
-        imagetrack=(FrameLayout)findViewById(R.id.jamming_img_testimage);
-        imagetrack.setBackgroundResource(R.drawable.x);
-        String trackurl= ServerManager.getServerURL()+"/test_track.mp3";
+        //imagetrack=(FrameLayout)findViewById(R.id.jamming_img_testimage);
         trackplayer=(VideoView)findViewById(R.id.jamming_vp_player);
-        timer=(TextView)findViewById(R.id.timer);
         recordbut=(ImageView)findViewById(R.id.jamming_image_record);
         stopbut=(ImageView)findViewById(R.id.jamming_image_stop);
+        countdown=(TextView)findViewById(R.id.countdown);
+        timer=(TextView)findViewById(R.id.timer);
+
+        Track myTrack = (Track) getIntent().getSerializableExtra("track");
+        final String imgUrl = myTrack.getImgUrl();
+        final String trackUrl= myTrack.getTrackUrl();
 
         recordbut.setOnClickListener(this);
         stopbut.setOnClickListener(this);
 
+        //imgtrack.setImageUrl(imgUrl, NetworkManager.getInstance(getApplicationContext()).getImageLoader());
 
-        trackplayer.setVideoURI(Uri.parse(trackurl));
+        trackplayer.setVideoURI(Uri.parse(trackUrl));
 
-        mc=new MediaController(this);
+        mc = new MediaController(this);
         mc.setMediaPlayer(trackplayer);
 
         trackplayer.setMediaController(mc);
-         AudioManager m_amAudioManager;
+        AudioManager m_amAudioManager;
         m_amAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         m_amAudioManager.setMode(AudioManager.MODE_IN_CALL);
         m_amAudioManager.setSpeakerphoneOn(false);
-
-
     }
 
     @Override
@@ -99,7 +103,6 @@ countdown=(TextView)findViewById(R.id.countdown);
     public void onClick(View v) {
         switch (v.getId()){
         case R.id.jamming_image_record:
-
             new CountDownTimer(5000,1000){
 
                 @Override
@@ -135,22 +138,21 @@ countdown=(TextView)findViewById(R.id.countdown);
                     }
                 }
             }.start();
-
-
         break;
-            case R.id.jamming_image_stop:
-        timeSwapBuff += timeInMilliseconds;
-        customHandler.removeCallbacks(updateTimerThread);
 
-        myAudioRecorder.stop();
-        myAudioRecorder.release();
-        myAudioRecorder = null;
+        case R.id.jamming_image_stop:
+            timeSwapBuff += timeInMilliseconds;
+            customHandler.removeCallbacks(updateTimerThread);
 
-        stopbut.setEnabled(false);
+            myAudioRecorder.stop();
+            myAudioRecorder.release();
+            myAudioRecorder = null;
 
-        Toast.makeText(getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_LONG).show();
-        break;
-    }
+            stopbut.setEnabled(false);
+
+            Toast.makeText(getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_LONG).show();
+            break;
+        }
     }
     private Runnable updateTimerThread = new Runnable() {
         public void run() {
