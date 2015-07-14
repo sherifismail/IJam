@@ -28,5 +28,8 @@
     <string name="title_activity_track_parent">TrackParent</string>
     <string name="title_activity_record">RecordActivity</string>
     <string name="title_activity_jamming">JammingActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_my_tracks">MyTracksActivity</string>
+    <string name="title_activity_editt_profile">EdittProfileActivity</string>
 
 </resources>

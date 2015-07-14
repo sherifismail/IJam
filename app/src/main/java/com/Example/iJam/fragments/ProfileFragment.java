@@ -13,7 +13,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.Example.iJam.R;
+import com.Example.iJam.activities.EdittProfileActivity;
 import com.Example.iJam.activities.MainActivity;
+import com.Example.iJam.activities.MyTracksActivity;
 import com.Example.iJam.activities.SignInActivity;
 import com.Example.iJam.network.HttpGetTask;
 import com.Example.iJam.network.NetworkManager;
@@ -78,16 +80,21 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 if (position == 0) {
+                    Intent edit =new Intent(getActivity(), EdittProfileActivity.class);
+                    startActivity(edit);
                 } else if (position == 1) {
+                    Intent mytracks=new Intent(getActivity(), MyTracksActivity.class);
+                    startActivity(mytracks);
 
                 } else if (position == 2) {
 
                 } else if (position == 3) {
 
                 } else if (position == 4) {
-                    Intent intent = new Intent(getActivity(), SignInActivity.class);
-                    startActivity(intent);
+                    Intent signout = new Intent(getActivity(), SignInActivity.class);
+                    startActivity(signout);
                     getActivity().finish();
                 }
             }
