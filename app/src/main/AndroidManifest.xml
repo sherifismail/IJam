@@ -61,6 +61,10 @@
             android:name=".activities.EdittProfileActivity"
             android:label="@string/title_activity_editt_profile" >
         </activity>
+        <activity
+            android:name=".activities.AboutUsActivity"
+            android:label="@string/title_activity_about_us" >
+        </activity>
     </application>
 
 </manifest>

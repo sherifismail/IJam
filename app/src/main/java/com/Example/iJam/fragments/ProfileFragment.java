@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.Example.iJam.R;
+import com.Example.iJam.activities.AboutUsActivity;
 import com.Example.iJam.activities.EdittProfileActivity;
 import com.Example.iJam.activities.MainActivity;
 import com.Example.iJam.activities.MyTracksActivity;
@@ -85,13 +86,15 @@ public class ProfileFragment extends Fragment {
                     Intent edit =new Intent(getActivity(), EdittProfileActivity.class);
                     startActivity(edit);
                 } else if (position == 1) {
+
+
+                } else if (position == 2) {
                     Intent mytracks=new Intent(getActivity(), MyTracksActivity.class);
                     startActivity(mytracks);
 
-                } else if (position == 2) {
-
                 } else if (position == 3) {
-
+                    Intent aboutus = new Intent(getActivity(), AboutUsActivity.class);
+                    startActivity(aboutus);
                 } else if (position == 4) {
                     Intent signout = new Intent(getActivity(), SignInActivity.class);
                     startActivity(signout);

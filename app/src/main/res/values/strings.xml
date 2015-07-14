@@ -31,5 +31,6 @@
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_my_tracks">MyTracksActivity</string>
     <string name="title_activity_editt_profile">EdittProfileActivity</string>
+    <string name="title_activity_about_us">AboutUsActivity</string>
 
 </resources>

@@ -27,7 +27,7 @@ public class EdittProfileActivity extends ActionBarActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_editprofile);
+        setContentView(R.layout.activity_editt_profile);
 
         firstname=(EditText)findViewById(R.id.Editprofile_edittxt_fname);
         lastname=(EditText)findViewById(R.id.Editprofile_edittxt_lname);
@@ -77,18 +77,19 @@ public class EdittProfileActivity extends ActionBarActivity implements View.OnCl
                 editoldpass=oldpassword.getText().toString().trim();
                 editnewpass=newpassword.getText().toString().trim();
                 editconfpass=confpassword.getText().toString().trim();
-                if((!editfname.isEmpty())||(!editlname.isEmpty())||(!editemail.isEmpty())){
-                    if(!editfname.equals(fName)){
+                if((!editfname.isEmpty())||(!editlname.isEmpty())||(!editemail.isEmpty())) {
+                    if (!editfname.equals(fName)) {
                         //update database
                     }
-                    if(!editlname.equals(lName)){
+                    if (!editlname.equals(lName)) {
                         //update database
                     }
-                    if(!editemail.equals(mail)){
+                    if (!editemail.equals(mail)) {
                         //update database with new email
                     }
+                }
 
-                    if((!editnewpass.isEmpty())&& (editoldpass.isEmpty())){
+                if((!editnewpass.isEmpty())&& (editoldpass.isEmpty())){
                         Toast.makeText(getApplicationContext(), "Please enter old password", Toast.LENGTH_SHORT).show();
                     }
                     else{
@@ -103,7 +104,7 @@ public class EdittProfileActivity extends ActionBarActivity implements View.OnCl
                             Toast.makeText(getApplicationContext(), "Wrong password", Toast.LENGTH_SHORT).show();
                     }
 
-                }
+                break;
 
         }
     }
