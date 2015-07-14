@@ -1,5 +1,6 @@
 package com.Example.iJam.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -7,18 +8,69 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.Example.iJam.R;
+import com.Example.iJam.adapters.TrackAdapter;
 import com.Example.iJam.fragments.ProfileFragment;
+import com.Example.iJam.fragments.TopTracksFragment;
+import com.Example.iJam.models.Track;
+import com.Example.iJam.network.HttpGetTask;
+import com.Example.iJam.network.ServerManager;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyTracksActivity extends ActionBarActivity {
 
-
+    private ListView lvTracks;
+    public static ArrayList<Track> myTracks = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_tracks);
 
+        lvTracks = (ListView) findViewById(R.id.activity_mytracks_list);
+
+        String url=null;
+        try {
+            String uname = MainActivity.user.getTitle();
+            url = ServerManager.getServerURL()+"/users/my_tracks.php?name="+ URLEncoder.encode(uname, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        new HttpGetTask(url, getApplicationContext()){
+            @Override
+            protected void onPostExecute(String s) {
+                if(s==null)
+                    return;
+                try {
+                    JSONObject response = new JSONObject(s);
+                    if(response.getString("status").equals("success")) {
+                        JSONArray jArray = new JSONArray(response.getString("results"));
+                        try {
+                            myTracks = Track.parseJson(jArray);
+                            TrackAdapter tracksAdap = new TrackAdapter(MyTracksActivity.this, MyTracksActivity.class, myTracks);
+                            lvTracks.setAdapter(tracksAdap);
+
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                            Toast.makeText(ctx, "Failed to retreive data!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute();
 
     }
 

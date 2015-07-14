@@ -40,11 +40,11 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
         recordbut=(ImageView)findViewById(R.id.record_image_record);
         stopbut=(ImageView)findViewById(R.id.record_image_stop);
         next=(Button)findViewById(R.id.record_btn_next);
-        uploadstorage=(Button)findViewById(R.id.record_btn_upload);
+        //uploadstorage=(Button)findViewById(R.id.record_btn_upload);
         next.setOnClickListener(this);
         recordbut.setOnClickListener(this);
         stopbut.setOnClickListener(this);
-        uploadstorage.setOnClickListener(this);
+        //uploadstorage.setOnClickListener(this);
     }
 
     @Override
@@ -126,10 +126,10 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
 
                 Toast.makeText(getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_LONG).show();
                 break;
-            case R.id.record_btn_upload:
+            /*case R.id.record_btn_upload:
                 Intent musicPicker2 = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(musicPicker2, 3);
-                break;
+                break;*/
         }
     }
 

@@ -72,15 +72,6 @@
         android:layout_alignParentBottom="true">
 
         <Button
-            android:id="@+id/record_btn_upload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:layout_marginRight="0.5dp"
-            android:background="@android:color/holo_orange_dark"
-            android:text="Upload from storage" />
-
-        <Button
             android:id="@+id/record_btn_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

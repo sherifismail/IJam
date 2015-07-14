@@ -25,8 +25,13 @@ import android.widget.VideoView;
 import com.Example.iJam.R;
 import com.Example.iJam.activities.JammingActivity;
 import com.Example.iJam.models.Track;
+import com.Example.iJam.network.HttpGetTask;
 import com.Example.iJam.network.NetworkManager;
+import com.Example.iJam.network.ServerManager;
 import com.android.volley.toolbox.NetworkImageView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -147,7 +152,20 @@ public class TrackDetailFragment extends Fragment {
     private View.OnClickListener likeListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            Toast.makeText(getActivity(), "Tracked Liked!", Toast.LENGTH_SHORT).show();
+            new HttpGetTask(ServerManager.getServerURL()+"/tracks/like.php?id="+myTrack.getID(), getActivity()){
+                @Override
+                protected void onPostExecute(String s) {
+                    try {
+                        JSONObject response = new JSONObject(s);
+                        if (response.getString("status").equals("success"))
+                            Toast.makeText(ctx, "Track liked", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(ctx, "Like failed" + response.getString("error"), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.execute();
         }
     };
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
