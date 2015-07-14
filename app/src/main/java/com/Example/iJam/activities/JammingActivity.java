@@ -4,17 +4,15 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.MediaController;
@@ -29,10 +27,10 @@ import java.io.IOException;
 
 public class JammingActivity extends ActionBarActivity implements View.OnClickListener {
 
-    ImageView recordbut,stopbut;
+    ImageView recordbut, stopbut;
     private MediaRecorder myAudioRecorder;
     private String outputFile = null;
-    TextView timer,countdown;
+    TextView timer, countdown;
     private long startTime = 0L;
     private Handler customHandler = new Handler();
     long timeInMilliseconds = 0L;
@@ -41,19 +39,20 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
     FrameLayout imagetrack;
     MediaController mc;
     VideoView trackplayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jamming);
 
-countdown=(TextView)findViewById(R.id.countdown);
-        imagetrack=(FrameLayout)findViewById(R.id.jamming_img_testimage);
+        countdown = (TextView) findViewById(R.id.countdown);
+        imagetrack = (FrameLayout) findViewById(R.id.jamming_img_testimage);
         imagetrack.setBackgroundResource(R.drawable.x);
-        String trackurl= ServerManager.getServerURL()+"/test_track.mp3";
-        trackplayer=(VideoView)findViewById(R.id.jamming_vp_player);
-        timer=(TextView)findViewById(R.id.timer);
-        recordbut=(ImageView)findViewById(R.id.jamming_image_record);
-        stopbut=(ImageView)findViewById(R.id.jamming_image_stop);
+        String trackurl = ServerManager.getServerURL() + "/test_track.mp3";
+        trackplayer = (VideoView) findViewById(R.id.jamming_vp_player);
+        timer = (TextView) findViewById(R.id.timer);
+        recordbut = (ImageView) findViewById(R.id.jamming_image_record);
+        stopbut = (ImageView) findViewById(R.id.jamming_image_stop);
 
         recordbut.setOnClickListener(this);
         stopbut.setOnClickListener(this);
@@ -61,12 +60,12 @@ countdown=(TextView)findViewById(R.id.countdown);
 
         trackplayer.setVideoURI(Uri.parse(trackurl));
 
-        mc=new MediaController(this);
+        mc = new MediaController(this);
         mc.setMediaPlayer(trackplayer);
 
         trackplayer.setMediaController(mc);
-         AudioManager m_amAudioManager;
-        m_amAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        AudioManager m_amAudioManager;
+        m_amAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         m_amAudioManager.setMode(AudioManager.MODE_IN_CALL);
         m_amAudioManager.setSpeakerphoneOn(false);
 
@@ -97,61 +96,62 @@ countdown=(TextView)findViewById(R.id.countdown);
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-        case R.id.jamming_image_record:
+        switch (v.getId()) {
+            case R.id.jamming_image_record:
 
-            new CountDownTimer(5000,1000){
+                new CountDownTimer(5000, 1000) {
 
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    countdown.setText(""+ millisUntilFinished / 1000);
-                }
-
-                @Override
-                public void onFinish() {
-                    try {
-                        countdown.setVisibility(View.INVISIBLE);
-                        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/testrecord.mp3";
-                        myAudioRecorder = new MediaRecorder();
-                        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-                        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-                        myAudioRecorder.setOutputFile(outputFile);
-                        trackplayer.start();
-                        startTime = SystemClock.uptimeMillis();
-                        customHandler.postDelayed(updateTimerThread, 0);
-                        myAudioRecorder.prepare();
-                        myAudioRecorder.start();
-
-                        Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_LONG).show();
-                        recordbut.setEnabled(false);
-                        stopbut.setEnabled(true);
-                    } catch (IllegalStateException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        countdown.setText("" + millisUntilFinished / 1000);
                     }
-                }
-            }.start();
+
+                    @Override
+                    public void onFinish() {
+                        try {
+                            countdown.setVisibility(View.INVISIBLE);
+                            outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/testrecord.mp3";
+                            myAudioRecorder = new MediaRecorder();
+                            myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                            myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+                            myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+                            myAudioRecorder.setOutputFile(outputFile);
+                            trackplayer.start();
+                            startTime = SystemClock.uptimeMillis();
+                            customHandler.postDelayed(updateTimerThread, 0);
+                            myAudioRecorder.prepare();
+                            myAudioRecorder.start();
+
+                            Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_LONG).show();
+                            recordbut.setEnabled(false);
+                            stopbut.setEnabled(true);
+                        } catch (IllegalStateException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
 
 
-        break;
+                break;
             case R.id.jamming_image_stop:
-        timeSwapBuff += timeInMilliseconds;
-        customHandler.removeCallbacks(updateTimerThread);
+                timeSwapBuff += timeInMilliseconds;
+                customHandler.removeCallbacks(updateTimerThread);
 
-        myAudioRecorder.stop();
-        myAudioRecorder.release();
-        myAudioRecorder = null;
+                myAudioRecorder.stop();
+                myAudioRecorder.release();
+                myAudioRecorder = null;
 
-        stopbut.setEnabled(false);
+                stopbut.setEnabled(false);
 
-        Toast.makeText(getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_LONG).show();
-        break;
+                Toast.makeText(getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_LONG).show();
+                break;
+        }
     }
-    }
+
     private Runnable updateTimerThread = new Runnable() {
         public void run() {
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;

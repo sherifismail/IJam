@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.Example.iJam.R;
 import com.Example.iJam.models.Track;
 import com.Example.iJam.network.NetworkManager;
-import com.Example.iJam.network.ServerManager;
 import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
@@ -46,7 +45,6 @@ public class TrackAdapter extends ArrayAdapter<Track> {
         TextView txtLikes = (TextView) rowView.findViewById(R.id.txtLikes);
         TextView txtRating = (TextView) rowView.findViewById(R.id.txtRating);
         NetworkImageView iv = (NetworkImageView) rowView.findViewById(R.id.img_trackimage);
-        //final ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
 
         final Track item = items.get(position);
 
@@ -54,12 +52,11 @@ public class TrackAdapter extends ArrayAdapter<Track> {
         final String likes = Integer.toString(item.getLikes());
         final String rating = Double.toString(item.getRating());
         //final String author = (item.getUploader());
-        final String imgUrl = ServerManager.getServerURL() + item.getImgUrl();
+        final String imgUrl = item.getImgUrl();
 
         txtTitle.setText("Title: " + title);
         txtLikes.setText("Likes Count: " + likes);
         txtRating.setText("Rating: " + rating + "/5");
-        //NetworkManager.getInstance(context).
         iv.setImageUrl(imgUrl, NetworkManager.getInstance(context).getImageLoader());
         /*
         NetworkManager.getInstance(context).getImageLoader().get("URL",
@@ -80,18 +77,7 @@ public class TrackAdapter extends ArrayAdapter<Track> {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, context2);
-                //Bundle b = new Bundle();
-
                 i.putExtra("track", item);
-                /*try {
-                    i.putExtra("title", title);
-                    i.putExtra("likes", likes);
-                    i.putExtra("rating", rating);
-                    i.putExtra("author", author);
-
-                } catch (Exception ee) {
-                    ee.printStackTrace();
-                }*/
                 context.startActivity(i);
             }
         });

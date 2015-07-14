@@ -1,6 +1,7 @@
 package com.Example.iJam.models;
 
 import com.Example.iJam.interfaces.JamHUBInterface;
+import com.Example.iJam.network.ServerManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -136,10 +137,10 @@ public class Track implements JamHUBInterface, Serializable {
             String title = ob.getString("track_name");
             String uploadDate = ob.getString("upload_date");
             String instrument = ob.getString("instrument");
-            String imgUrl = ob.getString("img_url");
+            String imgUrl = ServerManager.getServerURL() + ob.getString("img_url");
             String tags = ob.getString("tags");
             String band = ob.getString("band_name");
-            String trackUrl = ob.getString("track_url");
+            String trackUrl = ServerManager.getServerURL() + ob.getString("track_url");
             String user_name = ob.getString("user_name");
             int ancestor = ob.getInt("ancestor_id");
             //ArrayList<String> tags = new ArrayList<>();

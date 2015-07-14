@@ -36,7 +36,7 @@ public class TrackDetailFragment extends Fragment {
     VideoView trackPlayer;
     MediaController mc;
     NetworkImageView imgTrack;
-    private FloatingActionButton mFAB;
+    private FloatingActionButton mFAB, fabLike;
     private RelativeLayout mRoot;
 
     final ArrayList<String> list = new ArrayList<String>();
@@ -47,6 +47,8 @@ public class TrackDetailFragment extends Fragment {
         mRoot = (RelativeLayout) v.findViewById(R.id.root_activity_trackDetails);
         mFAB = (FloatingActionButton) v.findViewById(R.id.trackdetail_fab_jamover);
         mFAB.setOnClickListener(mFabClickListener);
+        fabLike = (FloatingActionButton)v.findViewById(R.id.trackdetail_fab_like);
+        fabLike.setOnClickListener(likeListener);
         trackDetails =(ListView)v.findViewById(R.id.trackdetail_lv_tracks);
         trackPlayer =(VideoView)v.findViewById(R.id.trackdetail_vp_player);
         imgTrack =(NetworkImageView)v.findViewById(R.id.trackdetail_img_testimage);
@@ -63,7 +65,7 @@ public class TrackDetailFragment extends Fragment {
             final String imgUrl = myTrack.getImgUrl();
             final String duration = Integer.toString(myTrack.getDuration());
             final String uploadDate = myTrack.getUpload_date();
-            final String trackUrl= myTrack.getTrackUrl();
+            final String trackUrl = myTrack.getTrackUrl();
                     //ServerManager.getServerURL()+"/php6EBA.tmp.mp3";
 
             imgTrack.setImageUrl(imgUrl, NetworkManager.getInstance(getActivity()).getImageLoader());
@@ -109,10 +111,16 @@ public class TrackDetailFragment extends Fragment {
 
         return v;
     }
+    private View.OnClickListener likeListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(getActivity(), "Tracked Liked!", Toast.LENGTH_SHORT).show();
+        }
+    };
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent i=new Intent(getActivity(),JammingActivity.class);
+            Intent i = new Intent(getActivity(),JammingActivity.class);
             startActivity(i);
         }
     };
