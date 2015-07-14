@@ -48,6 +48,17 @@
         android:layout_alignEnd="@id/trackdetail_fab_jamover" />
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/trackdetail_fab_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/staricon1"
+        app:backgroundTint="@color/colorwhite"
+        android:layout_marginBottom="20dp"
+        android:layout_above="@+id/trackdetail_fab_like"
+        android:layout_alignStart="@id/trackdetail_fab_jamover"
+        android:layout_alignEnd="@id/trackdetail_fab_jamover" />
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/trackdetail_fab_jamover"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,9 +66,9 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="20dp"
-        android:src="@drawable/j"
+        android:src="@drawable/j2"
         app:borderWidth="2dp"
         app:fabSize="normal"
-        app:rippleColor="@color/colorPrimaryDark" />
+        app:backgroundTint="@color/colorwhite"/>
 
 </RelativeLayout>

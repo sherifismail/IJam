@@ -2,6 +2,8 @@ package com.Example.iJam.fragments;
 
 //import android.app.Fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
@@ -36,8 +39,8 @@ public class TrackDetailFragment extends Fragment {
     VideoView trackPlayer;
     MediaController mc;
     NetworkImageView imgTrack;
-    private FloatingActionButton mFAB, fabLike;
-    private RelativeLayout mRoot;
+    FloatingActionButton fabJam, fabLike, fabRate;
+    RelativeLayout mRoot;
     Track myTrack;
 
     final ArrayList<String> list = new ArrayList<String>();
@@ -46,10 +49,12 @@ public class TrackDetailFragment extends Fragment {
         View v = inflater.inflate(R.layout.activity_track_details, container, false);
 
         mRoot = (RelativeLayout) v.findViewById(R.id.root_activity_trackDetails);
-        mFAB = (FloatingActionButton) v.findViewById(R.id.trackdetail_fab_jamover);
-        mFAB.setOnClickListener(mFabClickListener);
+        fabJam = (FloatingActionButton) v.findViewById(R.id.trackdetail_fab_jamover);
+        fabJam.setOnClickListener(mFabClickListener);
         fabLike = (FloatingActionButton)v.findViewById(R.id.trackdetail_fab_like);
         fabLike.setOnClickListener(likeListener);
+        fabRate = (FloatingActionButton)v.findViewById(R.id.trackdetail_fab_rate);
+        fabRate.setOnClickListener(rateListener);
         trackDetails =(ListView)v.findViewById(R.id.trackdetail_lv_tracks);
         trackPlayer =(VideoView)v.findViewById(R.id.trackdetail_vp_player);
         imgTrack =(NetworkImageView)v.findViewById(R.id.trackdetail_img_testimage);
@@ -114,6 +119,30 @@ public class TrackDetailFragment extends Fragment {
 
         return v;
     }
+    private View.OnClickListener rateListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            EditText etRate = new EditText(getActivity());
+            AlertDialog.Builder myDialog = new AlertDialog.Builder(getActivity());
+            myDialog.setTitle("Rate Track")
+                    .setView(etRate)
+                    .setMessage("Range 0-5")
+                    .setPositiveButton("Rate", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+            AlertDialog dialog = myDialog.create();
+            dialog.show();
+        }
+    };
     private View.OnClickListener likeListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
