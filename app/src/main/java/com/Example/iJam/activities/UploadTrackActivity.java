@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.Example.iJam.R;
+import com.Example.iJam.models.Track;
 import com.Example.iJam.network.HttpImageTask;
 import com.Example.iJam.network.HttpTrackTask;
 import com.Example.iJam.network.InsertTrackTask;
@@ -23,9 +24,6 @@ import com.Example.iJam.network.ServerManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 public class UploadTrackActivity extends AppCompatActivity implements View.OnClickListener{
@@ -163,7 +161,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                         try {
                             JSONObject response = new JSONObject(s);
                             if (response.getString("status").equals("success")) {
-                                img_url = ServerManager.getServerURL() + "/tracks/" + response.getString("url");
+                                img_url = /*ServerManager.getServerURL() +*/ "/tracks/" + response.getString("url");
                                 Toast.makeText(ctx, img_url, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(ctx, response.getString("error"), Toast.LENGTH_SHORT).show();
@@ -175,7 +173,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                         //---------------------------------------------------------------------------------------------
                         //UPLOAD TRACK TO DATABASE
                         if (ready)
-                            UploadTrack(name, track_duration, instrument, tags, img_url, track_url);
+                            UploadTrack(name, instrument, tags);
                         else
                             ready = true;
                     }
@@ -189,7 +187,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                         try {
                             JSONObject response = new JSONObject(s);
                             if (response.getString("status").equals("success")) {
-                                track_url = ServerManager.getServerURL() + "/tracks/" + response.getString("url");
+                                track_url = /*ServerManager.getServerURL() +*/ "/tracks/" + response.getString("url");
                                 Toast.makeText(ctx, track_url, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(ctx, response.getString("error"), Toast.LENGTH_SHORT).show();
@@ -201,7 +199,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                         //---------------------------------------------------------------------------------------------
                         //UPLOAD TRACK TO DATABASE
                         if (ready)
-                            UploadTrack(name, track_duration, instrument, tags, img_url, track_url);
+                            UploadTrack(name, instrument, tags);
                         else
                             ready = true;
                     }
@@ -210,18 +208,11 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void UploadTrack(String name, String duration, String instrument, String tags, String img_url, String track_url){
-        JSONObject json_track = new JSONObject();
+    private void UploadTrack(String name, String instrument, String tags){
+        Track myTrack = new Track(name, instrument, tags, track_url, img_url, 24,MainActivity.user.getTitle());
+        JSONObject json_track = null;
         try {
-            json_track.put("name", name);
-            json_track.put("user_name", MainActivity.user.getTitle());
-            json_track.put("band_name", JSONObject.NULL);
-            json_track.put("duration", 24);
-            json_track.put("upload_date", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-            json_track.put("instrument", instrument);
-            json_track.put("tags", tags);
-            json_track.put("img_url", img_url);
-            json_track.put("track_url", track_url);
+            json_track = myTrack.toJSONObject();
 
             new InsertTrackTask(getApplicationContext()) {
                 @Override
@@ -237,11 +228,13 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "Response UNKNOWN!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }.execute(json_track);
         } catch (JSONException e) {
             e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "Failed to upload record", Toast.LENGTH_SHORT).show();
         }
     }
 }

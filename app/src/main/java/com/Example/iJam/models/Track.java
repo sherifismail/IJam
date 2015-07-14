@@ -7,7 +7,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Khodary on 7/5/15.
@@ -67,6 +69,18 @@ public class Track implements JamHUBInterface, Serializable {
         ancestor.children.add(this);
     }
 
+    public Track(String title, String instrument, String tags, String trackUrl,
+                 String imageUrl, int duration, String uploader) {
+        this.title = title;
+        this.instrument = instrument;
+        this.tags = tags;
+        this.upload_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        this.trackUrl = trackUrl;
+        this.imageUrl = imageUrl;
+        this.duration = duration;
+        this.uploader = uploader;
+    }
+
     public Track() {
         title = null;
         uploader = null;
@@ -96,14 +110,15 @@ public class Track implements JamHUBInterface, Serializable {
 
     public JSONObject toJSONObject() throws JSONException {
         JSONObject trackOb = new JSONObject();
-        trackOb.put("name", this.getTitle());
-        trackOb.put("imageurl", this.getImgUrl());
-        trackOb.put("author", this.getUploader());
-        trackOb.put("duration", this.getDuration());
-        trackOb.put("tags", this.getTags());
-        trackOb.put("likes", this.getLikes());
-        trackOb.put("rating", this.getRating());
-        trackOb.put("instrument", this.getInstrument());
+        trackOb.put("name", title);
+        trackOb.put("user_name", uploader);
+        trackOb.put("band_name", JSONObject.NULL);
+        trackOb.put("img_url", imageUrl);
+        trackOb.put("track_url", trackUrl);
+        trackOb.put("upload_date", upload_date);
+        trackOb.put("duration", duration);
+        trackOb.put("tags", tags);
+        trackOb.put("instrument", instrument);
 
         return trackOb;
     }

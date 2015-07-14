@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.Example.iJam.R;
 import com.Example.iJam.models.Track;
 import com.Example.iJam.network.NetworkManager;
+import com.Example.iJam.network.ServerManager;
 import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
@@ -53,11 +54,12 @@ public class TrackAdapter extends ArrayAdapter<Track> {
         final String likes = Integer.toString(item.getLikes());
         final String rating = Double.toString(item.getRating());
         //final String author = (item.getUploader());
-        final String imgUrl = item.getImgUrl();
+        final String imgUrl = ServerManager.getServerURL() + item.getImgUrl();
 
         txtTitle.setText("Title: " + title);
         txtLikes.setText("Likes Count: " + likes);
         txtRating.setText("Rating: " + rating + "/5");
+        //NetworkManager.getInstance(context).
         iv.setImageUrl(imgUrl, NetworkManager.getInstance(context).getImageLoader());
         /*
         NetworkManager.getInstance(context).getImageLoader().get("URL",

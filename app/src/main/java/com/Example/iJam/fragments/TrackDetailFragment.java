@@ -32,12 +32,10 @@ import java.util.ArrayList;
  */
 public class TrackDetailFragment extends Fragment {
     TextView txtAuthor, txtTitle, txtLikes, txtRating;
-    //ImageView imgTrack;
-    ListView trackdetails;
-    VideoView trackplayer;
+    ListView trackDetails;
+    VideoView trackPlayer;
     MediaController mc;
-    NetworkImageView imgtrack;
-    //Button playtrack;
+    NetworkImageView imgTrack;
     private FloatingActionButton mFAB;
     private RelativeLayout mRoot;
 
@@ -47,14 +45,11 @@ public class TrackDetailFragment extends Fragment {
         View v = inflater.inflate(R.layout.activity_track_details, container, false);
 
         mRoot = (RelativeLayout) v.findViewById(R.id.root_activity_trackDetails);
-        mFAB = (FloatingActionButton) v.findViewById(R.id.toptracks_fab_add);
+        mFAB = (FloatingActionButton) v.findViewById(R.id.trackdetail_fab_jamover);
         mFAB.setOnClickListener(mFabClickListener);
-        trackdetails=(ListView)v.findViewById(R.id.trackdetail_lv_tracks);
-        trackplayer=(VideoView)v.findViewById(R.id.trackdetail_vp_player);
-        //playtrack=(Button) v.findViewById(R.id.trackdetail_bt_playtrack);
-        imgtrack=(NetworkImageView)v.findViewById(R.id.trackdetail_img_testimage);
-        //imgtrack.setBackgroundResource(R.drawable.x);
-
+        trackDetails =(ListView)v.findViewById(R.id.trackdetail_lv_tracks);
+        trackPlayer =(VideoView)v.findViewById(R.id.trackdetail_vp_player);
+        imgTrack =(NetworkImageView)v.findViewById(R.id.trackdetail_img_testimage);
 
         Track myTrack = (Track) getActivity().getIntent().getSerializableExtra("track");
 
@@ -71,8 +66,8 @@ public class TrackDetailFragment extends Fragment {
             final String trackUrl= myTrack.getTrackUrl();
                     //ServerManager.getServerURL()+"/php6EBA.tmp.mp3";
 
-            imgtrack.setImageUrl(imgUrl, NetworkManager.getInstance(getActivity()).getImageLoader());
-            trackplayer.setVideoURI(Uri.parse(trackUrl));
+            imgTrack.setImageUrl(imgUrl, NetworkManager.getInstance(getActivity()).getImageLoader());
+            trackPlayer.setVideoURI(Uri.parse(trackUrl));
 
             String[] trackItems = new String[]{"Title: "+ title, "Likes Count: " + likes,
                     "Rating: " + rating, "Uploader:" + uploader,
@@ -83,9 +78,9 @@ public class TrackDetailFragment extends Fragment {
             }
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, trackItems);
-            trackdetails.setAdapter(adapter);
+            trackDetails.setAdapter(adapter);
 
-            trackplayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            trackPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
                     // TODO Auto-generated method stub
@@ -101,12 +96,12 @@ public class TrackDetailFragment extends Fragment {
             });
 
             mc = new MediaController(getActivity());
-            mc.setMediaPlayer(trackplayer);
-            trackplayer.start();
+            mc.setMediaPlayer(trackPlayer);
+            trackPlayer.start();
             //int length = mc.getDuration();
 
-            mc.setAnchorView(trackplayer);
-            trackplayer.setMediaController(mc);
+            mc.setAnchorView(trackPlayer);
+            trackPlayer.setMediaController(mc);
 
         }catch(Exception ee){
             ee.printStackTrace();
