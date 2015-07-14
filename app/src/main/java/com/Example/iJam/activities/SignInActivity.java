@@ -106,9 +106,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                         Toast.makeText(ctx, "Log in failed! " + response.getString("error"), Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
-
                                         JSONObject user_info = response.getJSONObject("user");
-
                                         User u = User.parseJson(user_info);
                                         u.setImgUrl(ServerManager.getServerURL() + u.getImgUrl());
 

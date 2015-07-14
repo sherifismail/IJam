@@ -32,12 +32,17 @@ import java.util.ArrayList;
  */
 public class TrackDetailFragment extends Fragment {
     TextView txtAuthor, txtTitle, txtLikes, txtRating;
+    ListView trackdetails;
+    VideoView trackplayer;
     ListView trackDetails;
     VideoView trackPlayer;
     MediaController mc;
+    NetworkImageView imgtrack;
+    private FloatingActionButton mFAB;
     NetworkImageView imgTrack;
     private FloatingActionButton mFAB, fabLike;
     private RelativeLayout mRoot;
+    Track myTrack;
 
     final ArrayList<String> list = new ArrayList<String>();
 
@@ -47,11 +52,16 @@ public class TrackDetailFragment extends Fragment {
         mRoot = (RelativeLayout) v.findViewById(R.id.root_activity_trackDetails);
         mFAB = (FloatingActionButton) v.findViewById(R.id.trackdetail_fab_jamover);
         mFAB.setOnClickListener(mFabClickListener);
+        trackdetails=(ListView)v.findViewById(R.id.trackdetail_lv_tracks);
+        trackplayer=(VideoView)v.findViewById(R.id.trackdetail_vp_player);
+        imgtrack=(NetworkImageView)v.findViewById(R.id.trackdetail_img_testimage);
         fabLike = (FloatingActionButton)v.findViewById(R.id.trackdetail_fab_like);
         fabLike.setOnClickListener(likeListener);
         trackDetails =(ListView)v.findViewById(R.id.trackdetail_lv_tracks);
         trackPlayer =(VideoView)v.findViewById(R.id.trackdetail_vp_player);
         imgTrack =(NetworkImageView)v.findViewById(R.id.trackdetail_img_testimage);
+
+        myTrack = (Track) getActivity().getIntent().getSerializableExtra("track");
 
         Track myTrack = (Track) getActivity().getIntent().getSerializableExtra("track");
 
@@ -121,9 +131,12 @@ public class TrackDetailFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Intent i = new Intent(getActivity(),JammingActivity.class);
+            i.putExtra("track", myTrack);
             startActivity(i);
+            getActivity().finish();
         }
     };
+
     public static TrackDetailFragment newInstance(String text) {
 
         TrackDetailFragment f = new TrackDetailFragment();
@@ -134,4 +147,4 @@ public class TrackDetailFragment extends Fragment {
 
         return f;
     }
-    }
+}
