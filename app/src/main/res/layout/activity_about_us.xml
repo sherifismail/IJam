@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Welcome to JamHub, this is our project for mobile development course which is jamming musics"
+        android:text="@string/paragraph_about_us"
         android:id="@+id/textView5"
         android:layout_below="@+id/signin_img_logo"
         android:layout_alignParentLeft="true"
@@ -32,9 +32,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Developed by: Mostafa Ghoneimy             Mahmoud ElKhodary                                                                                                                       Sherif Ismail"
+        android:text="@string/developers_names_aboutus"
         android:id="@+id/textView6"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="29dp"
+        android:layout_below="@+id/textView5"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

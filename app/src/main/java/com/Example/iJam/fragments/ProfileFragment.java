@@ -58,7 +58,7 @@ public class ProfileFragment extends Fragment {
         profileImage.setImageUrl(imgUrl, NetworkManager.getInstance(getActivity()).getImageLoader());
         userName.setText("Welcome, " + fName + "!");
 
-        new HttpGetTask(ServerManager.getServerURL()+"/tracks/my_tracks.php?uname="+uName, getActivity()){
+        new HttpGetTask(ServerManager.getServerURL()+"/tracks/get_tracks.php?uname="+uName, getActivity()){
             @Override
             protected void onPostExecute(String s) {
                 try {

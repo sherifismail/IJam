@@ -27,13 +27,12 @@ import com.Example.iJam.R;
 import com.Example.iJam.models.Track;
 import com.Example.iJam.network.NetworkManager;
 import com.Example.iJam.network.ServerManager;
+import com.android.volley.toolbox.NetworkImageView;
 
 import java.io.IOException;
 
 public class JammingActivity extends ActionBarActivity implements View.OnClickListener {
 
-    ImageView recordbut, stopbut;
-    private MediaRecorder myAudioRecorder;
     private String outputFile = null;
     TextView timer, countdown;
     private long startTime = 0L;
@@ -41,16 +40,20 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
     long timeInMilliseconds = 0L;
     long timeSwapBuff = 0L;
     long updatedTime = 0L;
-    FrameLayout imagetrack;
+
+    NetworkImageView imagetrack;
     MediaController mc;
     VideoView trackplayer;
+
+    ImageView recordbut, stopbut;
+    private MediaRecorder myAudioRecorder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jamming);
 
-        //imagetrack=(FrameLayout)findViewById(R.id.jamming_img_testimage);
+        imagetrack=(NetworkImageView)findViewById(R.id.jamming_img_videoimage);
         trackplayer=(VideoView)findViewById(R.id.jamming_vp_player);
         recordbut=(ImageView)findViewById(R.id.jamming_image_record);
         stopbut=(ImageView)findViewById(R.id.jamming_image_stop);
@@ -64,8 +67,7 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
         recordbut.setOnClickListener(this);
         stopbut.setOnClickListener(this);
 
-        //imgtrack.setImageUrl(imgUrl, NetworkManager.getInstance(getApplicationContext()).getImageLoader());
-
+        imagetrack.setImageUrl(imgUrl, NetworkManager.getInstance(getApplicationContext()).getImageLoader());
         trackplayer.setVideoURI(Uri.parse(trackUrl));
 
         mc = new MediaController(this);
