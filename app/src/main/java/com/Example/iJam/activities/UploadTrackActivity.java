@@ -209,7 +209,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void UploadTrack(String name, String instrument, String tags){
-        Track myTrack = new Track(name, instrument, tags, track_url, img_url, 24, MainActivity.user.getTitle());
+        Track myTrack = new Track(name, instrument, tags, track_url, img_url, 24, MainActivity.user.getUser_name());
         JSONObject json_track = null;
         try {
             json_track = myTrack.toJSONObject();

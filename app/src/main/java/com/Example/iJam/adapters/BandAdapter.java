@@ -45,7 +45,7 @@ public class BandAdapter extends ArrayAdapter<Band>{
         final ImageView imageView = (ImageView) rowView.findViewById(R.id.ivBand);
         final Band item = items.get(position);
 
-        txtName.setText(item.getTitle());
+        txtName.setText(item.getUser_name());
         txtAuthor.setText(item.getAuthor());
         txtTracks.setText(item.getTracks().size());
         //imageView.setImageBitmap();

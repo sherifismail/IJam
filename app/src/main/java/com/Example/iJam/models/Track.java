@@ -172,7 +172,7 @@ public class Track implements JamHUBInterface, Serializable {
     }
 
     @Override
-    public void setTitle(String title) {
+    public void setUser_name(String title) {
         this.title = title;
     }
 
@@ -236,7 +236,7 @@ public class Track implements JamHUBInterface, Serializable {
     }
 
     @Override
-    public String getTitle() {
+    public String getUser_name() {
         return title;
     }
 

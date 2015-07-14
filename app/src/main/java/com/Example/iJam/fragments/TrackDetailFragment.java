@@ -69,7 +69,7 @@ public class TrackDetailFragment extends Fragment {
         Track myTrack = (Track) getActivity().getIntent().getSerializableExtra("track");
 
         try {
-            final String title = myTrack.getTitle();
+            final String title = myTrack.getUser_name();
             final String likes = Integer.toString(myTrack.getLikes());
             final String rating = Double.toString(myTrack.getRating());
             final String uploader = myTrack.getUploader();

@@ -181,7 +181,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, 1);
-
                 break;
         }
     }

@@ -5,7 +5,7 @@ package com.Example.iJam.interfaces;
  */
 public interface JamHUBInterface {
     public void setImgUrl(String imageUrl);
-    public void setTitle(String title);
+    public void setUser_name(String title);
     //public void setRating(double rating);
     //public void setLikes(int likes);
     //public void setUploader(String uploader);
@@ -21,7 +21,7 @@ public interface JamHUBInterface {
     //public ArrayList<Track> getChildren();
     //public String getTrackUrl();
     public String getImgUrl();
-    public String getTitle();
+    public String getUser_name();
     //public double getRating();
     //public int getLikes();
     //public String getUploader();

@@ -1,20 +1,14 @@
 package com.Example.iJam.activities;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.Example.iJam.R;
 import com.Example.iJam.adapters.TrackAdapter;
-import com.Example.iJam.fragments.ProfileFragment;
-import com.Example.iJam.fragments.TopTracksFragment;
 import com.Example.iJam.models.Track;
 import com.Example.iJam.network.HttpGetTask;
 import com.Example.iJam.network.ServerManager;
@@ -26,7 +20,6 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyTracksActivity extends ActionBarActivity {
 
@@ -41,7 +34,7 @@ public class MyTracksActivity extends ActionBarActivity {
 
         String url=null;
         try {
-            String uname = MainActivity.user.getTitle();
+            String uname = MainActivity.user.getUser_name();
             url = ServerManager.getServerURL()+"/users/my_tracks.php?name="+ URLEncoder.encode(uname, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

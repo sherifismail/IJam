@@ -61,7 +61,7 @@ public class User implements JamHUBInterface, Serializable {
     }
 
     @Override
-    public String getTitle() {
+    public String getUser_name() {
         return user_name;
     }
 
@@ -76,7 +76,7 @@ public class User implements JamHUBInterface, Serializable {
     }
 
     @Override
-    public void setTitle(String user_name) {
+    public void setUser_name(String user_name) {
         this.user_name = user_name;
     }
 

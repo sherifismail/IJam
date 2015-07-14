@@ -48,7 +48,7 @@ public class TrackAdapter extends ArrayAdapter<Track> {
 
         final Track item = items.get(position);
 
-        final String title = item.getTitle();
+        final String title = item.getUser_name();
         final String likes = Integer.toString(item.getLikes());
         final String rating = Double.toString(item.getRating());
         //final String author = (item.getUploader());

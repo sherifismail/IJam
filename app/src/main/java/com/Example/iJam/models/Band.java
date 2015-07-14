@@ -49,7 +49,7 @@ public class Band implements JamHUBInterface {
     }
 
     @Override
-    public String getTitle() {
+    public String getUser_name() {
         return name;
     }
 
@@ -90,7 +90,7 @@ public class Band implements JamHUBInterface {
         this.tracks = tracks;
     }
 
-    public void setTitle(String name) {
+    public void setUser_name(String name) {
         this.name = name;
     }
 
