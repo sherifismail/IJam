@@ -1,6 +1,8 @@
 package com.Example.iJam.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +30,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     Button signup;
     Button signin;
 
+    public static final String PREFS_NAME = "MyPrefsFile";
+
+    SharedPreferences settings = null;
+    Boolean signedIn = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +49,18 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         et_password = (EditText) findViewById(R.id.signin_et_pass);
         signin = (Button)findViewById(R.id.signin_bt_signin);
         signup = (Button)findViewById(R.id.signin_bt_signup);
+
+        settings = getSharedPreferences(PREFS_NAME, 0);
+        signedIn = settings.getBoolean("user", false);
+
+        if(signedIn){
+            AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
+            myDialog.setTitle("Signing In").setMessage("Intializing.../nPlease wait!");
+            AlertDialog dialog = myDialog.create();
+            dialog.show();
+            onClick(signin);
+            dialog.dismiss();
+        }
 
         TextView mTextView=(TextView)findViewById(R.id.signin_txt_forget);
         mTextView.setPaintFlags(mTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -88,6 +107,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 String user_name = et_user_name.getText().toString().trim();
                 String password = et_password.getText().toString().trim();
 
+                if(signedIn){
+                    user_name = settings.getString("user_name", user_name);
+                    password = settings.getString("password", password);
+                }
+
                 if (user_name.equals("") || password.equals(""))
                     Toast.makeText(getApplicationContext(), "one or more of the fields is empty!", Toast.LENGTH_SHORT).show();
                 else {
@@ -109,6 +133,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                         JSONObject user_info = response.getJSONObject("user");
                                         User u = User.parseJson(user_info);
                                         u.setImgUrl(ServerManager.getServerURL() + u.getImgUrl());
+
+                                        settings.edit().putString("user_name", u.getUser_name());
+                                        settings.edit().putBoolean("signIn", true);
+                                        settings.edit().putString("password", u.getPassword());
+                                        settings.edit().commit();
 
                                         Intent i = new Intent(ctx, MainActivity.class);
                                         i.putExtra("user", u);
