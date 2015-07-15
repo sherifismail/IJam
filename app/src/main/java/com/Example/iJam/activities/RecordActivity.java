@@ -96,7 +96,7 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
                     myAudioRecorder = new MediaRecorder();
                     myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
                     myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-                    myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+                    myAudioRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
                     myAudioRecorder.setOutputFile(outputFile);
 
                     startTime = SystemClock.uptimeMillis();
