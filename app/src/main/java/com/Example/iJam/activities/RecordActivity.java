@@ -2,11 +2,11 @@ package com.Example.iJam.activities;
 
 import android.content.Intent;
 import android.media.MediaRecorder;
-import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +19,7 @@ import com.Example.iJam.R;
 
 import java.io.IOException;
 
-public class RecordActivity extends AppCompatActivity implements View.OnClickListener {
+public class RecordActivity extends ActionBarActivity implements View.OnClickListener {
     Button next,uploadstorage;
     private MediaRecorder myAudioRecorder;
     private String outputFile = null;
