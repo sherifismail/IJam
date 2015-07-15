@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +24,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class EdittProfileActivity extends ActionBarActivity implements View.OnClickListener {
+public class EdittProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     final String lName = MainActivity.user.getLast_name();
     final String fName = MainActivity.user.getFirst_name();

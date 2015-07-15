@@ -21,24 +21,23 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/main_fab_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        android:src="@drawable/addicon"
-        app:borderWidth="2dp"
-        app:fabSize="normal"
-        app:backgroundTint="@color/colorwhite" />
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent" />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent" />
-
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/main_fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/addicon"
+            app:backgroundTint="@color/colorwhite"
+            app:borderWidth="2dp"
+            app:fabSize="normal" />
 
     </RelativeLayout>
 

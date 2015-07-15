@@ -82,7 +82,7 @@ public class TrackDetailFragment extends Fragment {
                     //ServerManager.getServerURL()+"/php6EBA.tmp.mp3";
 
             imgTrack.setImageUrl(imgUrl, NetworkManager.getInstance(getActivity()).getImageLoader());
-            trackPlayer.setVideoURI(Uri.parse(trackUrl));
+
 
             String[] trackItems = new String[]{"Title: "+ title, "Likes Count: " + likes,
                     "Rating: " + rating, "Uploader:" + uploader,
@@ -98,7 +98,7 @@ public class TrackDetailFragment extends Fragment {
             trackPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
-                    mp.setVolume(0.0f,0.5f);
+                    mp.setVolume(0.0f, 0.5f);
                     // TODO Auto-generated method stub
                     int duration = mp.getDuration() / 1000;
                     int hours = duration / 3600;
@@ -112,12 +112,14 @@ public class TrackDetailFragment extends Fragment {
             });
 
             mc = new MediaController(getActivity());
+            mc.setAnchorView(trackPlayer);
+            trackPlayer.setMediaController(mc);
             mc.setMediaPlayer(trackPlayer);
+
+            trackPlayer.setVideoURI(Uri.parse(trackUrl));
             trackPlayer.start();
             //int length = mc.getDuration();
 
-            mc.setAnchorView(trackPlayer);
-            trackPlayer.setMediaController(mc);
 
         }catch(Exception ee){
             ee.printStackTrace();

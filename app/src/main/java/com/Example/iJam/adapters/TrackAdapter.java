@@ -44,6 +44,7 @@ public class TrackAdapter extends ArrayAdapter<Track> {
         TextView txtTitle = (TextView) rowView.findViewById(R.id.txtTitle);
         TextView txtLikes = (TextView) rowView.findViewById(R.id.txtLikes);
         TextView txtRating = (TextView) rowView.findViewById(R.id.txtRating);
+        TextView txtUploader = (TextView)rowView.findViewById(R.id.txtUploader);
         NetworkImageView iv = (NetworkImageView) rowView.findViewById(R.id.img_trackimage);
 
         final Track item = items.get(position);
@@ -51,12 +52,13 @@ public class TrackAdapter extends ArrayAdapter<Track> {
         final String title = item.getUser_name();
         final String likes = Integer.toString(item.getLikes());
         final String rating = Double.toString(item.getRating());
-        //final String author = (item.getUploader());
+        final String uploader = (item.getUploader());
         final String imgUrl = item.getImgUrl();
 
         txtTitle.setText("Title: " + title);
         txtLikes.setText("Likes Count: " + likes);
         txtRating.setText("Rating: " + rating + "/5");
+        txtUploader.setText("Uploader: "+ uploader);
         iv.setImageUrl(imgUrl, NetworkManager.getInstance(context).getImageLoader());
         /*
         NetworkManager.getInstance(context).getImageLoader().get("URL",

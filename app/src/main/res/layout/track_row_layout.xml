@@ -16,7 +16,7 @@
             android:text="TrackTitle:"
             android:id="@+id/txtTitle"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/img_trackimage" />
 
@@ -37,7 +37,6 @@
             android:id="@+id/txtLikes"
             android:layout_marginBottom="5dp"
             android:layout_alignStart="@+id/txtTitle"
-            android:layout_toEndOf="@+id/img_trackimage"
             android:layout_below="@+id/txtTitle"/>
 
         <TextView
@@ -46,8 +45,16 @@
             android:text="Rating: "
             android:id="@+id/txtRating"
             android:layout_alignStart="@id/txtTitle"
-            android:layout_toEndOf="@+id/img_trackimage"
-            android:layout_below="@+id/txtLikes" />
+            android:layout_below="@+id/txtLikes"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/txtUploader"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtRating"
+            android:layout_alignStart="@id/txtTitle"
+            android:text="Uploader: "/>
 
     </RelativeLayout>
 </LinearLayout>
