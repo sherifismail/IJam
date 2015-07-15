@@ -216,6 +216,7 @@ public class EdittProfileActivity extends ActionBarActivity implements View.OnCl
                             Toast.makeText(ctx, "Update failed! " + response.getString("error"), Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
+                            //THIS IS TEMPORARY AND NEEDS TO BE CHANGED SO SOON!!!!
                             MainActivity.user.setFirst_name(editfname);
                             MainActivity.user.setLast_name(editlname);
                             MainActivity.user.setEmail(editemail);
