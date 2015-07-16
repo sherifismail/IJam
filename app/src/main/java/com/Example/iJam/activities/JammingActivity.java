@@ -2,8 +2,10 @@ package com.Example.iJam.activities;
 
 import android.content.Context;
 import android.media.AudioManager;
+import android.media.AudioTrack;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -24,6 +26,8 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.Example.iJam.R;
+import com.Example.iJam.models.MyAudioManager;
+import com.Example.iJam.models.MyAudioRecorder;
 import com.Example.iJam.models.Track;
 import com.Example.iJam.network.NetworkManager;
 import com.Example.iJam.network.ServerManager;
@@ -42,11 +46,10 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
     long updatedTime = 0L;
 
     NetworkImageView imagetrack;
-    MediaController mc;
-    VideoView trackplayer;
+    private AudioTrack track = null;
+    private MyAudioRecorder recorder = null;
 
     ImageView recordbut, stopbut;
-    private MediaRecorder myAudioRecorder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,6 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
         setContentView(R.layout.activity_jamming);
 
         imagetrack=(NetworkImageView)findViewById(R.id.jamming_img_videoimage);
-        trackplayer=(VideoView)findViewById(R.id.jamming_vp_player);
         recordbut=(ImageView)findViewById(R.id.jamming_image_record);
         stopbut=(ImageView)findViewById(R.id.jamming_image_stop);
         countdown=(TextView)findViewById(R.id.countdown);
@@ -66,18 +68,10 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
 
         recordbut.setOnClickListener(this);
         stopbut.setOnClickListener(this);
+        imagetrack.setOnClickListener(this);
 
         imagetrack.setImageUrl(imgUrl, NetworkManager.getInstance(getApplicationContext()).getImageLoader());
-        trackplayer.setVideoURI(Uri.parse(trackUrl));
-
-        mc = new MediaController(this);
-        mc.setMediaPlayer(trackplayer);
-
-        trackplayer.setMediaController(mc);
-        AudioManager m_amAudioManager;
-        m_amAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-        m_amAudioManager.setMode(AudioManager.MODE_IN_CALL);
-        m_amAudioManager.setSpeakerphoneOn(false);
+        track = MyAudioManager.InitAudio(Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp");
     }
 
     @Override
@@ -117,25 +111,26 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
                 public void onFinish() {
                     try {
                         countdown.setVisibility(View.INVISIBLE);
-                        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/testrecord.mp3";
-                        myAudioRecorder = new MediaRecorder();
-                        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-                        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-                        myAudioRecorder.setOutputFile(outputFile);
-                        trackplayer.start();
                         startTime = SystemClock.uptimeMillis();
                         customHandler.postDelayed(updateTimerThread, 0);
-                        myAudioRecorder.prepare();
-                        myAudioRecorder.start();
+
+                        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording";
+                        recorder = new MyAudioRecorder(outputFile);
+                        new AsyncTask<Void, Void, Void>(){
+
+                            @Override
+                            protected Void doInBackground(Void... params) {
+                                recorder.startRecording();
+                                return null;
+                            }
+                        }.execute();
+
+                        track.play();
 
                         Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_LONG).show();
                         recordbut.setEnabled(false);
                         stopbut.setEnabled(true);
                     } catch (IllegalStateException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } catch (IOException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
@@ -147,14 +142,16 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
             timeSwapBuff += timeInMilliseconds;
             customHandler.removeCallbacks(updateTimerThread);
 
-            myAudioRecorder.stop();
-            myAudioRecorder.release();
-            myAudioRecorder = null;
+            recorder.stopRecording();
+            track.stop();
 
             stopbut.setEnabled(false);
 
             Toast.makeText(getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_LONG).show();
             break;
+
+        case R.id.jamming_img_videoimage:
+            track.play();
         }
     }
     private Runnable updateTimerThread = new Runnable() {
