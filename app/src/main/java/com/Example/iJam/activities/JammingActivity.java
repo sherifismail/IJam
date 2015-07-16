@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.MediaController;
@@ -61,6 +62,7 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
         stopbut=(ImageView)findViewById(R.id.jamming_image_stop);
         countdown=(TextView)findViewById(R.id.countdown);
         timer=(TextView)findViewById(R.id.timer);
+        Button next = (Button) findViewById(R.id.jamming_bt_next);
 
         Track myTrack = (Track) getIntent().getSerializableExtra("track");
         final String imgUrl = myTrack.getImgUrl();
@@ -69,6 +71,7 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
         recordbut.setOnClickListener(this);
         stopbut.setOnClickListener(this);
         imagetrack.setOnClickListener(this);
+        next.setOnClickListener(this);
 
         imagetrack.setImageUrl(imgUrl, NetworkManager.getInstance(getApplicationContext()).getImageLoader());
         track = MyAudioManager.InitAudio(Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp");
@@ -114,7 +117,7 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
                         startTime = SystemClock.uptimeMillis();
                         customHandler.postDelayed(updateTimerThread, 0);
 
-                        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording";
+                        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/premix";
                         recorder = new MyAudioRecorder(outputFile);
                         new AsyncTask<Void, Void, Void>(){
 
@@ -152,6 +155,13 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
 
         case R.id.jamming_img_videoimage:
             track.play();
+            break;
+
+        case R.id.jamming_bt_next:
+            MyAudioManager.mixFiles(Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp",
+                                    Environment.getExternalStorageDirectory().getAbsolutePath() + "/premix",
+                                    Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording");
+
         }
     }
     private Runnable updateTimerThread = new Runnable() {
