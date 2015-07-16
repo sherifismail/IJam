@@ -1,7 +1,7 @@
 package com.Example.iJam.activities;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -21,7 +21,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-public class MyTracksActivity extends ActionBarActivity {
+public class MyTracksActivity extends AppCompatActivity {
 
     private ListView lvTracks;
     public static ArrayList<Track> myTracks = new ArrayList<>();
@@ -51,7 +51,7 @@ public class MyTracksActivity extends ActionBarActivity {
                         JSONArray jArray = new JSONArray(response.getString("results"));
                         try {
                             myTracks = Track.parseJson(jArray);
-                            TrackAdapter tracksAdap = new TrackAdapter(MyTracksActivity.this, MyTracksActivity.class, myTracks);
+                            TrackAdapter tracksAdap = new TrackAdapter(MyTracksActivity.this, MainTrackDetailActivity.class, myTracks);
                             lvTracks.setAdapter(tracksAdap);
 
                         }catch (JSONException e){

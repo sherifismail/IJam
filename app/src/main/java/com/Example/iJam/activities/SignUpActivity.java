@@ -2,6 +2,7 @@ package com.Example.iJam.activities;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -155,6 +156,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                                 } else {
                                                     Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
                                                     //int uid = response.getInt("user_id");
+                                                    SharedPreferences settings = getSharedPreferences(SignInActivity.PREFS_NAME, 0);
+                                                    SharedPreferences.Editor editor = settings.edit();
+
+                                                    editor.putString("user_name", u.getUser_name());
+                                                    editor.putString("password", u.getPassword());
+                                                    editor.putBoolean("signIn", false);
+                                                    editor.commit();
+
                                                     Intent i = new Intent(ctx, MainActivity.class);
                                                     //inte.putExtra("user_id", uid);
                                                     i.putExtra("user", u);

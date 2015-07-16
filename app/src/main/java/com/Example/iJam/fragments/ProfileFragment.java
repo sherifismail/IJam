@@ -1,6 +1,7 @@
 package com.Example.iJam.fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -97,6 +98,12 @@ public class ProfileFragment extends Fragment {
                     startActivity(aboutus);
                 } else if (position == 4) {
                     Intent signout = new Intent(getActivity(), SignInActivity.class);
+                    SharedPreferences settings = getActivity().getSharedPreferences(SignInActivity.PREFS_NAME, 0);
+                    SharedPreferences.Editor editor = settings.edit();
+
+                    editor.putBoolean("signIn", false);
+                    editor.commit();
+
                     startActivity(signout);
                     getActivity().finish();
                 }

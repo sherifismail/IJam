@@ -4,36 +4,70 @@
     tools:context="com.Example.iJam.activities.EdittProfileActivity">
 
 
+    <com.android.volley.toolbox.NetworkImageView
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:id="@+id/editprofile_img_profile"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="26dp"
+        android:layout_marginBottom="26dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="First name: "
         android:id="@+id/Editprofile_txtview_fname"
-        android:textSize="25dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp" />
+        android:textSize="20sp"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@id/editprofile_img_profile"/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Editprofile_edittxt_fname"
+        android:inputType="textPersonName"
+        android:layout_alignBaseline="@id/Editprofile_txtview_fname"
+        android:layout_toEndOf="@+id/Editprofile_txtview_fname"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Last name: "
         android:id="@+id/Editprofile_txtview_lname"
-        android:textSize="25dp"
+        android:textSize="20sp"
+        android:layout_marginTop="15dp"
         android:layout_below="@+id/Editprofile_txtview_fname"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp" />
+        android:layout_alignStart="@id/Editprofile_txtview_fname"
+        android:layout_alignEnd="@id/Editprofile_txtview_fname"/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Editprofile_edittxt_lname"
+        android:inputType="textPersonName"
+        android:layout_alignBaseline="@id/Editprofile_txtview_lname"
+        android:layout_toEndOf="@+id/Editprofile_txtview_fname" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email: "
         android:id="@+id/Editprofile_txtview_email"
-        android:textSize="25dp"
+        android:textSize="20sp"
         android:layout_below="@+id/Editprofile_txtview_lname"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp" />
+        android:layout_marginTop="15dp"
+        android:layout_alignEnd="@id/Editprofile_txtview_fname"
+        android:layout_alignStart="@id/Editprofile_txtview_fname" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Editprofile_edittxt_email"
+        android:layout_alignBaseline="@id/Editprofile_txtview_email"
+        android:layout_toEndOf="@+id/Editprofile_txtview_fname"
+        android:inputType="textEmailAddress" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,72 +75,17 @@
         android:text="Old Password: "
         android:id="@+id/Editprofile_txtview_pass"
         android:layout_below="@+id/Editprofile_txtview_email"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textSize="25dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp" />
-
-    <com.android.volley.toolbox.NetworkImageView
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:id="@+id/editprofile_img_profile"
-        android:layout_gravity="center_horizontal"
-        android:layout_above="@+id/Editprofile_edittxt_fname"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit changes"
-        android:id="@+id/Editprofile_btn_submit"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:background="@android:color/holo_orange_dark" />
+        android:layout_alignEnd="@id/Editprofile_txtview_fname"
+        android:layout_alignStart="@id/Editprofile_txtview_fname"
+        android:textSize="20sp"
+        android:layout_marginTop="15dp" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Editprofile_edittxt_fname"
-        android:layout_above="@+id/Editprofile_txtview_lname"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:inputType="textPersonName"
-        android:layout_toRightOf="@+id/Editprofile_txtview_fname"
-        android:layout_toEndOf="@+id/Editprofile_txtview_fname" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Editprofile_edittxt_lname"
-        android:layout_below="@+id/Editprofile_edittxt_fname"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:inputType="textPersonName"
-        android:layout_toRightOf="@+id/Editprofile_txtview_lname"
-        android:layout_toEndOf="@+id/Editprofile_txtview_lname" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Editprofile_edittxt_email"
-        android:layout_below="@+id/Editprofile_txtview_lname"
-        android:layout_toRightOf="@+id/Editprofile_txtview_email"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:inputType="textEmailAddress" />
-
-    <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/Editprofile_edittxt_pass"
-        android:layout_alignTop="@+id/Editprofile_txtview_pass"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:inputType="textPassword"
+        android:layout_alignBaseline="@id/Editprofile_txtview_pass"
         android:layout_toRightOf="@+id/Editprofile_txtview_pass"
         android:layout_toEndOf="@+id/Editprofile_txtview_pass" />
 
@@ -114,44 +93,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Password:"
-        android:id="@+id/textView"
-        android:layout_below="@+id/Editprofile_edittxt_pass"
-        android:layout_alignLeft="@+id/Editprofile_btn_submit"
-        android:layout_alignStart="@+id/Editprofile_btn_submit"
-        android:textSize="25dp"
-        android:layout_marginLeft="5dp" />
+        android:id="@+id/Editprofile_txtview_newpass"
+        android:layout_below="@+id/Editprofile_txtview_pass"
+        android:layout_alignEnd="@id/Editprofile_txtview_fname"
+        android:layout_alignStart="@id/Editprofile_txtview_fname"
+        android:layout_marginTop="15dp"
+        android:textSize="20sp"/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/Editprofile_edittxt_newpass"
+        android:layout_alignBaseline="@id/Editprofile_txtview_newpass"
+        android:layout_toEndOf="@+id/Editprofile_txtview_fname" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Confirm password:"
-        android:id="@+id/textView2"
-        android:layout_below="@+id/textView"
-        android:layout_alignLeft="@+id/Editprofile_btn_submit"
-        android:layout_alignStart="@+id/Editprofile_btn_submit"
-        android:textSize="25dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp" />
+        android:id="@+id/Editprofile_txtview_conpass"
+        android:layout_below="@+id/Editprofile_txtview_newpass"
+        android:layout_alignEnd="@id/Editprofile_txtview_fname"
+        android:layout_alignStart="@id/Editprofile_txtview_fname"
+        android:textSize="20sp"
+        android:layout_marginTop="15dp" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/Editprofile_edittxt_newpass"
-        android:layout_below="@+id/Editprofile_txtview_pass"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView" />
-
-    <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/Editprofile_edittxt_confpass"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2" />
+        android:layout_alignBaseline="@id/Editprofile_txtview_conpass"
+        android:layout_toEndOf="@+id/Editprofile_txtview_fname" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit changes"
+        android:id="@+id/Editprofile_btn_submit"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/holo_orange_dark"
+        android:textColor="@color/colorwhite"/>
 
 </RelativeLayout>
 

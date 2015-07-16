@@ -1,6 +1,7 @@
 package com.Example.iJam.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,14 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     Button signup;
     Button signin;
 
+    public static final String PREFS_NAME = "MyPrefsFile";
+
+    SharedPreferences settings = null;
+    Boolean signedIn = false;
+
+    String user_name = null;
+    String password = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +49,24 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         et_user_name = (EditText) findViewById(R.id.signin_et_username);
         et_password = (EditText) findViewById(R.id.signin_et_pass);
-        signin = (Button)findViewById(R.id.signin_bt_signin);
-        signup = (Button)findViewById(R.id.signin_bt_signup);
+        signin = (Button) findViewById(R.id.signin_bt_signin);
+        signup = (Button) findViewById(R.id.signin_bt_signup);
 
-        TextView mTextView=(TextView)findViewById(R.id.signin_txt_forget);
+        settings = getSharedPreferences(PREFS_NAME, 0);
+        signedIn = settings.getBoolean("signIn", false);
+
+        if (signedIn) {
+            Toast.makeText(getApplicationContext(), "Intializing...Please Wait!", Toast.LENGTH_SHORT).show();
+            user_name = settings.getString("user_name", user_name);
+            password = settings.getString("password", password);
+            try {
+                signInUser(user_name, password);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        TextView mTextView = (TextView) findViewById(R.id.signin_txt_forget);
         mTextView.setPaintFlags(mTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         mTextView.setOnClickListener(this);
 
@@ -73,6 +96,47 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         return super.onOptionsItemSelected(item);
     }
 
+    public void signInUser(String user_name, String password) throws JSONException {
+
+        JSONObject login_info = new JSONObject();
+        login_info.put("user_name", user_name);
+        login_info.put("password", password);
+
+        new LogInTask(getApplicationContext()) {
+            @Override
+            protected void onPostExecute(String s) {
+                try {
+                    JSONObject response = new JSONObject(s);
+                    String status = response.getString("status");
+                    if (status.equals("fail")) {
+                        Toast.makeText(ctx, "Log in failed! " + response.getString("error"), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
+                        JSONObject user_info = response.getJSONObject("user");
+                        User u = User.parseJson(user_info);
+                        u.setImgUrl(ServerManager.getServerURL() + u.getImgUrl());
+
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putString("user_name", u.getUser_name());
+                        editor.putString("password", u.getPassword());
+                        editor.putBoolean("signIn", true);
+                        editor.commit();
+
+                        Intent i = new Intent(ctx, MainActivity.class);
+                        i.putExtra("user", u);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        ctx.startActivity(i);
+                        finish();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute(login_info);
+
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -85,48 +149,17 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 startActivity(intent);
                 break;
             case R.id.signin_bt_signin:
-                String user_name = et_user_name.getText().toString().trim();
-                String password = et_password.getText().toString().trim();
+                user_name = et_user_name.getText().toString().trim();
+                password = et_password.getText().toString().trim();
 
                 if (user_name.equals("") || password.equals(""))
                     Toast.makeText(getApplicationContext(), "one or more of the fields is empty!", Toast.LENGTH_SHORT).show();
-                else {
-                    JSONObject login_info = new JSONObject();
+                else
                     try {
-                        login_info.put("user_name", user_name);
-                        login_info.put("password", password);
-
-                        new LogInTask(getApplicationContext()) {
-                            @Override
-                            protected void onPostExecute(String s) {
-                                try {
-                                    JSONObject response = new JSONObject(s);
-                                    String status = response.getString("status");
-                                    if (status.equals("fail")) {
-                                        Toast.makeText(ctx, "Log in failed! " + response.getString("error"), Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
-                                        JSONObject user_info = response.getJSONObject("user");
-                                        User u = User.parseJson(user_info);
-                                        u.setImgUrl(ServerManager.getServerURL() + u.getImgUrl());
-
-                                        Intent i = new Intent(ctx, MainActivity.class);
-                                        i.putExtra("user", u);
-                                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        ctx.startActivity(i);
-                                        finish();
-                                    }
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }.execute(login_info);
+                        signInUser(user_name, password);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-                }
                 break;
         }
     }
