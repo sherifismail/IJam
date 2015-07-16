@@ -2,8 +2,10 @@ package com.Example.iJam.fragments;
 
 //import android.app.Fragment;
 
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
@@ -14,12 +16,19 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.Example.iJam.R;
+import com.Example.iJam.activities.JammingActivity;
 import com.Example.iJam.models.MyAudioManager;
 import com.Example.iJam.models.Track;
+import com.Example.iJam.network.HttpGetTask;
 import com.Example.iJam.network.NetworkManager;
+import com.Example.iJam.network.ServerManager;
 import com.android.volley.toolbox.NetworkImageView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -54,6 +63,8 @@ public class TrackDetailFragment extends Fragment {
 
         Track myTrack = (Track) getActivity().getIntent().getSerializableExtra("track");
 
+        track = MyAudioManager.InitAudioRemote(myTrack.getTrackUrl());
+
         try {
             final String title = myTrack.getUser_name();
             final String likes = Integer.toString(myTrack.getLikes());
@@ -67,7 +78,16 @@ public class TrackDetailFragment extends Fragment {
             final String trackUrl = myTrack.getTrackUrl();
 
             imgTrack.setImageUrl(imgUrl, NetworkManager.getInstance(getActivity()).getImageLoader());
-            //InitAudio();
+
+            //NADAFA '3ER LAZEMAH
+            /*new AsyncTask<String, Void, Void>(){
+
+                @Override
+                protected Void doInBackground(String... params) {
+                    MyAudioManager.InitStream(track, trackUrl);
+                    return null;
+                }
+            }.execute();*/
 
             String[] trackItems = new String[]{"Title: "+ title, "Likes Count: " + likes,
                     "Rating: " + rating, "Uploader:" + uploader,
@@ -90,8 +110,7 @@ public class TrackDetailFragment extends Fragment {
     private View.OnClickListener rateListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            String outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording";
-            track = MyAudioManager.InitAudio(outputFile);
+
             track.play();
             /*EditText etRate = new EditText(getActivity());
             AlertDialog.Builder myDialog = new AlertDialog.Builder(getActivity());
@@ -117,7 +136,7 @@ public class TrackDetailFragment extends Fragment {
     private View.OnClickListener likeListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            /*new HttpGetTask(ServerManager.getServerURL()+"/tracks/like.php?id="+myTrack.getID(), getActivity()){
+            new HttpGetTask(ServerManager.getServerURL()+"/tracks/like.php?id="+myTrack.getID(), getActivity()){
                 @Override
                 protected void onPostExecute(String s) {
                     try {
@@ -130,22 +149,16 @@ public class TrackDetailFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
-            }.execute();*/
-            MyAudioManager.mixFiles(Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording",
-                                    Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording2",
-                                    Environment.getExternalStorageDirectory().getAbsolutePath() + "/mix");
+            }.execute();
         }
     };
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            /*
             Intent i = new Intent(getActivity(),JammingActivity.class);
             i.putExtra("track", myTrack);
             startActivity(i);
-            getActivity().finish();*/
-            track = MyAudioManager.InitAudio(Environment.getExternalStorageDirectory().getAbsolutePath() + "/mix");
-            track.play();
+            getActivity().finish();
         }
     };
 

@@ -3,6 +3,8 @@ package com.Example.iJam.models;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.os.AsyncTask;
+import android.os.Environment;
 
 import com.Example.iJam.activities.RecordActivity;
 
@@ -17,6 +19,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +35,11 @@ public abstract class MyAudioManager {
     public static final int CHANNEL_CONFIGURATION = AudioFormat.CHANNEL_CONFIGURATION_MONO;
     public static final int AUDIO_ENCODING =  AudioFormat.ENCODING_PCM_16BIT;
     final static int STREAM_TYPE = AudioManager.STREAM_MUSIC;
-    public static final int PLAY_MODE = AudioTrack.MODE_STATIC;
+    public static final int PLAY_STATIC = AudioTrack.MODE_STATIC;
+    public static final int PLAY_STREAM = AudioTrack.MODE_STREAM;
+
+    private static boolean executing = false;
+    private static AudioTrack track=null;
 
     public static AudioTrack InitAudio(String outputFile){
 
@@ -44,7 +54,7 @@ public abstract class MyAudioManager {
             BufferedInputStream bis = new BufferedInputStream(is);
             DataInputStream dis = new DataInputStream(bis);
 
-            track = new AudioTrack(STREAM_TYPE, FREQUENCY, CHANNEL_CONFIGURATION, AUDIO_ENCODING,audioLength,PLAY_MODE);
+            track = new AudioTrack(STREAM_TYPE, FREQUENCY, CHANNEL_CONFIGURATION, AUDIO_ENCODING,audioLength,PLAY_STATIC);
 
             short[] audioData = new short[audioLength];
 
@@ -63,6 +73,112 @@ public abstract class MyAudioManager {
             e.printStackTrace();
         }
         return track;
+    }
+
+    public static AudioTrack InitAudioRemote(String url){
+
+        executing = true;
+        new AsyncTask<String, Void, Void>(){
+
+            @Override
+            protected Void doInBackground(String... params) {
+                String outFileName = null;
+                try {
+                    outFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp";
+                    File file = new File(outFileName);
+
+                    URL source = new URL(params[0]);
+                    BufferedInputStream in = new BufferedInputStream(source.openStream());
+                    FileOutputStream fos = new FileOutputStream(outFileName);
+                    BufferedOutputStream bout = new BufferedOutputStream(fos,1024);
+
+                    byte[] data = new byte[1024];
+                    int x=0;
+                    while((x=in.read(data,0,1024))>=0){
+                        bout.write(data,0,x);
+                    }
+                    fos.flush();
+                    bout.flush();
+                    fos.close();
+                    bout.close();
+                    in.close();
+
+                    //GET THE LENGTH IN BYTES AND DIVIDE BY 2 TO GET THE LENGTH IN SHORT
+                    int audioLength = (int)(file.length());
+
+                    InputStream isf = new FileInputStream(file);
+                    BufferedInputStream bisf = new BufferedInputStream(isf);
+                    DataInputStream disf = new DataInputStream(bisf);
+
+                    track = new AudioTrack(STREAM_TYPE, FREQUENCY, CHANNEL_CONFIGURATION, AUDIO_ENCODING,audioLength,PLAY_STATIC);
+
+                    short[] audioData = new short[audioLength];
+
+                    //INSERTING THE DATA IN THE FILE TO FILL THE UADIODATA ARRAY
+                    int i=0;
+                    while (disf.available()>0 && i<audioLength) {
+                        audioData[i] = disf.readShort();
+                        i++;
+                    }
+                    track.write(audioData, 0, audioLength);
+
+                    disf.close();
+                    executing = false;
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }.execute(url);
+
+        while(executing){}
+        return track;
+    }
+
+    public static void InitStream(AudioTrack track, String url){
+        try {
+            //String outFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp";
+            //File file = new File(outFileName);
+
+            URL source = new URL(url);
+            BufferedInputStream in = new BufferedInputStream(source.openStream());
+            DataInputStream dis = new DataInputStream(in);
+
+            int buffSize = AudioTrack.getMinBufferSize(FREQUENCY, CHANNEL_CONFIGURATION, AUDIO_ENCODING);
+            track = new AudioTrack(STREAM_TYPE, FREQUENCY, CHANNEL_CONFIGURATION, AUDIO_ENCODING, buffSize, PLAY_STREAM);
+
+            byte[] audioData = new byte[buffSize];
+            //byte[] oneShort = new byte[2];
+
+
+            //byte[] data = new byte[1024];
+            //int x=0;
+            //while((x=in.read(data,0,1024))>=0){
+              //  bout.write(data,0,x);
+            //}
+            //INSERTING THE DATA IN THE FILE TO FILL THE UADIODATA ARRAY
+            int x=0;
+            //while (dis.available() > 0) {
+              //  int i=0;
+            while ((x = in.read(audioData, 0, buffSize)) >= 0) {
+                track.write(audioData,0,audioData.length);
+            }
+
+            //}
+            dis.close();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void mixFiles(String fileInput1, String fileInput2, String fileOuput){
