@@ -56,10 +56,14 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         signedIn = settings.getBoolean("signIn", false);
 
         if (signedIn) {
-            Toast.makeText(getApplicationContext(), "Intializing...Please Wait!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Intializing...Please Wait!", Toast.LENGTH_SHORT).show();
             user_name = settings.getString("user_name", user_name);
             password = settings.getString("password", password);
-            signInUser(user_name, password);
+            try {
+                signInUser(user_name, password);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         TextView mTextView = (TextView) findViewById(R.id.signin_txt_forget);
@@ -92,47 +96,44 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         return super.onOptionsItemSelected(item);
     }
 
-    public void signInUser(String user_name, String password) {
+    public void signInUser(String user_name, String password) throws JSONException {
 
         JSONObject login_info = new JSONObject();
-        try {
-            login_info.put("user_name", user_name);
-            login_info.put("password", password);
+        login_info.put("user_name", user_name);
+        login_info.put("password", password);
 
-            new LogInTask(getApplicationContext()) {
-                @Override
-                protected void onPostExecute(String s) {
-                    try {
-                        JSONObject response = new JSONObject(s);
-                        String status = response.getString("status");
-                        if (status.equals("fail")) {
-                            Toast.makeText(ctx, "Log in failed! " + response.getString("error"), Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
-                            JSONObject user_info = response.getJSONObject("user");
-                            User u = User.parseJson(user_info);
-                            u.setImgUrl(ServerManager.getServerURL() + u.getImgUrl());
+        new LogInTask(getApplicationContext()) {
+            @Override
+            protected void onPostExecute(String s) {
+                try {
+                    JSONObject response = new JSONObject(s);
+                    String status = response.getString("status");
+                    if (status.equals("fail")) {
+                        Toast.makeText(ctx, "Log in failed! " + response.getString("error"), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
+                        JSONObject user_info = response.getJSONObject("user");
+                        User u = User.parseJson(user_info);
+                        u.setImgUrl(ServerManager.getServerURL() + u.getImgUrl());
 
-                            settings.edit().putString("user_name", u.getUser_name());
-                            settings.edit().putBoolean("signIn", true);
-                            settings.edit().putString("password", u.getPassword());
-                            settings.edit().commit();
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putString("user_name", u.getUser_name());
+                        editor.putString("password", u.getPassword());
+                        editor.putBoolean("signIn", true);
+                        editor.commit();
 
-                            Intent i = new Intent(ctx, MainActivity.class);
-                            i.putExtra("user", u);
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            ctx.startActivity(i);
-                            finish();
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        Intent i = new Intent(ctx, MainActivity.class);
+                        i.putExtra("user", u);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        ctx.startActivity(i);
+                        finish();
                     }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            }.execute(login_info);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            }
+        }.execute(login_info);
 
     }
 
@@ -154,8 +155,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 if (user_name.equals("") || password.equals(""))
                     Toast.makeText(getApplicationContext(), "one or more of the fields is empty!", Toast.LENGTH_SHORT).show();
                 else
-                    signInUser(user_name, password);
-
+                    try {
+                        signInUser(user_name, password);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 break;
         }
     }

@@ -99,8 +99,11 @@ public class ProfileFragment extends Fragment {
                 } else if (position == 4) {
                     Intent signout = new Intent(getActivity(), SignInActivity.class);
                     SharedPreferences settings = getActivity().getSharedPreferences(SignInActivity.PREFS_NAME, 0);
-                    settings.edit().putBoolean("signIn", false);
-                    settings.edit().commit();
+                    SharedPreferences.Editor editor = settings.edit();
+
+                    editor.putBoolean("signIn", false);
+                    editor.commit();
+
                     startActivity(signout);
                     getActivity().finish();
                 }

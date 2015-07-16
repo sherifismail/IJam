@@ -138,14 +138,14 @@ public class User implements JamHUBInterface, Serializable {
     }
 
     public static User parseJson(JSONObject jOb) throws JSONException {
-
+        String password = jOb.getString("password");
         String imgUrl = jOb.getString("img_url");
         String email = jOb.getString("email");
         String fName = jOb.getString("first_name");
         String lName = jOb.getString("last_name");
         String user_name = jOb.getString("user_name");
 
-        User user = new User(user_name, "", fName, lName, imgUrl, email);
+        User user = new User(user_name, password, fName, lName, imgUrl, email);
 
         return user;
     }

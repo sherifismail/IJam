@@ -157,11 +157,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                                     Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
                                                     //int uid = response.getInt("user_id");
                                                     SharedPreferences settings = getSharedPreferences(SignInActivity.PREFS_NAME, 0);
+                                                    SharedPreferences.Editor editor = settings.edit();
 
-                                                    settings.edit().putString("user_name", u.getUser_name());
-                                                    settings.edit().putBoolean("signIn", true);
-                                                    settings.edit().putString("password", u.getPassword());
-                                                    settings.edit().commit();
+                                                    editor.putString("user_name", u.getUser_name());
+                                                    editor.putString("password", u.getPassword());
+                                                    editor.putBoolean("signIn", false);
+                                                    editor.commit();
 
                                                     Intent i = new Intent(ctx, MainActivity.class);
                                                     //inte.putExtra("user_id", uid);
