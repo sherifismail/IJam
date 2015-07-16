@@ -16,19 +16,11 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.Example.iJam.R;
-import com.Example.iJam.activities.RecordActivity;
 import com.Example.iJam.models.MyAudioManager;
 import com.Example.iJam.models.Track;
 import com.Example.iJam.network.NetworkManager;
 import com.android.volley.toolbox.NetworkImageView;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -42,8 +34,7 @@ public class TrackDetailFragment extends Fragment {
     RelativeLayout mRoot;
     Track myTrack;
     private AudioTrack track = null;
-
-    final ArrayList<String> list = new ArrayList<String>();
+    final ArrayList<String> list = new ArrayList<>();
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -100,7 +91,7 @@ public class TrackDetailFragment extends Fragment {
         @Override
         public void onClick(View v) {
             String outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording";
-            MyAudioManager.InitAudio(outputFile);
+            track = MyAudioManager.InitAudio(outputFile);
             track.play();
             /*EditText etRate = new EditText(getActivity());
             AlertDialog.Builder myDialog = new AlertDialog.Builder(getActivity());
@@ -153,7 +144,7 @@ public class TrackDetailFragment extends Fragment {
             i.putExtra("track", myTrack);
             startActivity(i);
             getActivity().finish();*/
-            MyAudioManager.InitAudio(Environment.getExternalStorageDirectory().getAbsolutePath() + "/mix");
+            track = MyAudioManager.InitAudio(Environment.getExternalStorageDirectory().getAbsolutePath() + "/mix");
             track.play();
         }
     };

@@ -31,7 +31,7 @@ public abstract class MyAudioManager {
     final static int STREAM_TYPE = AudioManager.STREAM_MUSIC;
     public static final int PLAY_MODE = AudioTrack.MODE_STATIC;
 
-    public static void InitAudio(String outputFile){
+    public static AudioTrack InitAudio(String outputFile){
 
         AudioTrack track = null;
         try {
@@ -54,8 +54,7 @@ public abstract class MyAudioManager {
                 audioData[i] = dis.readShort();
                 i++;
             }
-
-            int bufferWriteResult = track.write(audioData, 0, audioLength);
+            track.write(audioData, 0, audioLength);
             dis.close();
 
         } catch (FileNotFoundException e) {
@@ -63,6 +62,7 @@ public abstract class MyAudioManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return track;
     }
 
     public static void mixFiles(String fileInput1, String fileInput2, String fileOuput){
