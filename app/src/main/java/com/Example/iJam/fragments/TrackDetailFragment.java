@@ -2,14 +2,8 @@ package com.Example.iJam.fragments;
 
 //import android.app.Fragment;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.media.AudioManager;
-import android.media.AudioRecord;
 import android.media.AudioTrack;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
@@ -18,37 +12,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.MediaController;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.Example.iJam.R;
-import com.Example.iJam.activities.JammingActivity;
 import com.Example.iJam.activities.RecordActivity;
+import com.Example.iJam.models.MyAudioManager;
 import com.Example.iJam.models.Track;
-import com.Example.iJam.network.HttpGetTask;
 import com.Example.iJam.network.NetworkManager;
-import com.Example.iJam.network.ServerManager;
 import com.android.volley.toolbox.NetworkImageView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 /**
@@ -57,8 +37,6 @@ import java.util.ArrayList;
 public class TrackDetailFragment extends Fragment {
 
     ListView trackDetails;
-    VideoView trackPlayer;
-    MediaController mc;
     NetworkImageView imgTrack;
     FloatingActionButton fabJam, fabLike, fabRate;
     RelativeLayout mRoot;
@@ -66,8 +44,7 @@ public class TrackDetailFragment extends Fragment {
     private AudioTrack track = null;
 
     final ArrayList<String> list = new ArrayList<String>();
-    final int STREAM_TYPE = AudioManager.STREAM_MUSIC;
-    public static final int PLAY_MODE = AudioTrack.MODE_STATIC;
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_track_details, container, false);
@@ -80,7 +57,6 @@ public class TrackDetailFragment extends Fragment {
         fabRate = (FloatingActionButton)v.findViewById(R.id.trackdetail_fab_rate);
         fabRate.setOnClickListener(rateListener);
         trackDetails =(ListView)v.findViewById(R.id.trackdetail_lv_tracks);
-        //trackPlayer =(VideoView)v.findViewById(R.id.trackdetail_vp_player);
         imgTrack =(NetworkImageView)v.findViewById(R.id.trackdetail_img_testimage);
 
         myTrack = (Track) getActivity().getIntent().getSerializableExtra("track");
@@ -98,11 +74,9 @@ public class TrackDetailFragment extends Fragment {
             final String duration = Integer.toString(myTrack.getDuration());
             final String uploadDate = myTrack.getUpload_date();
             final String trackUrl = myTrack.getTrackUrl();
-                    //ServerManager.getServerURL()+"/php6EBA.tmp.mp3";
 
             imgTrack.setImageUrl(imgUrl, NetworkManager.getInstance(getActivity()).getImageLoader());
-            //trackPlayer.setVideoURI(Uri.parse(trackUrl));
-            InitAudio();
+            //InitAudio();
 
             String[] trackItems = new String[]{"Title: "+ title, "Likes Count: " + likes,
                     "Rating: " + rating, "Uploader:" + uploader,
@@ -115,30 +89,6 @@ public class TrackDetailFragment extends Fragment {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, trackItems);
             trackDetails.setAdapter(adapter);
 
-            /*trackPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    mp.setVolume(0.0f,0.5f);
-                    // TODO Auto-generated method stub
-                    int duration = mp.getDuration() / 1000;
-                    int hours = duration / 3600;
-                    int minutes = (duration / 60) - (hours * 60);
-                    int seconds = duration - (hours * 3600) - (minutes * 60);
-                    String formatted = String.format("%02d:%02d", minutes, seconds);
-                    //Log.i("trackduration", formatted);
-                    Toast.makeText(getActivity().getApplicationContext(), "duration is " + formatted, Toast.LENGTH_LONG).show();
-
-                }
-            });*/
-
-            //mc = new MediaController(getActivity());
-            //mc.setMediaPlayer(trackPlayer);
-            //trackPlayer.start();
-            //int length = mc.getDuration();
-
-            //mc.setAnchorView(trackPlayer);
-            //trackPlayer.setMediaController(mc);
-
         }catch(Exception ee){
             ee.printStackTrace();
         }
@@ -146,44 +96,13 @@ public class TrackDetailFragment extends Fragment {
         return v;
     }
 
-    private void InitAudio(){
-        try {
-            String outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording";
-            File file = new File(outputFile);
-
-            //GET THE LENGTH IN BYTES AND DIVIDE BY 2 TO GET THE LENGTH IN SHORT
-            int audioLength = (int)(file.length());
-
-            InputStream is = new FileInputStream(file);
-            BufferedInputStream bis = new BufferedInputStream(is);
-            DataInputStream dis = new DataInputStream(bis);
-
-            track = new AudioTrack(STREAM_TYPE,RecordActivity.FREQUENCY, RecordActivity.CHANNEL_CONFIGURATION
-                    , RecordActivity.AUDIO_ENCODING,audioLength,PLAY_MODE);
-
-            short[] audioData = new short[audioLength];
-
-            //INSERTING THE DATA IN THE FILE TO FILL THE UADIODATA ARRAY
-            int i=0;
-            while (dis.available()>0 && i<audioLength) {
-                audioData[i] = dis.readShort();
-                i++;
-            }
-
-            int bufferWriteResult = track.write(audioData, 0, audioLength);
-            dis.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private View.OnClickListener rateListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            EditText etRate = new EditText(getActivity());
+            String outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording";
+            MyAudioManager.InitAudio(outputFile);
+            track.play();
+            /*EditText etRate = new EditText(getActivity());
             AlertDialog.Builder myDialog = new AlertDialog.Builder(getActivity());
             myDialog.setTitle("Rate Track")
                     .setView(etRate)
@@ -201,13 +120,13 @@ public class TrackDetailFragment extends Fragment {
                         }
                     });
             AlertDialog dialog = myDialog.create();
-            dialog.show();
+            dialog.show();*/
         }
     };
     private View.OnClickListener likeListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            new HttpGetTask(ServerManager.getServerURL()+"/tracks/like.php?id="+myTrack.getID(), getActivity()){
+            /*new HttpGetTask(ServerManager.getServerURL()+"/tracks/like.php?id="+myTrack.getID(), getActivity()){
                 @Override
                 protected void onPostExecute(String s) {
                     try {
@@ -220,17 +139,22 @@ public class TrackDetailFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
-            }.execute();
+            }.execute();*/
+            MyAudioManager.mixFiles(Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording",
+                                    Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording2",
+                                    Environment.getExternalStorageDirectory().getAbsolutePath() + "/mix");
         }
     };
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            track.play();/*
+            /*
             Intent i = new Intent(getActivity(),JammingActivity.class);
             i.putExtra("track", myTrack);
             startActivity(i);
             getActivity().finish();*/
+            MyAudioManager.InitAudio(Environment.getExternalStorageDirectory().getAbsolutePath() + "/mix");
+            track.play();
         }
     };
 

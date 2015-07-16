@@ -150,7 +150,6 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
                     dos.writeShort(buffer[i]);
             }
 
-            int x = audioRecord.getAudioFormat();
             audioRecord.stop();
             audioRecord.release();
             dos.close();
