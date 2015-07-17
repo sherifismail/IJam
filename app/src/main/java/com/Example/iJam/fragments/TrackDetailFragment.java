@@ -2,6 +2,8 @@ package com.Example.iJam.fragments;
 
 //import android.app.Fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -14,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -100,6 +103,12 @@ public class TrackDetailFragment extends Fragment {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, trackItems);
             trackDetails.setAdapter(adapter);
 
+            imgTrack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    track.play();
+                }
+            });
         }catch(Exception ee){
             ee.printStackTrace();
         }
@@ -111,8 +120,7 @@ public class TrackDetailFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
-            track.play();
-            /*EditText etRate = new EditText(getActivity());
+            EditText etRate = new EditText(getActivity());
             AlertDialog.Builder myDialog = new AlertDialog.Builder(getActivity());
             myDialog.setTitle("Rate Track")
                     .setView(etRate)
@@ -130,9 +138,10 @@ public class TrackDetailFragment extends Fragment {
                         }
                     });
             AlertDialog dialog = myDialog.create();
-            dialog.show();*/
+            dialog.show();
         }
     };
+
     private View.OnClickListener likeListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
@@ -152,6 +161,7 @@ public class TrackDetailFragment extends Fragment {
             }.execute();
         }
     };
+
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
