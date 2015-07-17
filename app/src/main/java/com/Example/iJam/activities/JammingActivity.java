@@ -1,6 +1,7 @@
 package com.Example.iJam.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.media.MediaRecorder;
@@ -158,10 +159,14 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
             break;
 
         case R.id.jamming_bt_next:
+            //MIX IN ASYNC TASK!!!
             MyAudioManager.mixFiles(Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp",
                                     Environment.getExternalStorageDirectory().getAbsolutePath() + "/premix",
                                     Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording");
-
+            Intent intent = new Intent(this, UploadTrackActivity.class);
+            intent.putExtra("filename", Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording");
+            startActivity(intent);
+            finish();
         }
     }
     private Runnable updateTimerThread = new Runnable() {

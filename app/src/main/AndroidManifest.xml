@@ -47,23 +47,28 @@
         </activity>
         <activity
             android:name=".activities.RecordActivity"
-            android:label="@string/title_activity_record" >
+            android:label="@string/title_activity_record"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activities.JammingActivity"
-            android:label="@string/title_activity_jamming" >
+            android:label="@string/title_activity_jamming"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activities.MyTracksActivity"
-            android:label="@string/title_activity_my_tracks" >
+            android:label="@string/title_activity_my_tracks"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activities.EdittProfileActivity"
-            android:label="@string/title_activity_editt_profile" >
+            android:label="@string/title_activity_editt_profile"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activities.AboutUsActivity"
-            android:label="@string/title_activity_about_us" >
+            android:label="@string/title_activity_about_us"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 
