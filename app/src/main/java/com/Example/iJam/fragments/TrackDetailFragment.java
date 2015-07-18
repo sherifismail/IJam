@@ -59,6 +59,7 @@ public class TrackDetailFragment extends Fragment {
         fabLike.setOnClickListener(likeListener);
         fabRate = (FloatingActionButton)v.findViewById(R.id.trackdetail_fab_rate);
         fabRate.setOnClickListener(rateListener);
+
         trackDetails =(ListView)v.findViewById(R.id.trackdetail_lv_tracks);
         imgTrack =(NetworkImageView)v.findViewById(R.id.trackdetail_img_testimage);
 
@@ -76,7 +77,7 @@ public class TrackDetailFragment extends Fragment {
             final String tags = myTrack.getTags();
             final String instrument = myTrack.getInstrument();
             final String imgUrl = myTrack.getImgUrl();
-            final String duration = Integer.toString(myTrack.getDuration());
+            final int duration = myTrack.getDuration();
             final String uploadDate = myTrack.getUpload_date();
             final String trackUrl = myTrack.getTrackUrl();
 
@@ -92,10 +93,14 @@ public class TrackDetailFragment extends Fragment {
                 }
             }.execute();*/
 
+            int mins = duration / 60;
+            int secs = duration % 60;
+            String dur = String.format("%02d", mins) + ":" + String.format("%02d", secs);
+
             String[] trackItems = new String[]{"Title: "+ title, "Likes Count: " + likes,
                     "Rating: " + rating, "Uploader:" + uploader,
                     "Tags: " + tags, "Instrument: " + instrument,
-                    "Song Duration: " + duration, "Upload Date: " + uploadDate};
+                    "Song Duration: " + dur, "Upload Date: " + uploadDate};
             for (int i = 0; i < trackItems.length; ++i) {
                 list.add(trackItems[i]);
             }

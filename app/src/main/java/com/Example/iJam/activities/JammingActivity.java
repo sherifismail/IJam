@@ -51,6 +51,7 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
     private AudioTrack track = null;
     private MyAudioRecorder recorder = null;
     Track myTrack;
+    private int secs;
 
     ImageView recordbut, stopbut;
 
@@ -116,8 +117,7 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
                 public void onFinish() {
                     try {
                         countdown.setVisibility(View.INVISIBLE);
-                        startTime = SystemClock.uptimeMillis();
-                        customHandler.postDelayed(updateTimerThread, 0);
+
 
                         outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/premix";
                         recorder = new MyAudioRecorder(outputFile);
@@ -132,6 +132,8 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
 
                         track.play();
 
+                        startTime = SystemClock.uptimeMillis();
+                        customHandler.postDelayed(updateTimerThread, 0);
                         Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_LONG).show();
                         recordbut.setEnabled(false);
                         stopbut.setEnabled(true);
@@ -146,13 +148,11 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
         case R.id.jamming_image_stop:
             timeSwapBuff += timeInMilliseconds;
             customHandler.removeCallbacks(updateTimerThread);
-
             recorder.stopRecording();
-            track.stop();
-
             stopbut.setEnabled(false);
-
             Toast.makeText(getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_LONG).show();
+
+            track.stop();
             break;
 
         case R.id.jamming_img_videoimage:
@@ -167,6 +167,7 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
             Intent intent = new Intent(this, UploadTrackActivity.class);
             intent.putExtra("filename", Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording");
             intent.putExtra("id", myTrack.getID());
+            intent.putExtra("duration", secs);
             startActivity(intent);
             finish();
         }
@@ -175,7 +176,7 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
         public void run() {
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
             updatedTime = timeSwapBuff + timeInMilliseconds;
-            int secs = (int) (updatedTime / 1000);
+            secs = (int) (updatedTime / 1000);
             int mins = secs / 60;
             secs = secs % 60;
             int milliseconds = (int) (updatedTime % 1000);

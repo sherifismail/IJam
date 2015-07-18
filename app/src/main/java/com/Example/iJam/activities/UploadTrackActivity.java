@@ -35,6 +35,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
     boolean ready = false;
     String img_url, track_url, track_duration;
     int anc_id;
+    int duration;
 
 
     @Override
@@ -45,6 +46,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
         Intent caller = getIntent();
         outputFile = caller.getStringExtra("filename");
         anc_id = caller.getIntExtra("id", 0);
+        duration = caller.getIntExtra("duration", 0);
 
         imgTrack = (ImageView)findViewById(R.id.trackupload_img_trackimage);
         btUpload = (Button) findViewById(R.id.trackupload_bt_upload);
@@ -211,7 +213,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void UploadTrack(String name, String instrument, String tags){
-        Track myTrack = new Track(name, instrument, tags, anc_id, track_url, img_url, 24, MainActivity.user.getUser_name());
+        Track myTrack = new Track(name, instrument, tags, anc_id, track_url, img_url, duration, MainActivity.user.getUser_name());
         JSONObject json_track = null;
         try {
             json_track = myTrack.toJSONObject();

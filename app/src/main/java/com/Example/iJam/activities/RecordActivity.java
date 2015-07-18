@@ -17,8 +17,9 @@ import com.Example.iJam.R;
 import com.Example.iJam.models.MyAudioRecorder;
 
 public class RecordActivity extends ActionBarActivity implements View.OnClickListener {
-    Button next;
-    TextView timer;
+
+    private int secs;
+    private TextView timer;
     private long startTime = 0L;
     private Handler customHandler = new Handler();
     long timeInMilliseconds = 0L;
@@ -32,6 +33,8 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
+
+        Button next;
 
         timer=(TextView)findViewById(R.id.timer);
         recordbut=(ImageView)findViewById(R.id.record_image_record);
@@ -49,6 +52,7 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
             case R.id.record_btn_next:
                 Intent intent=new Intent(RecordActivity.this,UploadTrackActivity.class);
                 intent.putExtra("filename",outputFile);
+                intent.putExtra("duration", secs);
                 startActivity(intent);
                 finish();
                 break;
@@ -93,10 +97,9 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
         public void run() {
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
             updatedTime = timeSwapBuff + timeInMilliseconds;
-            int secs = (int) (updatedTime / 1000);
+            secs = (int) (updatedTime / 1000);
             int mins = secs / 60;
             secs = secs % 60;
-            int milliseconds = (int) (updatedTime % 1000);
             timer.setText("" + String.format("%02d", mins) + ":" + String.format("%02d", secs));
             customHandler.postDelayed(this, 0);
         }
