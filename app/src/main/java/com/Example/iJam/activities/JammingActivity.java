@@ -50,6 +50,7 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
     NetworkImageView imagetrack;
     private AudioTrack track = null;
     private MyAudioRecorder recorder = null;
+    Track myTrack;
 
     ImageView recordbut, stopbut;
 
@@ -65,7 +66,7 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
         timer=(TextView)findViewById(R.id.timer);
         Button next = (Button) findViewById(R.id.jamming_bt_next);
 
-        Track myTrack = (Track) getIntent().getSerializableExtra("track");
+        myTrack = (Track) getIntent().getSerializableExtra("track");
         final String imgUrl = myTrack.getImgUrl();
         final String trackUrl= myTrack.getTrackUrl();
 
@@ -165,6 +166,7 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
                                     Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording");
             Intent intent = new Intent(this, UploadTrackActivity.class);
             intent.putExtra("filename", Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording");
+            intent.putExtra("id", myTrack.getID());
             startActivity(intent);
             finish();
         }

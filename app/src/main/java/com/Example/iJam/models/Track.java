@@ -82,6 +82,19 @@ public class Track implements JamHUBInterface, Serializable {
         this.uploader = uploader;
     }
 
+    public Track(String title, String instrument, String tags, int ancestor, String trackUrl,
+                 String imageUrl, int duration, String uploader) {
+        this.title = title;
+        this.instrument = instrument;
+        this.tags = tags;
+        this.ancestor = ancestor;
+        this.upload_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        this.trackUrl = trackUrl;
+        this.imageUrl = imageUrl;
+        this.duration = duration;
+        this.uploader = uploader;
+    }
+
     public Track() {
         title = null;
         uploader = null;
@@ -120,6 +133,7 @@ public class Track implements JamHUBInterface, Serializable {
         trackOb.put("duration", duration);
         trackOb.put("tags", tags);
         trackOb.put("instrument", instrument);
+        trackOb.put("ancestor_id", ancestor);
 
         return trackOb;
     }
