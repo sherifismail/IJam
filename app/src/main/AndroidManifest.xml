@@ -70,6 +70,10 @@
             android:label="@string/title_activity_about_us"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".activities.ForgotPassword"
+            android:label="@string/title_activity_forgot_password" >
+        </activity>
     </application>
 
 </manifest>

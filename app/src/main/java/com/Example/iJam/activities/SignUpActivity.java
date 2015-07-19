@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -25,6 +26,18 @@ import com.Example.iJam.network.ServerManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,6 +45,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     Button btn_signup;
     ImageView profileImage;
     String img_url = null;
+    String email,password;
+    Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,10 +120,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.signup_bt_signup:
-                final String password = et_pass.getText().toString().trim();
+                password = et_pass.getText().toString().trim();
                 final String confirm_pass = et_confirm_pass.getText().toString().trim();
                 final String user_name = et_username.getText().toString().trim();
-                final String email = et_email.getText().toString().trim();
+                email = et_email.getText().toString().trim();
                 final String fname = et_fname.getText().toString().trim();
                 final String lname = et_lname.getText().toString().trim();
 
@@ -163,6 +178,21 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                                     editor.putString("password", u.getPassword());
                                                     editor.putBoolean("signIn", false);
                                                     editor.commit();
+                                                    Properties props = new Properties();
+                                                    props.put("mail.smtp.host", "smtp.gmail.com");
+                                                    props.put("mail.smtp.socketFactory.port", "465");
+                                                    props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                                                    props.put("mail.smtp.auth", "true");
+                                                    props.put("mail.smtp.port", "465");
+                                                    session = Session.getDefaultInstance(props, new Authenticator() {
+                                                        @Override
+                                                        protected PasswordAuthentication getPasswordAuthentication() {
+                                                            return new PasswordAuthentication("jamhubapp@gmail.com", "jamhub123");
+                                                        }
+                                                    });
+
+                                                    RetreiveFeedTask task = new RetreiveFeedTask();
+                                                    task.execute();
 
                                                     Intent i = new Intent(ctx, MainActivity.class);
                                                     //inte.putExtra("user_id", uid);
@@ -216,6 +246,33 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     break;
             }
 
+        }
+    }
+
+
+    class RetreiveFeedTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try{
+                Message message = new MimeMessage(session);
+                message.setFrom(new InternetAddress("jamhub"));
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+                message.setSubject("Welcome to JamHub");
+                message.setContent("Welcome to JamHub, hope you enjoy our application", "text/html; charset=utf-8");
+                Transport.send(message);
+            } catch(MessagingException e) {
+                e.printStackTrace();
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(getApplicationContext(), "Message sent", Toast.LENGTH_LONG).show();
         }
     }
 }
