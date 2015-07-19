@@ -99,8 +99,8 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
             updatedTime = timeSwapBuff + timeInMilliseconds;
             secs = (int) (updatedTime / 1000);
             int mins = secs / 60;
-            secs = secs % 60;
-            timer.setText("" + String.format("%02d", mins) + ":" + String.format("%02d", secs));
+            int Rsecs = secs % 60;
+            timer.setText("" + String.format("%02d", mins) + ":" + String.format("%02d", Rsecs));
             customHandler.postDelayed(this, 0);
         }
     };

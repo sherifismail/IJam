@@ -167,6 +167,9 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
             Intent intent = new Intent(this, UploadTrackActivity.class);
             intent.putExtra("filename", Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording");
             intent.putExtra("id", myTrack.getID());
+            int parentDur = myTrack.getDuration();
+            if(parentDur > secs)
+                secs = parentDur;
             intent.putExtra("duration", secs);
             startActivity(intent);
             finish();
@@ -178,9 +181,8 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
             updatedTime = timeSwapBuff + timeInMilliseconds;
             secs = (int) (updatedTime / 1000);
             int mins = secs / 60;
-            secs = secs % 60;
-            int milliseconds = (int) (updatedTime % 1000);
-            timer.setText("" + String.format("%02d", mins) + ":" + String.format("%02d", secs));
+            int Rsecs = secs % 60;
+            timer.setText("" + String.format("%02d", mins) + ":" + String.format("%02d", Rsecs));
             customHandler.postDelayed(this, 0);
         }
     };

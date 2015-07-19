@@ -46,6 +46,7 @@ public class TrackDetailFragment extends Fragment {
     RelativeLayout mRoot;
     Track myTrack;
     private AudioTrack track = null;
+    boolean playing = false;
     final ArrayList<String> list = new ArrayList<>();
 
 
@@ -111,7 +112,15 @@ public class TrackDetailFragment extends Fragment {
             imgTrack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    track.play();
+                    if(!playing) {
+                        track.play();
+                        playing = true;
+                    }
+                    else{
+                        track.pause();
+                        playing = false;
+                    }
+
                 }
             });
         }catch(Exception ee){
