@@ -18,7 +18,7 @@ import java.io.OutputStream;
 public class MyAudioRecorder {
 
     String outputFile;
-    public boolean isRecording;
+    private boolean isRecording;
 
     public MyAudioRecorder(String outputFile){
         this.outputFile = outputFile;
@@ -85,5 +85,9 @@ public class MyAudioRecorder {
 
     public void stopRecording(){
         isRecording = false;
+    }
+
+    public boolean isRecording(){
+        return isRecording;
     }
 }

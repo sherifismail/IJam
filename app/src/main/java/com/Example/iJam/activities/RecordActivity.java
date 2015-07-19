@@ -50,11 +50,17 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.record_btn_next:
-                Intent intent=new Intent(RecordActivity.this,UploadTrackActivity.class);
-                intent.putExtra("filename",outputFile);
-                intent.putExtra("duration", secs);
-                startActivity(intent);
-                finish();
+                if(recorder != null) {
+                    if(recorder.isRecording())
+                        recorder.stopRecording();
+
+                    Intent intent = new Intent(RecordActivity.this, UploadTrackActivity.class);
+                    intent.putExtra("filename", outputFile);
+                    intent.putExtra("duration", secs);
+                    startActivity(intent);
+                    finish();
+                } else
+                    Toast.makeText(getApplicationContext(), "Please start recording before proceeding to the upload page", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.record_image_record:
@@ -105,6 +111,11 @@ public class RecordActivity extends ActionBarActivity implements View.OnClickLis
         }
     };
 
-
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(recorder != null && recorder.isRecording()) {
+            recorder.stopRecording();
+        }
+    }
 }

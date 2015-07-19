@@ -46,6 +46,7 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
     long timeInMilliseconds = 0L;
     long timeSwapBuff = 0L;
     long updatedTime = 0L;
+    boolean playing = false;
 
     NetworkImageView imagetrack;
     private AudioTrack track = null;
@@ -118,7 +119,6 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
                     try {
                         countdown.setVisibility(View.INVISIBLE);
 
-
                         outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/premix";
                         recorder = new MyAudioRecorder(outputFile);
                         new AsyncTask<Void, Void, Void>(){
@@ -131,6 +131,7 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
                         }.execute();
 
                         track.play();
+                        playing = true;
 
                         startTime = SystemClock.uptimeMillis();
                         customHandler.postDelayed(updateTimerThread, 0);
@@ -156,25 +157,60 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
             break;
 
         case R.id.jamming_img_videoimage:
-            track.play();
+            if(!playing) {
+                track.play();
+                playing = true;
+            }
+            else{
+                track.pause();
+                playing = false;
+            }
             break;
 
         case R.id.jamming_bt_next:
-            //MIX IN ASYNC TASK!!!
-            MyAudioManager.mixFiles(Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp",
-                                    Environment.getExternalStorageDirectory().getAbsolutePath() + "/premix",
-                                    Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording");
-            Intent intent = new Intent(this, UploadTrackActivity.class);
-            intent.putExtra("filename", Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording");
-            intent.putExtra("id", myTrack.getID());
-            int parentDur = myTrack.getDuration();
-            if(parentDur > secs)
-                secs = parentDur;
-            intent.putExtra("duration", secs);
-            startActivity(intent);
-            finish();
+            if(recorder != null) {
+                if(recorder.isRecording())
+                    recorder.stopRecording();
+                if(playing){
+                    playing = false;
+                    track.stop();
+                    track.release();
+                }
+
+                //MIX IN ASYNC TASK!!!
+                MyAudioManager.mixFiles(Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp",
+                        Environment.getExternalStorageDirectory().getAbsolutePath() + "/premix",
+                        Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording");
+
+                Intent intent = new Intent(this, UploadTrackActivity.class);
+                intent.putExtra("filename", Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording");
+                intent.putExtra("id", myTrack.getID());
+                int parentDur = myTrack.getDuration();
+                if (parentDur > secs)
+                    secs = parentDur;
+                intent.putExtra("duration", secs);
+
+                startActivity(intent);
+                finish();
+            }
+            else
+                Toast.makeText(getApplicationContext(), "Please start recording before proceeding to the upload page", Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(recorder != null && recorder.isRecording()) {
+            recorder.stopRecording();
+        }
+        if(playing) {
+            playing = false;
+            track.stop();
+            track.release();
+        }
+    }
+
     private Runnable updateTimerThread = new Runnable() {
         public void run() {
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;

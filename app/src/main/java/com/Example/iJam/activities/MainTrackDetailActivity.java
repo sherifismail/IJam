@@ -1,6 +1,8 @@
 package com.Example.iJam.activities;
 
+import android.media.AudioTrack;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -20,6 +22,9 @@ public class MainTrackDetailActivity extends AppCompatActivity {
     private ViewPager mPager;
     private TrackDetailAdapter mAdapter;
     public static User user;
+
+    private AudioTrack mainTrack = null;
+    public Boolean mainPLaying = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,16 @@ public class MainTrackDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(mainPLaying) {
+            mainPLaying = false;
+            mainTrack.stop();
+            mainTrack.release();
+        }
+    }
+
     public static class MyFragment extends Fragment {
         public static final java.lang.String ARG_PAGE = "arg_page";
 
@@ -75,6 +90,18 @@ public class MainTrackDetailActivity extends AppCompatActivity {
             myFragment.setArguments(arguments);
             return myFragment;
         }
+    }
+
+    public void setMainTrack(AudioTrack fragmentTrack){
+        mainTrack = fragmentTrack;
+    }
+
+    public void setMainPLaying(Boolean playing){
+        mainPLaying = playing;
+    }
+
+    public Boolean getMainPLaying(){
+        return mainPLaying;
     }
 }
 

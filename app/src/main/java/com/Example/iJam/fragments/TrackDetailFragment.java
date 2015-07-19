@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.Example.iJam.R;
 import com.Example.iJam.activities.JammingActivity;
+import com.Example.iJam.activities.MainTrackDetailActivity;
 import com.Example.iJam.models.MyAudioManager;
 import com.Example.iJam.models.Track;
 import com.Example.iJam.network.HttpGetTask;
@@ -45,8 +46,7 @@ public class TrackDetailFragment extends Fragment {
     FloatingActionButton fabJam, fabLike, fabRate;
     RelativeLayout mRoot;
     Track myTrack;
-    private AudioTrack track = null;
-    boolean playing = false;
+    private AudioTrack track;
     final ArrayList<String> list = new ArrayList<>();
 
 
@@ -69,6 +69,8 @@ public class TrackDetailFragment extends Fragment {
         Track myTrack = (Track) getActivity().getIntent().getSerializableExtra("track");
 
         track = MyAudioManager.InitAudioRemote(myTrack.getTrackUrl());
+        ((MainTrackDetailActivity)getActivity()).setMainTrack(track);
+        ((MainTrackDetailActivity)getActivity()).setMainPLaying(false);
 
         try {
             final String title = myTrack.getUser_name();
@@ -112,13 +114,13 @@ public class TrackDetailFragment extends Fragment {
             imgTrack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(!playing) {
+                    if(!((MainTrackDetailActivity)getActivity()).getMainPLaying()) {
                         track.play();
-                        playing = true;
+                        ((MainTrackDetailActivity)getActivity()).setMainPLaying(true);
                     }
                     else{
                         track.pause();
-                        playing = false;
+                        ((MainTrackDetailActivity)getActivity()).setMainPLaying(true);
                     }
 
                 }
@@ -179,6 +181,11 @@ public class TrackDetailFragment extends Fragment {
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            if(((MainTrackDetailActivity)getActivity()).getMainPLaying()) {
+                track.stop();
+                track.release();
+            }
+
             Intent i = new Intent(getActivity(),JammingActivity.class);
             i.putExtra("track", myTrack);
             startActivity(i);

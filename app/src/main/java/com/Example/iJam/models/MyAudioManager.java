@@ -147,21 +147,12 @@ public abstract class MyAudioManager {
 
             URL source = new URL(url);
             BufferedInputStream in = new BufferedInputStream(source.openStream());
-            DataInputStream dis = new DataInputStream(in);
+            //DataInputStream dis = new DataInputStream(in);
 
             int buffSize = AudioTrack.getMinBufferSize(FREQUENCY, CHANNEL_CONFIGURATION, AUDIO_ENCODING);
             track = new AudioTrack(STREAM_TYPE, FREQUENCY, CHANNEL_CONFIGURATION, AUDIO_ENCODING, buffSize, PLAY_STREAM);
 
             byte[] audioData = new byte[buffSize];
-            //byte[] oneShort = new byte[2];
-
-
-            //byte[] data = new byte[1024];
-            //int x=0;
-            //while((x=in.read(data,0,1024))>=0){
-              //  bout.write(data,0,x);
-            //}
-            //INSERTING THE DATA IN THE FILE TO FILL THE UADIODATA ARRAY
             int x=0;
             //while (dis.available() > 0) {
               //  int i=0;
@@ -170,7 +161,7 @@ public abstract class MyAudioManager {
             }
 
             //}
-            dis.close();
+            in.close();
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
