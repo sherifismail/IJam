@@ -141,9 +141,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.signin_txt_forget:
-                /*Intent intent=new Intent(SignInActivity.this,SignUpActivity.class);
-                startActivity(intent);
-                break;*/
+                Intent i=new Intent(SignInActivity.this,ForgotPassword.class);
+                startActivity(i);
+                break;
             case R.id.signin_bt_signup:
                 Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
                 startActivity(intent);

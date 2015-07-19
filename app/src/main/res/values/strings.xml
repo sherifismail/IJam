@@ -34,5 +34,6 @@
     <string name="title_activity_about_us">AboutUsActivity</string>
     <string name="paragraph_about_us">Welcome to JamHub, this application is a project for mobile development course offered in AUC by Dr. Mohamed Shaalan in Summer 2015</string>
     <string name="developers_names_aboutus">Developed by:\nMahmoud ElKhodary\nMostafa Ghoneimy\nSherif Ismail</string>
+    <string name="title_activity_forgot_password">ForgotPassword</string>
 
 </resources>

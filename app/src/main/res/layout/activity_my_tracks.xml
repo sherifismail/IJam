@@ -22,7 +22,7 @@
         android:id="@+id/activity_mytracks_list"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/button"
+        android:layout_above="@+id/sendpasswordButton"
         android:layout_below="@+id/textView3" />
 
 
