@@ -5,7 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.Example.iJam.R;
+import com.Example.iJam.models.MyAudioManager;
 import com.Example.iJam.models.Track;
 import com.Example.iJam.network.HttpImageTask;
 import com.Example.iJam.network.HttpTrackTask;
@@ -136,7 +139,32 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.trackupload_bt_upload:
-                Upload();
+                new AsyncTask<Void, Void, Void>(){
+                    @Override
+                    protected Void doInBackground(Void... params) {
+                        if(anc_id != 0) {
+                            new AsyncTask<Void, Void, Void>(){
+                                @Override
+                                protected Void doInBackground(Void... params) {
+                                    //MIX IN ASYNC TASK!!!
+                                    MyAudioManager.mixFiles(Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp",
+                                            Environment.getExternalStorageDirectory().getAbsolutePath() + "/premix",
+                                            Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording");
+                                    return null;
+                                }
+
+                                @Override
+                                protected void onPostExecute(Void aVoid) {
+                                    Toast.makeText(getApplicationContext(), "Mixing complete!", Toast.LENGTH_SHORT).show();
+                                }
+                            }.execute();
+                        }
+                        Upload();
+                        return null;
+                    }
+                }.execute();
+                Toast.makeText(getApplicationContext(), "Uploading in progress!", Toast.LENGTH_SHORT).show();
+                finish();
                 break;
         }
     }
@@ -166,7 +194,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                             JSONObject response = new JSONObject(s);
                             if (response.getString("status").equals("success")) {
                                 img_url = /*ServerManager.getServerURL() +*/ "/tracks/" + response.getString("url");
-                                Toast.makeText(ctx, img_url, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(ctx, img_url, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(ctx, response.getString("error"), Toast.LENGTH_SHORT).show();
                             }
@@ -192,7 +220,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                             JSONObject response = new JSONObject(s);
                             if (response.getString("status").equals("success")) {
                                 track_url = /*ServerManager.getServerURL() +*/ "/tracks/" + response.getString("url");
-                                Toast.makeText(ctx, track_url, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(ctx, track_url, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(ctx, response.getString("error"), Toast.LENGTH_SHORT).show();
                             }
@@ -228,10 +256,8 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                             Toast.makeText(ctx, "Failed to upload track! " + response.getString("error"), Toast.LENGTH_SHORT).show();
                         } else if(status.equals("Ufail")){
                             Toast.makeText(ctx, "Updating database failed! " + response.getString("error"), Toast.LENGTH_SHORT).show();
-                            finish();
                         } else {
-                            Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show();
-                            finish();
+                            Toast.makeText(ctx, "Track uploaded successfulyy", Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

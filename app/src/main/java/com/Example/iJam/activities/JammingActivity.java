@@ -177,11 +177,6 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
                     track.release();
                 }
 
-                //MIX IN ASYNC TASK!!!
-                MyAudioManager.mixFiles(Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp",
-                        Environment.getExternalStorageDirectory().getAbsolutePath() + "/premix",
-                        Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording");
-
                 Intent intent = new Intent(this, UploadTrackActivity.class);
                 intent.putExtra("filename", Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording");
                 intent.putExtra("id", myTrack.getID());

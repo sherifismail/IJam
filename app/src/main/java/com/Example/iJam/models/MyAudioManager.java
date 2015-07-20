@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.util.Log;
 
 import com.Example.iJam.activities.RecordActivity;
 
@@ -175,13 +176,19 @@ public abstract class MyAudioManager {
     public static void mixFiles(String fileInput1, String fileInput2, String fileOuput){
 
         List<Short> music1 = createMusicArray(fileInput1);
+        Log.i("steps", "1a");
         List<Short> music2 = createMusicArray(fileInput2);
+        Log.i("steps", "1b");
 
         completeStreams(music1, music2);
+        Log.i("steps", "2");
         short[] music1Array = buildShortArray(music1);
+        Log.i("steps", "3a");
         short[] music2Array = buildShortArray(music2);
+        Log.i("steps", "3b");
 
         short[] output = new short[music1Array.length];
+        Log.i("steps", "4");
         for(int i=0; i < output.length; i++){
 
             float samplef1 = music1Array[i] / 32768.0f;
@@ -197,7 +204,9 @@ public abstract class MyAudioManager {
 
             output[i] = outputSample;
         }
+        Log.i("steps", "5");
         saveToFile(output, fileOuput);
+        Log.i("steps", "6");
 
     }
 

@@ -13,6 +13,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.Example.iJam.R;
+import com.Example.iJam.network.HttpGetTask;
+import com.Example.iJam.network.ServerManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Properties;
 
@@ -28,38 +33,55 @@ import javax.mail.internet.MimeMessage;
 
 public class ForgotPassword extends Activity {
 
-    String emaill,password;
-    Session session;
-    EditText mail;
+    private String emaill, password = null;
+    private Session session;
+    private EditText mail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
-        password="1234";
+
         mail=(EditText)findViewById(R.id.emailTxt);
-        Button sendemail=(Button)findViewById(R.id.sendpasswordButton);
+        Button sendemail = (Button)findViewById(R.id.sendpasswordButton);
+
         sendemail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                emaill=mail.getText().toString().trim();
-                Properties props = new Properties();
-                props.put("mail.smtp.host", "smtp.gmail.com");
-                props.put("mail.smtp.socketFactory.port", "465");
-                props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-                props.put("mail.smtp.auth", "true");
-                props.put("mail.smtp.port", "465");
-                session = Session.getDefaultInstance(props, new Authenticator() {
+                emaill = mail.getText().toString().trim();
+
+                new HttpGetTask(ServerManager.getServerURL()+"/tracks/password.php?mail="+emaill, getApplicationContext()){
                     @Override
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("jamhubapp@gmail.com", "jamhub123");
+                    protected void onPostExecute(String s) {
+                        try {
+                            JSONObject response = new JSONObject(s);
+                            if (response.getString("status").equals("success")) {
+                                password = response.getString("password");
+
+                                Properties props = new Properties();
+                                props.put("mail.smtp.host", "smtp.gmail.com");
+                                props.put("mail.smtp.socketFactory.port", "465");
+                                props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                                props.put("mail.smtp.auth", "true");
+                                props.put("mail.smtp.port", "465");
+                                session = Session.getDefaultInstance(props, new Authenticator() {
+                                    @Override
+                                    protected PasswordAuthentication getPasswordAuthentication() {
+                                        return new PasswordAuthentication("jamhubapp@gmail.com", "jamhub123");
+                                    }
+                                });
+                                RetreiveFeedTask task = new RetreiveFeedTask();
+                                task.execute();
+
+                                finish();
+                            }
+                            else
+                                Toast.makeText(ctx, "email not found in our database!", Toast.LENGTH_SHORT).show();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                });
-
-                RetreiveFeedTask task = new RetreiveFeedTask();
-                task.execute();
-
-                Intent intent=new Intent(ForgotPassword.this,SignInActivity.class);
-                startActivity(intent);
+                }.execute();
             }
         });
     }
@@ -97,7 +119,7 @@ public class ForgotPassword extends Activity {
                 message.setFrom(new InternetAddress("jamhub"));
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emaill));
                 message.setSubject("Retrieving password");
-                message.setContent("Welcome to JamHub, Your password is "+password, "text/html; charset=utf-8");
+                message.setContent("Your password is "+password, "text/html; charset=utf-8");
                 Transport.send(message);
             } catch(MessagingException e) {
                 e.printStackTrace();
@@ -109,7 +131,7 @@ public class ForgotPassword extends Activity {
 
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(getApplicationContext(), "Password sent", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Password sent", Toast.LENGTH_SHORT).show();
         }
     }
 }
