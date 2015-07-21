@@ -12,6 +12,7 @@ import android.view.MenuItem;
 
 import com.Example.iJam.R;
 import com.Example.iJam.adapters.TrackDetailAdapter;
+import com.Example.iJam.models.MyTrackPlayer;
 import com.Example.iJam.models.User;
 
 
@@ -23,8 +24,7 @@ public class MainTrackDetailActivity extends AppCompatActivity {
     private TrackDetailAdapter mAdapter;
     public static User user;
 
-    private AudioTrack mainTrack = null;
-    public Boolean mainPLaying = false;
+    private MyTrackPlayer mainTrack = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +68,8 @@ public class MainTrackDetailActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(mainPLaying) {
-            mainPLaying = false;
-            mainTrack.stop();
-            mainTrack.release();
+        if(mainTrack.isPlaying()) {
+            mainTrack.finish();
         }
     }
 
@@ -92,16 +90,8 @@ public class MainTrackDetailActivity extends AppCompatActivity {
         }
     }
 
-    public void setMainTrack(AudioTrack fragmentTrack){
+    public void setMainTrack(MyTrackPlayer fragmentTrack){
         mainTrack = fragmentTrack;
-    }
-
-    public void setMainPLaying(Boolean playing){
-        mainPLaying = playing;
-    }
-
-    public Boolean getMainPLaying(){
-        return mainPLaying;
     }
 }
 

@@ -35,6 +35,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
     EditText etName, etInstrument, etTags;
     private MediaRecorder myAudioRecorder;
     private String outputFile = null;
+    private String anc_url = null;
     boolean ready = false;
     String img_url, track_url, track_duration;
     int anc_id;
@@ -50,6 +51,8 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
         outputFile = caller.getStringExtra("filename");
         anc_id = caller.getIntExtra("id", 0);
         duration = caller.getIntExtra("duration", 0);
+        if(anc_id!=0)
+            anc_url = caller.getStringExtra("url");
 
         imgTrack = (ImageView)findViewById(R.id.trackupload_img_trackimage);
         btUpload = (Button) findViewById(R.id.trackupload_bt_upload);
@@ -147,7 +150,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                                 @Override
                                 protected Void doInBackground(Void... params) {
                                     //MIX IN ASYNC TASK!!!
-                                    MyAudioManager.mixFiles(Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp",
+                                    MyAudioManager.mixFiles(anc_url,
                                             Environment.getExternalStorageDirectory().getAbsolutePath() + "/premix",
                                             Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording");
                                     return null;
@@ -156,10 +159,12 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                                 @Override
                                 protected void onPostExecute(Void aVoid) {
                                     Toast.makeText(getApplicationContext(), "Mixing complete!", Toast.LENGTH_SHORT).show();
+                                    Upload();
                                 }
                             }.execute();
                         }
-                        Upload();
+                        else
+                            Upload();
                         return null;
                     }
                 }.execute();
@@ -194,7 +199,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                             JSONObject response = new JSONObject(s);
                             if (response.getString("status").equals("success")) {
                                 img_url = /*ServerManager.getServerURL() +*/ "/tracks/" + response.getString("url");
-                                //Toast.makeText(ctx, img_url, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ctx, img_url, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(ctx, response.getString("error"), Toast.LENGTH_SHORT).show();
                             }
@@ -220,7 +225,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                             JSONObject response = new JSONObject(s);
                             if (response.getString("status").equals("success")) {
                                 track_url = /*ServerManager.getServerURL() +*/ "/tracks/" + response.getString("url");
-                                //Toast.makeText(ctx, track_url, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ctx, track_url, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(ctx, response.getString("error"), Toast.LENGTH_SHORT).show();
                             }

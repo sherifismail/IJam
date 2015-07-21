@@ -30,6 +30,7 @@ import android.widget.VideoView;
 import com.Example.iJam.R;
 import com.Example.iJam.models.MyAudioManager;
 import com.Example.iJam.models.MyAudioRecorder;
+import com.Example.iJam.models.MyTrackPlayer;
 import com.Example.iJam.models.Track;
 import com.Example.iJam.network.NetworkManager;
 import com.Example.iJam.network.ServerManager;
@@ -46,10 +47,9 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
     long timeInMilliseconds = 0L;
     long timeSwapBuff = 0L;
     long updatedTime = 0L;
-    boolean playing = false;
 
     NetworkImageView imagetrack;
-    private AudioTrack track = null;
+    private MyTrackPlayer player = new MyTrackPlayer();
     private MyAudioRecorder recorder = null;
     Track myTrack;
     private int secs;
@@ -78,7 +78,6 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
         next.setOnClickListener(this);
 
         imagetrack.setImageUrl(imgUrl, NetworkManager.getInstance(getApplicationContext()).getImageLoader());
-        track = MyAudioManager.InitAudio(Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp");
     }
 
     @Override
@@ -121,6 +120,15 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
 
                         outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/premix";
                         recorder = new MyAudioRecorder(outputFile);
+
+                        new AsyncTask<Void, Void, Void>(){
+                            @Override
+                            protected Void doInBackground(Void... params) {
+                                player.playStream(myTrack.getTrackUrl());
+                                return null;
+                            }
+                        }.execute();
+
                         new AsyncTask<Void, Void, Void>(){
 
                             @Override
@@ -129,9 +137,6 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
                                 return null;
                             }
                         }.execute();
-
-                        track.play();
-                        playing = true;
 
                         startTime = SystemClock.uptimeMillis();
                         customHandler.postDelayed(updateTimerThread, 0);
@@ -153,33 +158,29 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
             stopbut.setEnabled(false);
             Toast.makeText(getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_LONG).show();
 
-            track.stop();
+            player.finish();
             break;
 
-        case R.id.jamming_img_videoimage:
-            if(!playing) {
-                track.play();
-                playing = true;
-            }
-            else{
-                track.pause();
-                playing = false;
-            }
-            break;
+        /*case R.id.jamming_img_videoimage:
+            if(!player.isPlaying())
+                player.resume();
+            else
+                player.pause();
+            break;*/
 
         case R.id.jamming_bt_next:
             if(recorder != null) {
                 if(recorder.isRecording())
                     recorder.stopRecording();
-                if(playing){
-                    playing = false;
-                    track.stop();
-                    track.release();
+
+                if(player.isPlaying()){
+                    player.finish();
                 }
 
                 Intent intent = new Intent(this, UploadTrackActivity.class);
                 intent.putExtra("filename", Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording");
                 intent.putExtra("id", myTrack.getID());
+                intent.putExtra("url", myTrack.getTrackUrl());
                 int parentDur = myTrack.getDuration();
                 if (parentDur > secs)
                     secs = parentDur;
@@ -199,11 +200,8 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
         if(recorder != null && recorder.isRecording()) {
             recorder.stopRecording();
         }
-        if(playing) {
-            playing = false;
-            track.stop();
-            track.release();
-        }
+        if(player.isPlaying())
+            player.finish();
     }
 
     private Runnable updateTimerThread = new Runnable() {

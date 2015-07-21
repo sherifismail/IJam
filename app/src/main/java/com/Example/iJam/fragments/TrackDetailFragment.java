@@ -25,6 +25,7 @@ import com.Example.iJam.R;
 import com.Example.iJam.activities.JammingActivity;
 import com.Example.iJam.activities.MainTrackDetailActivity;
 import com.Example.iJam.models.MyAudioManager;
+import com.Example.iJam.models.MyTrackPlayer;
 import com.Example.iJam.models.Track;
 import com.Example.iJam.network.HttpGetTask;
 import com.Example.iJam.network.NetworkManager;
@@ -45,8 +46,8 @@ public class TrackDetailFragment extends Fragment {
     NetworkImageView imgTrack;
     FloatingActionButton fabJam, fabLike, fabRate;
     RelativeLayout mRoot;
-    Track myTrack;
-    private AudioTrack track;
+    private Track myTrack;
+    private MyTrackPlayer player = new MyTrackPlayer();
     final ArrayList<String> list = new ArrayList<>();
 
 
@@ -66,11 +67,15 @@ public class TrackDetailFragment extends Fragment {
 
         myTrack = (Track) getActivity().getIntent().getSerializableExtra("track");
 
-        Track myTrack = (Track) getActivity().getIntent().getSerializableExtra("track");
+        new AsyncTask<Void, Void, Void>(){
+            @Override
+            protected Void doInBackground(Void... params) {
+                player.playStream(myTrack.getTrackUrl());
+                return null;
+            }
+        }.execute();
 
-        track = MyAudioManager.InitAudioRemote(myTrack.getTrackUrl());
-        ((MainTrackDetailActivity)getActivity()).setMainTrack(track);
-        ((MainTrackDetailActivity)getActivity()).setMainPLaying(false);
+        ((MainTrackDetailActivity)getActivity()).setMainTrack(player);
 
         try {
             final String title = myTrack.getUser_name();
@@ -85,16 +90,6 @@ public class TrackDetailFragment extends Fragment {
             final String trackUrl = myTrack.getTrackUrl();
 
             imgTrack.setImageUrl(imgUrl, NetworkManager.getInstance(getActivity()).getImageLoader());
-
-            //NADAFA '3ER LAZEMAH
-            /*new AsyncTask<String, Void, Void>(){
-
-                @Override
-                protected Void doInBackground(String... params) {
-                    MyAudioManager.InitStream(track, trackUrl);
-                    return null;
-                }
-            }.execute();*/
 
             int mins = duration / 60;
             int secs = duration % 60;
@@ -111,20 +106,15 @@ public class TrackDetailFragment extends Fragment {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, trackItems);
             trackDetails.setAdapter(adapter);
 
-            imgTrack.setOnClickListener(new View.OnClickListener() {
+            /*imgTrack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(!((MainTrackDetailActivity)getActivity()).getMainPLaying()) {
-                        track.play();
-                        ((MainTrackDetailActivity)getActivity()).setMainPLaying(true);
-                    }
-                    else{
-                        track.pause();
-                        ((MainTrackDetailActivity)getActivity()).setMainPLaying(true);
-                    }
-
+                    if(player.isPlaying())
+                        player.pause();
+                    else
+                        player.resume();
                 }
-            });
+            });*/
         }catch(Exception ee){
             ee.printStackTrace();
         }
@@ -181,10 +171,8 @@ public class TrackDetailFragment extends Fragment {
     private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(((MainTrackDetailActivity)getActivity()).getMainPLaying()) {
-                track.stop();
-                track.release();
-            }
+            if(player.isPlaying())
+                player.finish();
 
             Intent i = new Intent(getActivity(),JammingActivity.class);
             i.putExtra("track", myTrack);

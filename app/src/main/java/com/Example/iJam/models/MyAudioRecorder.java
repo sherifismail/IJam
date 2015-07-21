@@ -42,10 +42,10 @@ public class MyAudioRecorder {
 
 
             // Create a new AudioRecord object to record the audio.
-            int bufferSize = AudioRecord.getMinBufferSize(MyAudioManager.FREQUENCY, MyAudioManager.CHANNEL_CONFIGURATION,
-                    MyAudioManager.AUDIO_ENCODING);
-            AudioRecord audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, MyAudioManager.FREQUENCY,
-                    MyAudioManager.CHANNEL_CONFIGURATION, MyAudioManager.AUDIO_ENCODING, bufferSize);
+            int bufferSize = AudioRecord.getMinBufferSize(MyTrackPlayer.FREQUENCY, MyTrackPlayer.CHANNEL_CONFIGURATION,
+                    MyTrackPlayer.AUDIO_ENCODING);
+            AudioRecord audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, MyTrackPlayer.FREQUENCY,
+                    MyTrackPlayer.CHANNEL_CONFIGURATION, MyTrackPlayer.AUDIO_ENCODING, bufferSize);
 
             short[] buffer = new short[bufferSize];
             audioRecord.startRecording();

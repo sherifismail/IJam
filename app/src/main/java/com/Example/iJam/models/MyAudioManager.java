@@ -5,7 +5,6 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.util.Log;
 
 import com.Example.iJam.activities.RecordActivity;
 
@@ -32,163 +31,18 @@ import java.util.List;
  */
 public abstract class MyAudioManager {
 
-    public static final int FREQUENCY = 44100;
-    public static final int CHANNEL_CONFIGURATION = AudioFormat.CHANNEL_CONFIGURATION_MONO;
-    public static final int AUDIO_ENCODING =  AudioFormat.ENCODING_PCM_16BIT;
-    final static int STREAM_TYPE = AudioManager.STREAM_MUSIC;
-    public static final int PLAY_STATIC = AudioTrack.MODE_STATIC;
-    public static final int PLAY_STREAM = AudioTrack.MODE_STREAM;
+    public static void mixFiles(String url, String fileInput2, String fileOuput){
 
-    private static boolean executing = false;
-    private static AudioTrack track=null;
+        readIntoFile(url, Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp");
 
-    public static AudioTrack InitAudio(String outputFile){
-
-        AudioTrack track = null;
-        try {
-            File file = new File(outputFile);
-
-            //GET THE LENGTH IN BYTES AND DIVIDE BY 2 TO GET THE LENGTH IN SHORT
-            int audioLength = (int)(file.length());
-
-            InputStream is = new FileInputStream(file);
-            BufferedInputStream bis = new BufferedInputStream(is);
-            DataInputStream dis = new DataInputStream(bis);
-
-            track = new AudioTrack(STREAM_TYPE, FREQUENCY, CHANNEL_CONFIGURATION, AUDIO_ENCODING,audioLength,PLAY_STATIC);
-
-            short[] audioData = new short[audioLength];
-
-            //INSERTING THE DATA IN THE FILE TO FILL THE UADIODATA ARRAY
-            int i=0;
-            while (dis.available()>0 && i<audioLength) {
-                audioData[i] = dis.readShort();
-                i++;
-            }
-            track.write(audioData, 0, audioLength);
-            dis.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return track;
-    }
-
-    public static AudioTrack InitAudioRemote(String url){
-
-        executing = true;
-        new AsyncTask<String, Void, Void>(){
-
-            @Override
-            protected Void doInBackground(String... params) {
-                String outFileName = null;
-                try {
-                    outFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp";
-                    File file = new File(outFileName);
-
-                    URL source = new URL(params[0]);
-                    BufferedInputStream in = new BufferedInputStream(source.openStream());
-                    FileOutputStream fos = new FileOutputStream(outFileName);
-                    BufferedOutputStream bout = new BufferedOutputStream(fos,1024);
-
-                    byte[] data = new byte[1024];
-                    int x=0;
-                    while((x=in.read(data,0,1024))>=0){
-                        bout.write(data,0,x);
-                    }
-                    fos.flush();
-                    bout.flush();
-                    fos.close();
-                    bout.close();
-                    in.close();
-
-                    //GET THE LENGTH IN BYTES AND DIVIDE BY 2 TO GET THE LENGTH IN SHORT
-                    int audioLength = (int)(file.length());
-
-                    InputStream isf = new FileInputStream(file);
-                    BufferedInputStream bisf = new BufferedInputStream(isf);
-                    DataInputStream disf = new DataInputStream(bisf);
-
-                    track = new AudioTrack(STREAM_TYPE, FREQUENCY, CHANNEL_CONFIGURATION, AUDIO_ENCODING,audioLength,PLAY_STATIC);
-
-                    short[] audioData = new short[audioLength];
-
-                    //INSERTING THE DATA IN THE FILE TO FILL THE UADIODATA ARRAY
-                    int i=0;
-                    while (disf.available()>0 && i<audioLength) {
-                        audioData[i] = disf.readShort();
-                        i++;
-                    }
-                    track.write(audioData, 0, audioLength);
-
-                    disf.close();
-                    executing = false;
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        }.execute(url);
-
-        while(executing){}
-        return track;
-    }
-
-    public static void InitStream(AudioTrack track, String url){
-        try {
-            //String outFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp";
-            //File file = new File(outFileName);
-
-            URL source = new URL(url);
-            BufferedInputStream in = new BufferedInputStream(source.openStream());
-            //DataInputStream dis = new DataInputStream(in);
-
-            int buffSize = AudioTrack.getMinBufferSize(FREQUENCY, CHANNEL_CONFIGURATION, AUDIO_ENCODING);
-            track = new AudioTrack(STREAM_TYPE, FREQUENCY, CHANNEL_CONFIGURATION, AUDIO_ENCODING, buffSize, PLAY_STREAM);
-
-            byte[] audioData = new byte[buffSize];
-            int x=0;
-            //while (dis.available() > 0) {
-              //  int i=0;
-            while ((x = in.read(audioData, 0, buffSize)) >= 0) {
-                track.write(audioData,0,audioData.length);
-            }
-
-            //}
-            in.close();
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void mixFiles(String fileInput1, String fileInput2, String fileOuput){
-
-        List<Short> music1 = createMusicArray(fileInput1);
-        Log.i("steps", "1a");
+        List<Short> music1 = createMusicArray(Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp");
         List<Short> music2 = createMusicArray(fileInput2);
-        Log.i("steps", "1b");
 
         completeStreams(music1, music2);
-        Log.i("steps", "2");
         short[] music1Array = buildShortArray(music1);
-        Log.i("steps", "3a");
         short[] music2Array = buildShortArray(music2);
-        Log.i("steps", "3b");
 
         short[] output = new short[music1Array.length];
-        Log.i("steps", "4");
         for(int i=0; i < output.length; i++){
 
             float samplef1 = music1Array[i] / 32768.0f;
@@ -204,9 +58,7 @@ public abstract class MyAudioManager {
 
             output[i] = outputSample;
         }
-        Log.i("steps", "5");
         saveToFile(output, fileOuput);
-        Log.i("steps", "6");
 
     }
 
@@ -267,6 +119,32 @@ public abstract class MyAudioManager {
             for(int i=0; i<mix.length; i++)
                 dos.writeShort(mix[i]);
 
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readIntoFile(String url, String outFileName){
+        try {
+            URL source = new URL(url);
+            BufferedInputStream in = new BufferedInputStream(source.openStream());
+            FileOutputStream fos = new FileOutputStream(outFileName);
+            BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
+
+            byte[] data = new byte[1024];
+            int x = 0;
+            while ((x = in.read(data, 0, 1024)) >= 0) {
+                bout.write(data, 0, x);
+            }
+            fos.flush();
+            bout.flush();
+            fos.close();
+            bout.close();
+            in.close();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
