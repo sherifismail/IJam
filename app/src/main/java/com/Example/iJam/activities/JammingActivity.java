@@ -1,5 +1,6 @@
 package com.Example.iJam.activities;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -7,6 +8,7 @@ import android.media.AudioTrack;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -55,6 +57,22 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
     private int secs;
 
     ImageView recordbut, stopbut;
+
+    AsyncTask StartPlayer = new AsyncTask() {
+        @Override
+        protected Object doInBackground(Object[] params) {
+            player.playStream(myTrack.getTrackUrl());
+            return null;
+        }
+    };
+
+    AsyncTask StartRecorder = new AsyncTask() {
+        @Override
+        protected Object doInBackground(Object[] params) {
+            recorder.startRecording();
+            return null;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,22 +139,8 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
                         outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/premix";
                         recorder = new MyAudioRecorder(outputFile);
 
-                        new AsyncTask<Void, Void, Void>(){
-                            @Override
-                            protected Void doInBackground(Void... params) {
-                                player.playStream(myTrack.getTrackUrl());
-                                return null;
-                            }
-                        }.execute();
-
-                        new AsyncTask<Void, Void, Void>(){
-
-                            @Override
-                            protected Void doInBackground(Void... params) {
-                                recorder.startRecording();
-                                return null;
-                            }
-                        }.execute();
+                        startMyTask(StartPlayer);
+                        startMyTask(StartRecorder);
 
                         startTime = SystemClock.uptimeMillis();
                         customHandler.postDelayed(updateTimerThread, 0);
@@ -154,6 +158,7 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
         case R.id.jamming_image_stop:
             timeSwapBuff += timeInMilliseconds;
             customHandler.removeCallbacks(updateTimerThread);
+
             recorder.stopRecording();
             stopbut.setEnabled(false);
             Toast.makeText(getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_LONG).show();
@@ -216,4 +221,11 @@ public class JammingActivity extends ActionBarActivity implements View.OnClickLi
         }
     };
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB) // API 11
+    void startMyTask(AsyncTask asyncTask) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+            asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        else
+            asyncTask.execute();
+    }
 }

@@ -199,7 +199,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                             JSONObject response = new JSONObject(s);
                             if (response.getString("status").equals("success")) {
                                 img_url = /*ServerManager.getServerURL() +*/ "/tracks/" + response.getString("url");
-                                Toast.makeText(ctx, img_url, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(ctx, img_url, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(ctx, response.getString("error"), Toast.LENGTH_SHORT).show();
                             }
@@ -225,7 +225,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                             JSONObject response = new JSONObject(s);
                             if (response.getString("status").equals("success")) {
                                 track_url = /*ServerManager.getServerURL() +*/ "/tracks/" + response.getString("url");
-                                Toast.makeText(ctx, track_url, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(ctx, track_url, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(ctx, response.getString("error"), Toast.LENGTH_SHORT).show();
                             }

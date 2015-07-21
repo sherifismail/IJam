@@ -33,9 +33,10 @@ public abstract class MyAudioManager {
 
     public static void mixFiles(String url, String fileInput2, String fileOuput){
 
-        readIntoFile(url, Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp");
+        String targetfile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp";
+        readIntoFile(url, targetfile);
 
-        List<Short> music1 = createMusicArray(Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp");
+        List<Short> music1 = createMusicArray(Environment.getExternalStorageDirectory().getAbsolutePath()+ "/temp");
         List<Short> music2 = createMusicArray(fileInput2);
 
         completeStreams(music1, music2);
