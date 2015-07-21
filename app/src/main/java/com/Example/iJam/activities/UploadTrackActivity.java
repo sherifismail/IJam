@@ -168,6 +168,7 @@ public class UploadTrackActivity extends AppCompatActivity implements View.OnCli
                         return null;
                     }
                 }.execute();
+                int i=0;
                 Toast.makeText(getApplicationContext(), "Uploading in progress!", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
